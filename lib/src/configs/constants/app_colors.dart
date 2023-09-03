@@ -8,9 +8,9 @@ import 'package:flutter/material.dart';
 // Color RED_COLOR = Colors.red[700]!;
 
 class AppColors {
-  static const Color PRIMARY_PURPLE = Color.fromRGBO(143, 93, 190, 1);
+  static const Color PRIMARY_PURPLE = Color.fromRGBO(130, 64, 192, 1);
 
-  static const Color SECONDARY_PINK = Color.fromRGBO(245, 113, 127, 1);
+  static const Color SECONDARY_PURPLE = Color.fromRGBO(128, 28, 156, 0.604);
 
   static const Color COLOR_WHITE = Color.fromRGBO(255, 255, 255, 1);
 
@@ -38,5 +38,5 @@ class AppColors {
 
   static const Color LIGHT_SOLID_PINK = Color.fromRGBO(237, 50, 225, 0.1);
 
-  static const Color LIGHT_PURPLE = Color.fromRGBO(191, 42, 236, 0.098);
+
 }

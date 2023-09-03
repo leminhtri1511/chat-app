@@ -29,7 +29,7 @@ class AppButton extends StatelessWidget {
             colors: [
               if (enableButton) AppColors.PRIMARY_PURPLE else AppColors.BLACK_200,
               if (enableButton)
-                AppColors.LIGHT_PURPLE
+                AppColors.SECONDARY_PURPLE
               else
                 AppColors.BLACK_200,
             ],
