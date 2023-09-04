@@ -3,13 +3,33 @@ import 'package:chat_app/src/configs/configs.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-import '../routers.dart';
+import '../base/base.dart';
+import 'welcome_screen_viewmodel.dart';
 
-class ChooseMethodScreen extends StatelessWidget {
-  const ChooseMethodScreen({super.key});
+
+
+class WelcomeScreen extends StatefulWidget {
+  const WelcomeScreen({super.key});
+
+  @override
+  State<WelcomeScreen> createState() => _WelcomeScreenState();
+}
+
+class _WelcomeScreenState extends State<WelcomeScreen> {
+  WelcomeScreenViewModel? _viewModel;
+  var isLogin = true;
 
   @override
   Widget build(BuildContext context) {
+    return BaseWidget<WelcomeScreenViewModel>(
+      viewModel: WelcomeScreenViewModel(),
+      onViewModelReady: (viewModel) => _viewModel = viewModel!..init(),
+      builder: (context, viewModel, child) => buildWelcome(),
+    );
+  }
+
+
+  Widget buildWelcome() {
     return Scaffold(
       body: SafeArea(
         child: Center(
@@ -69,7 +89,7 @@ class ChooseMethodScreen extends StatelessWidget {
                       height: 50,
                       width: double.infinity,
                       child: ElevatedButton(
-                        onPressed: () => AppRouter.goToSignUpScreen(context),
+                        onPressed: () => _viewModel!.goToSignUpScreen(context),
                         child: const Paragraph(
                           content: 'Sign up with email',
                           style: STYLE_LARGE_BOLD,
@@ -90,11 +110,12 @@ class ChooseMethodScreen extends StatelessWidget {
                       height: 50,
                       width: double.infinity,
                       child: ElevatedButton(
+                        onPressed: () => _viewModel!.goToSignInScreen(context),
                         style: const ButtonStyle(
                           backgroundColor:
                               MaterialStatePropertyAll(Colors.transparent),
                         ),
-                        onPressed: () => AppRouter.goToSignUpScreen(context),
+                        // onPressed: () => AppRouter.goToWelcomeScreen(context),
                         child: Paragraph(
                           content: 'Sign in',
                           style: STYLE_LARGE_BOLD.copyWith(

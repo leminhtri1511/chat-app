@@ -40,7 +40,10 @@ class MyApp extends StatelessWidget {
         GlobalWidgetsLocalizations.delegate,
         GlobalCupertinoLocalizations.delegate,
       ],
-      supportedLocales: S.delegate.supportedLocales,
+
+
+      // supportedLocales: S.delegate.supportedLocales,
+      
       // locale: AppPref.isCheckLocale == _Contants.defaultLanguage
       //     ? window.locale
       //     : AppPref.isCheckLocale == _Contants.languageVietName

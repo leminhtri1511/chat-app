@@ -4,7 +4,7 @@ import 'package:chat_app/src/configs/configs.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-import '../screens/welcome_screens/choose_method_screen.dart';
+import '../welcome_screens/welcome_screen.dart';
 
 
 class SplashScreen extends StatefulWidget {
@@ -22,7 +22,7 @@ class _SplashScreenState extends State<SplashScreen> {
       const Duration(seconds: 2),
       () => Navigator.of(context).pushReplacement(
         CupertinoPageRoute(
-          builder: (BuildContext context) => const ChooseMethodScreen(),
+          builder: (BuildContext context) => const WelcomeScreen(),
         ),
       ),
     );

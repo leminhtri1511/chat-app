@@ -1,24 +1,18 @@
+import 'package:chat_app/src/presentation/forgot_password_screen/forgot_pasword_screen.dart';
+import 'package:chat_app/src/presentation/sign_in_screen/sign_in_screen.dart';
+import 'package:chat_app/src/presentation/sign_up_screen/sign_up_screen.dart';
 import 'package:flutter/material.dart';
-
 
 import 'app/splash.dart';
 import 'bottom_navigation_bar/navigation_screen.dart';
 
-
 class Routers {
   static const String getStarted = '/getStarted';
   static const String home = '/home';
-  static const String homeDetails = '/homeDetails';
-  static const String verification = '/verification';
-  static const String updateProfile = '/updateProfile';
-  static const String createPassword = '/createPassword';
   static const String signIn = '/signIn';
-  static const String addService = '/addService';
-  static const String serviceList = '/serviceList';
-  static const String serviceDetails = '/serviceDetails';
-  static const String editService = '/editService';
   static const String signUp = '/signUp';
-  static const String navigation = '/navigation';
+  static const String forgotPass = '/forgotPass';
+  // static const String navigation = '/navigation';
 
   static Route<dynamic> generateRoute(RouteSettings settings) {
     final arguments = settings.arguments;
@@ -31,18 +25,29 @@ class Routers {
           arguments: arguments,
         );
 
-      // case navigation:
-      //   return animRoute(
-      //     const NavigateScreen(),
-      //     beginOffset: right,
-      //     name: verification,
-      //     arguments: arguments,
-      //   );
+      case signIn:
+        return animRoute(
+          const SignInScreen(),
+          beginOffset: right,
+          name: getStarted,
+          arguments: arguments,
+        );
 
+      case signUp:
+        return animRoute(
+          const SignUpScreen(),
+          beginOffset: right,
+          name: getStarted,
+          arguments: arguments,
+        );
 
-      // case profileMember:
-      //   return animRoute(const ProfileMemberScreen(),
-      //       beginOffset: right, name: profileMember, arguments: arguments);
+      case forgotPass:
+        return animRoute(
+          const ForgotPasswordScreen(),
+          beginOffset: right,
+          name: getStarted,
+          arguments: arguments,
+        );
 
       default:
         return animRoute(
