@@ -59,7 +59,7 @@ class _SignInScreenState extends State<SignInScreen> {
                 buildEmailFormField(),
                 buildPasswordFormField(),
                 buildForgotPassword(context),
-                buildConfirmButton(),
+                buildLogInButton(),
                 buildGotoSignUpScreen(context),
               ],
             ),
@@ -70,9 +70,10 @@ class _SignInScreenState extends State<SignInScreen> {
   }
 
   Widget buildEmailFormField() {
-    return const Padding(
-      padding: EdgeInsets.symmetric(vertical: 10),
+    return  Padding(
+      padding: const EdgeInsets.symmetric(vertical: 10),
       child: AppFormField(
+        textEditingController: _viewModel!.emailController,
         labelText: 'Email address',
         hintText: 'Enter your email',
       ),
@@ -80,22 +81,25 @@ class _SignInScreenState extends State<SignInScreen> {
   }
 
   Widget buildPasswordFormField() {
-    return const Padding(
-      padding: EdgeInsets.symmetric(vertical: 10),
+    return  Padding(
+      padding: const EdgeInsets.symmetric(vertical: 10),
       child: AppFormField(
+        textEditingController: _viewModel!.passwordController,
+        obscureText: true,
         labelText: 'Password',
         hintText: 'Enter password',
       ),
     );
   }
 
-  Widget buildConfirmButton() {
+  Widget buildLogInButton() {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 20),
       child: AppButton(
+
         enableButton: true,
-        content: 'Confirm',
-        onTap: () {},
+        content: 'Log in',
+        onTap: () => _viewModel!.logInButton(),
       ),
     );
   }

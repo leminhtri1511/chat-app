@@ -1,3 +1,7 @@
+import 'package:chat_app/src/configs/configs.dart';
+import 'package:chat_app/src/presentation/home_screen/home_screen.dart';
+import 'package:chat_app/src/presentation/sign_in_screen/sign_in_screen.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 // import '../../configs/firebase/analytics_firebase.dart';
@@ -5,7 +9,6 @@ import '../../intl/generated/l10n.dart';
 
 import '../bottom_navigation_bar/navigation.dart';
 import '../routers.dart';
-
 
 class Constants {
   static const String languageVietName = 'vi';
@@ -21,7 +24,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       key: key,
-      debugShowCheckedModeBanner: false,
+      debugShowCheckedModeBanner: true,
       // navigatorObservers: [ConfigAnalytics.observer],
       // theme: ThemeData(fontFamily: 'Quicksand'),
       theme: ThemeData().copyWith(
@@ -41,9 +44,8 @@ class MyApp extends StatelessWidget {
         GlobalCupertinoLocalizations.delegate,
       ],
 
-
       // supportedLocales: S.delegate.supportedLocales,
-      
+
       // locale: AppPref.isCheckLocale == _Contants.defaultLanguage
       //     ? window.locale
       //     : AppPref.isCheckLocale == _Contants.languageVietName
@@ -52,10 +54,23 @@ class MyApp extends StatelessWidget {
       //             _Contants.languageEnglish,
       //             _Contants.countryEnglish,
       //           ),
-      initialRoute: Routers.getStarted,
+      // initialRoute: Routers.getStarted,
+
       onGenerateRoute: Routers.generateRoute,
-      // home: const SignInScreen(),
-      // home: const NavigateScreen(),
+      home: StreamBuilder(
+        stream: FirebaseAuth.instance.authStateChanges(),
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return const ThreeBounceLoading();
+          }
+
+          if (snapshot.hasData) {
+            return const HomeScreen();
+          }
+
+          return const SignInScreen();
+        },
+      ),
     );
   }
 }
