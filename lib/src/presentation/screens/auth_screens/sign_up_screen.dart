@@ -5,9 +5,14 @@ import 'package:lottie/lottie.dart';
 
 import '../routers.dart';
 
-class SignInScreen extends StatelessWidget {
-  const SignInScreen({super.key});
+class SignUpScreen extends StatefulWidget {
+  const SignUpScreen({super.key});
 
+  @override
+  State<SignUpScreen> createState() => _SignUpScreenState();
+}
+
+class _SignUpScreenState extends State<SignUpScreen> {
   @override
   Widget build(BuildContext context) {
     // Future<bool> exitApp() async {
@@ -48,25 +53,27 @@ class SignInScreen extends StatelessWidget {
                     mainAxisSize: MainAxisSize.min,
                     children: [
                       const Paragraph(
-                        content: 'Sign In',
+                        content: 'Sign Up',
                         style: STYLE_LARGE_BOLD,
                       ),
                       const SizedBox(width: 10),
-                      Lottie.asset(AppImages.loadingMessage),
+                      Lottie.asset(AppImages.smallChatIcon),
                     ],
                   ),
                   const SizedBox(height: 15),
                   Paragraph(
                     content:
-                        'Welcome back! Sign in using your social account or email to continue us',
+                        'Get chatting with friends and family today by signing up for our chat app!',
                     style: STYLE_SMALL.copyWith(fontWeight: FontWeight.w500),
                     textAlign: TextAlign.center,
                   ),
                   const SizedBox(height: 45),
                   buildEmailFormField(),
+                  buildUserNameFormField(),
                   buildPasswordFormField(),
+                  buildConfirmPasswordFormField(),
                   buildConfirmButton(),
-                  buildForgotPassword(context),
+                  buildGotoSignInScreen(context),
                 ],
               ),
             ),
@@ -80,8 +87,19 @@ class SignInScreen extends StatelessWidget {
     return const Padding(
       padding: EdgeInsets.symmetric(vertical: 10),
       child: AppFormField(
+        keyboardType: TextInputType.emailAddress,
         labelText: 'Email address',
         hintText: 'Enter your email',
+      ),
+    );
+  }
+
+  Widget buildUserNameFormField() {
+    return const Padding(
+      padding: EdgeInsets.symmetric(vertical: 10),
+      child: AppFormField(
+        labelText: 'User name',
+        hintText: 'Enter username',
       ),
     );
   }
@@ -92,6 +110,18 @@ class SignInScreen extends StatelessWidget {
       child: AppFormField(
         labelText: 'Password',
         hintText: 'Enter password',
+        obscureText: true,
+      ),
+    );
+  }
+
+  Widget buildConfirmPasswordFormField() {
+    return const Padding(
+      padding: EdgeInsets.symmetric(vertical: 10),
+      child: AppFormField(
+        labelText: 'Confirm password',
+        hintText: 'Confirm Your password',
+        obscureText: true,
       ),
     );
   }
@@ -107,19 +137,24 @@ class SignInScreen extends StatelessWidget {
     );
   }
 
-  Widget buildForgotPassword(BuildContext context) {
+  Widget buildGotoSignInScreen(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 20.0),
-      child: Column(
+      child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
-          InkWell(
-            onTap: () => AppRouter.goToForgotPasswordScreen(context),
-            child: Paragraph(
-              content: 'Forgot your password?',
-              style: STYLE_SMALL_BOLD.copyWith(color: AppColors.PRIMARY_PURPLE),
-            ),
+          const Paragraph(
+            content: 'Alread have an account?',
+            style: STYLE_SMALL_BOLD,
           ),
+          const SizedBox(width: 10),
+          InkWell(
+              onTap: () => AppRouter.goToSignInScreen(context),
+              child: Paragraph(
+                content: 'Log in',
+                style:
+                    STYLE_SMALL_BOLD.copyWith(color: AppColors.PRIMARY_PURPLE),
+              ))
         ],
       ),
     );

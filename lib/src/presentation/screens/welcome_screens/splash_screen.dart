@@ -1,10 +1,10 @@
 import 'dart:async';
 
-import 'package:chat_app/src/screens/choose_method_screen.dart';
+import 'package:chat_app/src/configs/configs.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-import 'auth_screens/sign_up_screen.dart';
+import 'choose_method_screen.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -30,6 +30,7 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Theme.of(context).colorScheme.surface,
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -39,12 +40,10 @@ class _SplashScreenState extends State<SplashScreen> {
               color: Colors.deepPurple[400],
             ),
             const SizedBox(height: 10),
-            const Text(
-              'Chatbox',
-              style: TextStyle(
-                  fontSize: 35,
-                  fontStyle: FontStyle.italic,
-                  fontWeight: FontWeight.w500),
+            Paragraph(
+              content: 'Chatbox',
+              style: STYLE_LARGE_BIG.copyWith(
+                  fontSize: 30, fontStyle: FontStyle.italic),
             )
           ],
         ),

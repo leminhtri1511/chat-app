@@ -5,8 +5,15 @@ import 'package:lottie/lottie.dart';
 
 import '../routers.dart';
 
-class SignUpScreen extends StatelessWidget {
-  const SignUpScreen({super.key});
+class SignInScreen extends StatefulWidget {
+  const SignInScreen({super.key});
+
+  @override
+  State<SignInScreen> createState() => _SignInScreenState();
+}
+
+class _SignInScreenState extends State<SignInScreen> {
+  var isLogin = true;
 
   @override
   Widget build(BuildContext context) {
@@ -48,27 +55,26 @@ class SignUpScreen extends StatelessWidget {
                     mainAxisSize: MainAxisSize.min,
                     children: [
                       const Paragraph(
-                        content: 'Sign Up',
+                        content: 'Sign In',
                         style: STYLE_LARGE_BOLD,
                       ),
                       const SizedBox(width: 10),
-                      Lottie.asset(AppImages.loadingMessage),
+                      Lottie.asset(AppImages.smallChatIcon),
                     ],
                   ),
                   const SizedBox(height: 15),
                   Paragraph(
                     content:
-                        'Get chatting with friends and family today by signing up for our chat app!',
+                        'Welcome back! Sign in using your social account or email to continue us',
                     style: STYLE_SMALL.copyWith(fontWeight: FontWeight.w500),
                     textAlign: TextAlign.center,
                   ),
                   const SizedBox(height: 45),
                   buildEmailFormField(),
-                  buildUserNameFormField(),
                   buildPasswordFormField(),
-                  buildConfirmPasswordFormField(),
+                  buildForgotPassword(context),
                   buildConfirmButton(),
-                  buildGotoSignInScreen(context),
+                  buildGotoSignUpScreen(context),
                 ],
               ),
             ),
@@ -88,32 +94,12 @@ class SignUpScreen extends StatelessWidget {
     );
   }
 
-  Widget buildUserNameFormField() {
-    return const Padding(
-      padding: EdgeInsets.symmetric(vertical: 10),
-      child: AppFormField(
-        labelText: 'User name',
-        hintText: 'Enter username',
-      ),
-    );
-  }
-
   Widget buildPasswordFormField() {
     return const Padding(
       padding: EdgeInsets.symmetric(vertical: 10),
       child: AppFormField(
         labelText: 'Password',
         hintText: 'Enter password',
-      ),
-    );
-  }
-
-  Widget buildConfirmPasswordFormField() {
-    return const Padding(
-      padding: EdgeInsets.symmetric(vertical: 10),
-      child: AppFormField(
-        labelText: 'Confirm password',
-        hintText: 'Confirm Your password',
       ),
     );
   }
@@ -129,23 +115,41 @@ class SignUpScreen extends StatelessWidget {
     );
   }
 
-  Widget buildGotoSignInScreen(BuildContext context) {
+  Widget buildForgotPassword(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 20.0),
+      padding: const EdgeInsets.symmetric(vertical: 0.0),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.end,
+        children: [
+          TextButton(
+            onPressed: () => AppRouter.goToForgotPasswordScreen(context),
+            child: Paragraph(
+              content: 'Forgot password?',
+              style: STYLE_SMALL_BOLD.copyWith(color: AppColors.PRIMARY_PURPLE),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget buildGotoSignUpScreen(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 15.0),
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
           Paragraph(
-            content: 'Alread have an account?',
-            style: STYLE_SMALL_BOLD.copyWith(color: AppColors.BLACK_400),
+            content: "Don't have an account yet?",
+            style: STYLE_SMALL_BOLD.copyWith(),
           ),
-          const SizedBox(width: 10),
-          InkWell(
-              onTap: () => AppRouter.goToSignInScreen(context),
-              child: Paragraph(
-                content: 'Log in',
-                style: STYLE_SMALL_BOLD.copyWith(color: AppColors.BLACK_500),
-              ))
+          TextButton(
+            onPressed: () => AppRouter.goToSignUpScreen(context),
+            child: Paragraph(
+              content: 'Sign up',
+              style: STYLE_SMALL_BOLD.copyWith(color: AppColors.PRIMARY_PURPLE),
+            ),
+          )
         ],
       ),
     );

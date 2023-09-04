@@ -1,6 +1,7 @@
-import 'package:chat_app/src/screens/auth_screens/forgot_pasword_screen.dart';
-import 'package:chat_app/src/screens/auth_screens/sign_in_screen.dart';
-import 'package:chat_app/src/screens/auth_screens/sign_up_screen.dart';
+
+import 'package:chat_app/src/presentation/screens/auth_screens/forgot_pasword_screen.dart';
+import 'package:chat_app/src/presentation/screens/auth_screens/sign_in_screen.dart';
+import 'package:chat_app/src/presentation/screens/auth_screens/sign_up_screen.dart';
 import 'package:flutter/cupertino.dart';
 
 class AppRouter {

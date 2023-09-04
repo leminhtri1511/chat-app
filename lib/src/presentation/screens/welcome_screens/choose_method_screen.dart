@@ -1,7 +1,9 @@
 import 'package:chat_app/src/configs/configs.dart';
-import 'package:chat_app/src/screens/routers.dart';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+
+import '../routers.dart';
 
 class ChooseMethodScreen extends StatelessWidget {
   const ChooseMethodScreen({super.key});
@@ -14,15 +16,6 @@ class ChooseMethodScreen extends StatelessWidget {
           child: Container(
             height: double.infinity,
             decoration: const BoxDecoration(
-              // gradient: LinearGradient(
-              //   colors: [
-              //     AppColors.PRIMARY_PURPLE,
-              //     AppColors.SECONDARY_PURPLE,
-              //   ],
-              //   begin: Alignment.topLeft,
-              //   end: Alignment.bottomRight
-              // ),
-
               image: DecorationImage(
                 image: AssetImage(AppImages.background),
                 fit: BoxFit.cover,
@@ -68,7 +61,7 @@ class ChooseMethodScreen extends StatelessWidget {
                           color: AppColors.COLOR_WHITE),
                     ),
                     const SizedBox(height: 20),
-                    const Divider(),
+                    // const Divider(),
                     const SizedBox(
                       height: 40,
                     ),
@@ -83,25 +76,33 @@ class ChooseMethodScreen extends StatelessWidget {
                         ),
                       ),
                     ),
-                    const SizedBox(height: 20),
-                    Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Paragraph(
-                          content: 'Alread have an account?',
-                          style: STYLE_SMALL_BOLD.copyWith(
-                              color: AppColors.BLACK_300),
+
+                    const Padding(
+                      padding: EdgeInsets.symmetric(vertical: 15),
+                      child: Divider(
+                          // color: AppColors.BLACK_400,
+                          // indent: 100,
+                          // endIndent: 0,
+                          ),
+                    ),
+
+                    SizedBox(
+                      height: 50,
+                      width: double.infinity,
+                      child: ElevatedButton(
+                        style: const ButtonStyle(
+                          backgroundColor:
+                              MaterialStatePropertyAll(Colors.transparent),
                         ),
-                        const SizedBox(width: 10),
-                        InkWell(
-                            onTap: () => AppRouter.goToSignInScreen(context),
-                            child: Paragraph(
-                              content: 'Log in',
-                              style: STYLE_SMALL_BOLD.copyWith(
-                                  color: AppColors.COLOR_WHITE),
-                            ))
-                      ],
-                    )
+                        onPressed: () => AppRouter.goToSignUpScreen(context),
+                        child: Paragraph(
+                          content: 'Sign in',
+                          style: STYLE_LARGE_BOLD.copyWith(
+                              color: AppColors.COLOR_WHITE),
+                        ),
+                      ),
+                    ),
+                    const SizedBox(height: 50),
                   ],
                 ),
               ),

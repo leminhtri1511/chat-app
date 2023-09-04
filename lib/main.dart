@@ -1,42 +1,32 @@
-import 'package:chat_app/src/screens/splash_screen.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_performance/firebase_performance.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 
-void main() {
+import 'firebase_options.dart';
+import 'src/configs/configs.dart';
+import 'src/presentation/app/app.dart';
+import 'src/utils/http_remote.dart';
+import 'src/utils/utils.dart';
+
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  // HttpOverrides.global = MyHttpOverrides();
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+  // final trace = FirebasePerformance.instance.newTrace('app_start');
+  // await trace.start();
+  // ConfigCrashlytics.init();
+  // notificationInitialed();
+  // await ConfigPerformance.init();
+  // await AppDeviceInfo.init();
+  // await HttpRemote.init();
   runApp(const MyApp());
+  // await trace.stop();
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    SystemChrome.setSystemUIOverlayStyle(
-      const SystemUiOverlayStyle(
-        systemStatusBarContrastEnforced: true,
-        systemNavigationBarColor: Colors.transparent,
-        systemNavigationBarDividerColor: Colors.transparent,
-        systemNavigationBarIconBrightness: Brightness.dark,
-        statusBarIconBrightness: Brightness.dark,
-      ),
-    );
-
-    //Setting SystmeUIMode
-    SystemChrome.setEnabledSystemUIMode(
-      SystemUiMode.edgeToEdge,
-      overlays: [SystemUiOverlay.top],
-    );
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: 'FlutterChat',
-      theme: ThemeData().copyWith(
-        useMaterial3: true,
-        colorScheme: ColorScheme.fromSeed(
-          seedColor: Colors.deepPurple,
-        ),
-      ),
-      home: const SplashScreen(),
-    );
-  }
-}
+// class MyHttpOverrides extends HttpOverrides {
+//   @override
+//   HttpClient createHttpClient(SecurityContext? context) {
+//     return super.createHttpClient(context)
+//       ..badCertificateCallback = (cert, host, port) => true;
+//   }
+// }
