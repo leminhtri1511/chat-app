@@ -5,7 +5,7 @@ import 'package:lottie/lottie.dart';
 
 import '../base/base.dart';
 
-import 'sing_in_viewmodel.dart';
+import 'sign_in_viewmodel.dart';
 
 class SignInScreen extends StatefulWidget {
   const SignInScreen({super.key});
@@ -70,7 +70,7 @@ class _SignInScreenState extends State<SignInScreen> {
   }
 
   Widget buildEmailFormField() {
-    return  Padding(
+    return Padding(
       padding: const EdgeInsets.symmetric(vertical: 10),
       child: AppFormField(
         textEditingController: _viewModel!.emailController,
@@ -81,7 +81,7 @@ class _SignInScreenState extends State<SignInScreen> {
   }
 
   Widget buildPasswordFormField() {
-    return  Padding(
+    return Padding(
       padding: const EdgeInsets.symmetric(vertical: 10),
       child: AppFormField(
         textEditingController: _viewModel!.passwordController,
@@ -96,7 +96,6 @@ class _SignInScreenState extends State<SignInScreen> {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 20),
       child: AppButton(
-
         enableButton: true,
         content: 'Log in',
         onTap: () => _viewModel!.logInButton(),
@@ -129,7 +128,7 @@ class _SignInScreenState extends State<SignInScreen> {
         mainAxisSize: MainAxisSize.min,
         children: [
           Paragraph(
-            content: "Don't have an account yet?",
+            content: "Don't have any account yet?",
             style: STYLE_SMALL_BOLD.copyWith(),
           ),
           TextButton(

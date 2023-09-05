@@ -54,7 +54,7 @@ class MyApp extends StatelessWidget {
       //             _Contants.languageEnglish,
       //             _Contants.countryEnglish,
       //           ),
-      // initialRoute: Routers.getStarted,
+      initialRoute: Routers.getStarted,
 
       onGenerateRoute: Routers.generateRoute,
       home: StreamBuilder(

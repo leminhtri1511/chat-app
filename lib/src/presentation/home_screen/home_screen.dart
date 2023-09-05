@@ -1,6 +1,10 @@
 import 'package:chat_app/src/configs/configs.dart';
+import 'package:chat_app/src/configs/widget/pick_image/pick_image.dart';
+import 'package:chat_app/src/presentation/forgot_password_screen/forgot_password.dart';
 import 'package:chat_app/src/presentation/home_screen/home_screen_viewmodel.dart';
+import 'package:chat_app/src/presentation/routers.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/cupertino.dart';
 
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
@@ -28,38 +32,50 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   Widget buildHomeScreen() {
-    return SafeArea(
-      child: SingleChildScrollView(
-        child: Center(
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                // AppBar(
-                //   actions: [
-                //     IconButton(
-                //       onPressed: () => FirebaseAuth.instance.signOut(),
-                //       icon: const Icon(
-                //         Icons.logout_outlined,
-                //       ),
-                //     ),
-                //   ],
-                // ),
-                Paragraph(
-                  content: 'HOME SCREEN',
-                  style: STYLE_LARGE_BOLD.copyWith(fontSize: 40),
+    return SingleChildScrollView(
+      child: Center(
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 20),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              // AppBar(
+              //   actions: [
+              //     IconButton(
+              //       onPressed: () => FirebaseAuth.instance.signOut(),
+              //       icon: const Icon(
+              //         Icons.logout_outlined,
+              //       ),
+              //     ),
+              //   ],
+              // ),
+              Paragraph(
+                content: 'HOME SCREEN',
+                style: STYLE_LARGE_BOLD.copyWith(fontSize: 40),
+              ),
+
+              const SizedBox(height: 70),
+
+              const PickImage(),
+
+              const SizedBox(height: 70),
+
+              TextButton(
+                onPressed: () =>
+                    Navigator.pushNamed(context, Routers.forgotPass),
+                child: const Paragraph(
+                  content: 'go to forgot pass screen',
                 ),
-                const SizedBox(
-                  height: 70,
-                ),
-                AppButton(
-                  content: 'Log out',
-                  enableButton: true,
-                  onTap: () => FirebaseAuth.instance.signOut(),
-                )
-              ],
-            ),
+              ),
+
+              const SizedBox(height: 70),
+
+              AppButton(
+                content: 'Log out',
+                enableButton: true,
+                onTap: () => FirebaseAuth.instance.signOut(),
+              )
+            ],
           ),
         ),
       ),

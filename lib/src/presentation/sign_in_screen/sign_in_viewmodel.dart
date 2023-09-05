@@ -18,6 +18,7 @@ class SignInViewModel extends BaseViewModel {
         password: passwordController.text,
 
       );
+      
       print(userLogIn);
     } on FirebaseAuthException catch (e) {
       if (e.code == 'email-already-in-use') {}
@@ -29,6 +30,9 @@ class SignInViewModel extends BaseViewModel {
       );
     }
   }
+  Future<void> goToHomeScreen(BuildContext context) =>
+     
+  Navigator.pushNamed(context, Routers.navigation);
 
   Future<void> goToSignUpScreen(BuildContext context) =>
       Navigator.pushNamed(context, Routers.signUp);

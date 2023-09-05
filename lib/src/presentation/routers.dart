@@ -12,7 +12,8 @@ class Routers {
   static const String signIn = '/signIn';
   static const String signUp = '/signUp';
   static const String forgotPass = '/forgotPass';
-  // static const String navigation = '/navigation';
+  
+  static const String navigation = '/navigation';
 
   static Route<dynamic> generateRoute(RouteSettings settings) {
     final arguments = settings.arguments;
@@ -44,6 +45,14 @@ class Routers {
       case forgotPass:
         return animRoute(
           const ForgotPasswordScreen(),
+          beginOffset: right,
+          name: getStarted,
+          arguments: arguments,
+        );
+
+        case navigation:
+        return animRoute(
+          const NavigateScreen(),
           beginOffset: right,
           name: getStarted,
           arguments: arguments,

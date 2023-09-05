@@ -1,4 +1,5 @@
 import 'package:chat_app/src/configs/configs.dart';
+import 'package:chat_app/src/configs/widget/pick_image/pick_image.dart';
 
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
@@ -55,6 +56,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   textAlign: TextAlign.center,
                 ),
                 const SizedBox(height: 45),
+                buildPickImage(),
                 buildEmailFormField(),
                 buildUserNameFormField(),
                 buildPasswordFormField(),
@@ -69,8 +71,19 @@ class _SignUpScreenState extends State<SignUpScreen> {
     );
   }
 
+  Widget buildPickImage() {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 10),
+      child: PickImage(
+        onPickImage: (pickedImage) {
+          _viewModel!.selectedImage = pickedImage;
+        },
+      ),
+    );
+  }
+
   Widget buildEmailFormField() {
-    return  Padding(
+    return Padding(
       padding: const EdgeInsets.symmetric(vertical: 10),
       child: AppFormField(
         textEditingController: _viewModel!.emailController,
@@ -92,7 +105,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
   }
 
   Widget buildPasswordFormField() {
-    return  Padding(
+    return Padding(
       padding: const EdgeInsets.symmetric(vertical: 10),
       child: AppFormField(
         textEditingController: _viewModel!.passwordController,

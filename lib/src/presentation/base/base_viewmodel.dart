@@ -13,29 +13,30 @@ abstract class BaseViewModel extends ChangeNotifier {
   Future<bool> exitApp() async {
     return await showDialog(
       context: context,
-      builder: (ctx) => WarningDialog(
-        image: AppImages.icPlus,
-        title: BaseWidgetLanguage.exitApp,
-        content: BaseWidgetLanguage.exitConfirm,
-        leftButtonName: BaseWidgetLanguage.cancel,
-        onTapLeft: () => Navigator.pop(ctx),
-        rightButtonName: BaseWidgetLanguage.confirm,
-        onTapRight: SystemNavigator.pop,
+      builder: (ctx) =>
+          // WarningDialog(
+          //   // image: AppImages.icPlus,
+          //   title: BaseWidgetLanguage.exitApp,
+          //   content: BaseWidgetLanguage.exitConfirm,
+          //   leftButtonName: BaseWidgetLanguage.cancel,
+          //   onTapLeft: () => Navigator.pop(ctx),
+          //   rightButtonName: BaseWidgetLanguage.confirm,
+          //   onTapRight: SystemNavigator.pop,
+          // ),
+          AlertDialog(
+        title: Paragraph(content: BaseWidgetLanguage.exitApp),
+        content: Paragraph(content: BaseWidgetLanguage.exitConfirm),
+        actions: <Widget>[
+          TextButton(
+            onPressed: () => Navigator.of(ctx).pop(false), //<-- SEE HERE
+            child: const Text('No'),
+          ),
+          const TextButton(
+            onPressed: SystemNavigator.pop, // <-- SEE HERE
+            child: Text('Yes'),
+          ),
+        ],
       ),
-      //  AlertDialog(
-      //   title: const Text('Are you sure?'),
-      //   content: const Text('Do you want to exit an App'),
-      //   actions: <Widget>[
-      //     TextButton(
-      //       onPressed: () => Navigator.of(ctx).pop(false), //<-- SEE HERE
-      //       child: const Text('No'),
-      //     ),
-      //     const TextButton(
-      //       onPressed: SystemNavigator.pop, // <-- SEE HERE
-      //       child: Text('Yes'),
-      //     ),
-      //   ],
-      // ),
     );
   }
 }
