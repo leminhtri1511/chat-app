@@ -22,11 +22,10 @@ class NavigationViewModel extends BaseViewModel {
         indicatorColor: AppColors.SURFACE_PURPLE,
         labelTextStyle: MaterialStateProperty.all(
           const TextStyle(
-            fontSize: 15,
-            fontFamily: 'Quicksand',
-            fontWeight: FontWeight.bold,
-            color: AppColors.PRIMARY_PURPLE
-          ),
+              fontSize: 15,
+              fontFamily: 'Quicksand',
+              fontWeight: FontWeight.bold,
+              color: AppColors.PRIMARY_PURPLE),
         ),
       ),
       child: NavigationBar(

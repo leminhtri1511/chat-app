@@ -18,18 +18,13 @@ class Constants {
   static const String defaultLanguage = 'defaultLanguage';
 }
 
-class MyApp extends StatefulWidget {
+class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
   @override
-  State<MyApp> createState() => _MyAppState();
-}
-
-class _MyAppState extends State<MyApp> {
-  @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      // key: key,
+      key: key,
       debugShowCheckedModeBanner: false,
       // navigatorObservers: [ConfigAnalytics.observer],
       // theme: ThemeData(fontFamily: 'Quicksand'),
