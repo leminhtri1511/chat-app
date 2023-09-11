@@ -13,8 +13,8 @@ dependencies:
   flutter:
     sdk: flutter
 
-  firebase_core: ^2.15.1
-    # Management State
+  
+  # Management State
   provider: ^6.0.5
 
   # Connect internet
@@ -27,6 +27,7 @@ dependencies:
   intl: ^0.18.0
 
   # Firebase
+  firebase_core: ^2.15.1
   firebase_database: ^10.2.3
   firebase_auth: ^4.6.3
   cloud_firestore: ^4.8.1

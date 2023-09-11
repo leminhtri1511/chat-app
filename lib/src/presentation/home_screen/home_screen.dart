@@ -1,6 +1,8 @@
 import 'package:chat_app/src/configs/configs.dart';
 import 'package:chat_app/src/configs/widget/pick_image/pick_image.dart';
 import 'package:chat_app/src/presentation/forgot_password_screen/forgot_password.dart';
+import 'package:chat_app/src/presentation/home_screen/components/chat_msg_widget.dart';
+import 'package:chat_app/src/presentation/home_screen/components/new_msg_widget.dart';
 import 'package:chat_app/src/presentation/home_screen/home_screen_viewmodel.dart';
 import 'package:chat_app/src/presentation/routers.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -20,7 +22,6 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   HomeScreenViewModel? _viewModel;
-  var isLogin = true;
 
   @override
   Widget build(BuildContext context) {
@@ -32,53 +33,37 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   Widget buildHomeScreen() {
-    return SingleChildScrollView(
-      child: Center(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              // AppBar(
-              //   actions: [
-              //     IconButton(
-              //       onPressed: () => FirebaseAuth.instance.signOut(),
-              //       icon: const Icon(
-              //         Icons.logout_outlined,
-              //       ),
-              //     ),
-              //   ],
-              // ),
-              Paragraph(
-                content: 'HOME SCREEN',
-                style: STYLE_LARGE_BOLD.copyWith(fontSize: 40),
-              ),
-
-              const SizedBox(height: 70),
-
-              const PickImage(),
-
-              const SizedBox(height: 70),
-
-              TextButton(
-                onPressed: () =>
-                    Navigator.pushNamed(context, Routers.forgotPass),
-                child: const Paragraph(
-                  content: 'go to forgot pass screen',
-                ),
-              ),
-
-              const SizedBox(height: 70),
-
-              AppButton(
-                content: 'Log out',
-                enableButton: true,
-                onTap: () => FirebaseAuth.instance.signOut(),
-              )
-            ],
+    return SafeArea(
+      child: Column(
+        
+        children: [
+          buildAppBar(),
+          // const Spacer(),
+          const Expanded(
+            child: ChatMsgWidget(),
           ),
-        ),
+          const NewMsgWidget()
+        ],
       ),
     );
   }
+
+  Widget buildAppBar() => AppBar(
+        backgroundColor: Theme.of(context).colorScheme.primary,
+        title: Paragraph(
+          content: 'HOME',
+          style: STYLE_LARGE_BOLD.copyWith(
+              fontSize: 20, color: AppColors.COLOR_WHITE),
+        ),
+        centerTitle: true,
+        actions: [
+          IconButton(
+            onPressed: () => FirebaseAuth.instance.signOut(),
+            icon: const Icon(
+              Icons.logout_outlined,
+              color: AppColors.COLOR_WHITE,
+            ),
+          ),
+        ],
+      );
 }

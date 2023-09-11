@@ -24,7 +24,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       key: key,
-      debugShowCheckedModeBanner: true,
+      debugShowCheckedModeBanner: false,
       // navigatorObservers: [ConfigAnalytics.observer],
       // theme: ThemeData(fontFamily: 'Quicksand'),
       theme: ThemeData().copyWith(
@@ -54,12 +54,13 @@ class MyApp extends StatelessWidget {
       //             _Contants.languageEnglish,
       //             _Contants.countryEnglish,
       //           ),
-      initialRoute: Routers.getStarted,
+      // initialRoute: Routers.getStarted,
 
       onGenerateRoute: Routers.generateRoute,
       home: StreamBuilder(
         stream: FirebaseAuth.instance.authStateChanges(),
         builder: (context, snapshot) {
+          // print("Auth state: ${snapshot.connectionState}");
           if (snapshot.connectionState == ConnectionState.waiting) {
             return const ThreeBounceLoading();
           }

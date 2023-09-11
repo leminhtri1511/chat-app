@@ -12,6 +12,7 @@ class Paragraph extends StatelessWidget {
     this.overflow,
     this.textAlign,
     this.maxLines,
+    this.softWrap,
   });
   final String? content;
   final TextStyle? style;
@@ -20,6 +21,7 @@ class Paragraph extends StatelessWidget {
   final TextAlign? textAlign;
   final TextOverflow? overflow;
   final int? maxLines;
+  final bool? softWrap;
 
   @override
   Widget build(BuildContext context) {
@@ -30,6 +32,7 @@ class Paragraph extends StatelessWidget {
       style:
           style ?? STYLE_SMALL.copyWith(fontWeight: fontWeight, color: color),
       overflow: overflow,
+      softWrap: softWrap,
     );
   }
 }

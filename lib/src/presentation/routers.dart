@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 
 import 'app/splash.dart';
 import 'bottom_navigation_bar/navigation_screen.dart';
+import 'home_screen/home_screen.dart';
 
 class Routers {
   static const String getStarted = '/getStarted';
@@ -12,7 +13,7 @@ class Routers {
   static const String signIn = '/signIn';
   static const String signUp = '/signUp';
   static const String forgotPass = '/forgotPass';
-  
+
   static const String navigation = '/navigation';
 
   static Route<dynamic> generateRoute(RouteSettings settings) {
@@ -42,6 +43,14 @@ class Routers {
           arguments: arguments,
         );
 
+      case home:
+        return animRoute(
+          const HomeScreen(),
+          beginOffset: right,
+          name: getStarted,
+          arguments: arguments,
+        );
+
       case forgotPass:
         return animRoute(
           const ForgotPasswordScreen(),
@@ -50,7 +59,7 @@ class Routers {
           arguments: arguments,
         );
 
-        case navigation:
+      case navigation:
         return animRoute(
           const NavigateScreen(),
           beginOffset: right,

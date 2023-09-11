@@ -95,9 +95,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
   }
 
   Widget buildUserNameFormField() {
-    return const Padding(
-      padding: EdgeInsets.symmetric(vertical: 10),
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 10),
       child: AppFormField(
+        textEditingController: _viewModel!.userNameController,
         labelText: 'User name',
         hintText: 'Enter username',
       ),

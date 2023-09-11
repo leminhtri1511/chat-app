@@ -66,16 +66,11 @@ class _BaseWidgetState<T extends BaseViewModel> extends State<BaseWidget<T>> {
     //     statusBarColor: Theme.of(context).colorScheme.background,
     //   ),
     // );
-    return WillPopScope(
-      onWillPop: () => viewModel!.exitApp(),
-      child: SafeArea(
-        child: Scaffold(
-          backgroundColor: Theme.of(context).colorScheme.surface,
-          body: ChangeNotifierProvider<T>(
-            create: (context) => viewModel!..setContext(context),
-            child: Consumer<T>(builder: widget.builder, child: widget.child),
-          ),
-        ),
+    return Scaffold(
+      backgroundColor: Theme.of(context).colorScheme.surface,
+      body: ChangeNotifierProvider<T>(
+        create: (context) => viewModel!..setContext(context),
+        child: Consumer<T>(builder: widget.builder, child: widget.child),
       ),
     );
   }

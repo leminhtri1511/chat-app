@@ -3,16 +3,19 @@
 import 'dart:io';
 
 import 'package:chat_app/src/presentation/base/base.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:restart_app/restart_app.dart';
 
 import '../routers.dart';
 
 class SignUpViewModel extends BaseViewModel {
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
+  TextEditingController userNameController = TextEditingController();
   final firebase = FirebaseAuth.instance;
   File? selectedImage;
 
@@ -29,10 +32,19 @@ class SignUpViewModel extends BaseViewModel {
       final storageRef = FirebaseStorage.instance
           .ref()
           .child('user_images')
-          .child('${createUser.user?.uid}.jpg');
+          .child('${createUser.user!.uid}.jpg');
       await storageRef.putFile(selectedImage!);
-      final imageUrl = storageRef.getDownloadURL();
-      print(imageUrl);
+      final imageUrl = await storageRef.getDownloadURL();
+
+      await FirebaseFirestore.instance
+          .collection('users')
+          .doc(createUser.user!.uid)
+          .set({
+        'username': userNameController.text,
+        'email': emailController.text,
+        'password': passwordController.text,
+        'image_url': imageUrl,
+      });
     } on FirebaseAuthException catch (e) {
       if (e.code == 'email-already-in-use') {}
 
@@ -47,4 +59,6 @@ class SignUpViewModel extends BaseViewModel {
 
   Future<void> goToSignInScreen(BuildContext context) =>
       Navigator.pushNamed(context, Routers.signIn);
+  Future<void> goToHomeScreen(BuildContext context) =>
+      Navigator.pushNamed(context, Routers.home);
 }

@@ -11,5 +11,7 @@ class HomeScreenViewModel extends BaseViewModel {
 
   dynamic init() {}
 
-  
+  void submitMsg() {
+    
+  }
 }

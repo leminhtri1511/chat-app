@@ -1,3 +1,5 @@
+// ignore_for_file: use_build_context_synchronously, avoid_print
+
 import 'package:chat_app/src/presentation/routers.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/cupertino.dart';
@@ -16,10 +18,10 @@ class SignInViewModel extends BaseViewModel {
       final userLogIn = await firebase.signInWithEmailAndPassword(
         email: emailController.text,
         password: passwordController.text,
-
       );
-      
+
       print(userLogIn);
+
     } on FirebaseAuthException catch (e) {
       if (e.code == 'email-already-in-use') {}
       ScaffoldMessenger.of(context).clearSnackBars();
@@ -30,9 +32,9 @@ class SignInViewModel extends BaseViewModel {
       );
     }
   }
+
   Future<void> goToHomeScreen(BuildContext context) =>
-     
-  Navigator.pushNamed(context, Routers.navigation);
+      Navigator.pushNamed(context, Routers.navigation);
 
   Future<void> goToSignUpScreen(BuildContext context) =>
       Navigator.pushNamed(context, Routers.signUp);
