@@ -1,10 +1,11 @@
+import 'package:chat_app/src/presentation/bottom_navigation/navigation.dart';
 import 'package:chat_app/src/presentation/forgot_password_screen/forgot_pasword_screen.dart';
 import 'package:chat_app/src/presentation/sign_in_screen/sign_in_screen.dart';
 import 'package:chat_app/src/presentation/sign_up_screen/sign_up_screen.dart';
 import 'package:flutter/material.dart';
 
 import 'app/splash.dart';
-import 'bottom_navigation_bar/navigation_screen.dart';
+
 import 'home_screen/home_screen.dart';
 
 class Routers {
@@ -61,7 +62,7 @@ class Routers {
 
       case navigation:
         return animRoute(
-          const NavigateScreen(),
+          const BottomNavigation(),
           beginOffset: right,
           name: getStarted,
           arguments: arguments,

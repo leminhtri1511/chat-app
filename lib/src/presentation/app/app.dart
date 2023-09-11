@@ -1,4 +1,5 @@
 import 'package:chat_app/src/configs/configs.dart';
+import 'package:chat_app/src/presentation/bottom_navigation/navigation.dart';
 import 'package:chat_app/src/presentation/home_screen/home_screen.dart';
 import 'package:chat_app/src/presentation/sign_in_screen/sign_in_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -7,7 +8,6 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 // import '../../configs/firebase/analytics_firebase.dart';
 import '../../intl/generated/l10n.dart';
 
-import '../bottom_navigation_bar/navigation.dart';
 import '../routers.dart';
 
 class Constants {
@@ -18,15 +18,25 @@ class Constants {
   static const String defaultLanguage = 'defaultLanguage';
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
+class MyApp extends StatefulWidget {
+  const MyApp({super.key});
+
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      key: key,
+      // key: key,
       debugShowCheckedModeBanner: false,
       // navigatorObservers: [ConfigAnalytics.observer],
       // theme: ThemeData(fontFamily: 'Quicksand'),
+      // theme: ThemeData.light(useMaterial3: true),
+      // darkTheme: ThemeData.dark(
+      //   useMaterial3: true,
+      // ),
       theme: ThemeData().copyWith(
         useMaterial3: true,
         colorScheme: ColorScheme.fromSeed(
@@ -66,7 +76,7 @@ class MyApp extends StatelessWidget {
           }
 
           if (snapshot.hasData) {
-            return const HomeScreen();
+            return const BottomNavigation();
           }
 
           return const SignInScreen();

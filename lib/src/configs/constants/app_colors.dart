@@ -12,6 +12,8 @@ class AppColors {
 
   static const Color SECONDARY_PURPLE = Color.fromRGBO(128, 28, 156, 0.604);
 
+  static const Color SURFACE_PURPLE = Color.fromRGBO(187, 162, 216, 1);
+
   static const Color COLOR_WHITE = Color.fromRGBO(255, 255, 255, 1);
 
   static const Color COLOR_GREY = Color.fromRGBO(166, 166, 166, 1);
@@ -30,13 +32,13 @@ class AppColors {
 
   static const Color PRIMARY_RED = Color.fromRGBO(233, 49, 38, 1);
 
-  static const Color LIGHT_ORANGE = Color.fromRGBO(227, 77, 48, 0.1);
+  // static const Color LIGHT_ORANGE = Color.fromRGBO(227, 77, 48, 0.1);
 
-  static const Color LIGHT_SOLID_ORANGE = Color.fromRGBO(237, 53, 50, 0.1);
+  // static const Color LIGHT_SOLID_ORANGE = Color.fromRGBO(237, 53, 50, 0.1);
 
-  static const Color PRIMARY_LIGHT_PINK = Color.fromRGBO(213, 56, 123, 0.1);
+  // static const Color PRIMARY_LIGHT_PINK = Color.fromRGBO(213, 56, 123, 0.1);
 
-  static const Color LIGHT_SOLID_PINK = Color.fromRGBO(237, 50, 225, 0.1);
+  // static const Color LIGHT_SOLID_PINK = Color.fromRGBO(237, 50, 225, 0.1);
 
 
 }
