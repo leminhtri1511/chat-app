@@ -1,7 +1,9 @@
 import 'package:chat_app/src/configs/configs.dart';
+import 'package:chat_app/src/presentation/profile_screen/components/function_bar_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter_svg/svg.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key});
@@ -43,19 +45,23 @@ class _ProfileScreenState extends State<ProfileScreen> {
     showDialog(
       context: context,
       builder: (ctx) => AlertDialog(
-        title: const Paragraph(content: 'Log out'),
-        content: const Paragraph(content: 'Are you sure you want to log out?'),
+        title: const Paragraph(
+          content: 'Log out',
+          style: STYLE_MEDIUM_BOLD,
+        ),
+        content: const Paragraph(
+            content: 'Are you sure you want to log out?', style: STYLE_MEDIUM),
         actions: [
           TextButton(
             onPressed: () => Navigator.of(ctx).pop(false),
-            child: const Text('No'),
+            child: const Paragraph(content: 'No', style: STYLE_SMALL_BOLD),
           ),
           TextButton(
             onPressed: () {
               FirebaseAuth.instance.signOut();
               Navigator.pop(context);
             },
-            child: const Text('Yes'),
+            child: const Paragraph(content: 'Yes', style: STYLE_SMALL_BOLD),
           ),
         ],
       ),
@@ -65,42 +71,97 @@ class _ProfileScreenState extends State<ProfileScreen> {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 25.0),
-        child: Column(
-          children: [
-            const Paragraph(
-              content: 'PROFILE',
-              style: STYLE_LARGE_BOLD,
-            ),
-            Row(
-              // mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                CircleAvatar(
-                  radius: 38,
-                  backgroundImage: NetworkImage(imageUrl ?? ''),
-                ),
-                const SizedBox(
-                  width: 30,
-                ),
-                Paragraph(
-                  content: userName ?? 'User has no name!',
-                  style: STYLE_LARGE_BOLD,
-                ),
-              ],
-            ),
-            const Spacer(),
-            AppButton(
-              enableButton: true,
-              content: 'Log out',
-              onTap: () => logOutButton(),
-            ),
-            const SizedBox(
-              height: 40,
-            )
-          ],
-        ),
+      child: Column(
+        children: [
+          // const Paragraph(
+          //   content: 'PROFILE',
+          //   style: STYLE_LARGE_BOLD,
+          // ),
+
+          buildAvatarRow(),
+          const Divider(),
+          buildSettingList(),
+
+          // const Spacer(),
+          buildLogOutButton(),
+        ],
       ),
     );
   }
+
+  Widget buildAvatarRow() => Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 20),
+        child: Row(
+          children: [
+            Container(
+              decoration: BoxDecoration(
+                border: Border.all(color: AppColors.SECONDARY_PURPLE),
+                borderRadius: BorderRadius.circular(99),
+              ),
+              child: Padding(
+                padding: const EdgeInsets.all(4.0),
+                child: CircleAvatar(
+                  radius: 38,
+                  backgroundImage: NetworkImage(imageUrl ?? ''),
+                ),
+              ),
+            ),
+            const SizedBox(width: 30),
+            Paragraph(
+              content: userName ?? 'User has no name!',
+              style: STYLE_LARGE_BOLD,
+            ),
+            const Spacer(),
+            const Icon(
+              Icons.qr_code_2_sharp,
+              color: AppColors.PRIMARY_PURPLE,
+            ),
+            const SizedBox(width: 10)
+          ],
+        ),
+      );
+
+  Widget buildSettingList() => Expanded(
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 20.0),
+          child: ListView(
+            scrollDirection: Axis.vertical,
+            children: [
+              FunctionBarWidget(
+                svgIcon: AppImages.key,
+                title: 'Account',
+                content: 'Privacy, security',
+                onTap: () {},
+              ),
+              FunctionBarWidget(
+                svgIcon: AppImages.chat,
+                title: 'Chat',
+                content: 'Theme, wallpapers',
+                onTap: () {},
+              ),
+              FunctionBarWidget(
+                svgIcon: AppImages.notification,
+                title: 'Notification',
+                content: 'Message, group and others',
+                onTap: () {},
+              ),
+              FunctionBarWidget(
+                svgIcon: AppImages.help,
+                title: 'Help',
+                content: 'Help center, privacy policy',
+                onTap: () {},
+              ),
+            ],
+          ),
+        ),
+      );
+
+  Widget buildLogOutButton() => Padding(
+        padding: const EdgeInsets.symmetric(vertical: 35, horizontal: 20),
+        child: AppButton(
+          enableButton: true,
+          content: 'Log out',
+          onTap: () => logOutButton(),
+        ),
+      );
 }

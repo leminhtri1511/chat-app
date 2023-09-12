@@ -54,4 +54,12 @@ class AppImages {
   static const String fbIcon = 'assets/icons/fb.svg';
 
   static const String ggIcon = 'assets/icons/gg.svg';
+
+  static const String key = 'assets/icons/key.svg';
+
+  static const String chat = 'assets/icons/chat.svg';
+
+  static const String help = 'assets/icons/help.svg';
+  
+  static const String notification = 'assets/icons/notification.svg';
 }
