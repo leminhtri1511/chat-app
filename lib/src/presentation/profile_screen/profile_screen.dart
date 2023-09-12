@@ -6,19 +6,20 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:lottie/lottie.dart';
 
-class ProfileScreen extends StatefulWidget {
-  const ProfileScreen({super.key});
+class ChatScreen extends StatefulWidget {
+  const ChatScreen({super.key});
 
   @override
-  _ProfileScreenState createState() => _ProfileScreenState();
+  _ChatScreenState createState() => _ChatScreenState();
 }
 
-class _ProfileScreenState extends State<ProfileScreen> {
+class _ChatScreenState extends State<ChatScreen> {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
   String? imageUrl;
   String? userName;
   String? userEmail;
+
   @override
   void initState() {
     super.initState();
@@ -71,6 +72,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
     );
   }
 
+  IconData lightMode = Icons.light_mode_rounded;
+  IconData darkMode = Icons.dark_mode_rounded;
+  bool iconBool = false;
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -127,7 +131,17 @@ class _ProfileScreenState extends State<ProfileScreen> {
               ],
             ),
             const Spacer(),
-            Lottie.asset(AppImages.qrCode, height: 40),
+            // Lottie.asset(AppImages.qrCode, height: 40),
+            IconButton(
+              onPressed: () {
+                setState(() {
+                  iconBool = !iconBool;
+                });
+              },
+              icon: iconBool
+                  ? Icon(lightMode, size: 30)
+                  : Icon(darkMode, size: 30),
+            ),
             const SizedBox(width: 10)
           ],
         ),

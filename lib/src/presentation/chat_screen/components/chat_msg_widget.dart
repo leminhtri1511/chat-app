@@ -1,5 +1,5 @@
 import 'package:chat_app/src/configs/configs.dart';
-import 'package:chat_app/src/presentation/home_screen/components/msg_block_widget.dart';
+import 'package:chat_app/src/presentation/chat_screen/components/msg_block_widget.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:firebase_auth/firebase_auth.dart';

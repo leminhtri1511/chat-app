@@ -1,6 +1,6 @@
 import 'package:chat_app/src/configs/configs.dart';
 import 'package:chat_app/src/presentation/bottom_navigation/navigation.dart';
-import 'package:chat_app/src/presentation/home_screen/home_screen.dart';
+import 'package:chat_app/src/presentation/chat_screen/chat_screen.dart';
 import 'package:chat_app/src/presentation/sign_in_screen/sign_in_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -18,6 +18,21 @@ class Constants {
   static const String defaultLanguage = 'defaultLanguage';
 }
 
+bool iconBool = false;
+
+
+ThemeData lightTheme = ThemeData(
+  useMaterial3: true,
+  primarySwatch: Colors.deepPurple,
+  brightness: Brightness.light,
+);
+
+ThemeData darkTheme = ThemeData(
+  useMaterial3: true,
+  primarySwatch: Colors.deepPurple,
+  brightness: Brightness.dark,
+);
+
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
@@ -26,18 +41,15 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       key: key,
       debugShowCheckedModeBanner: false,
-      // navigatorObservers: [ConfigAnalytics.observer],
+      theme: lightTheme,
+      darkTheme: darkTheme,
       // theme: ThemeData(fontFamily: 'Quicksand'),
-      // theme: ThemeData.light(useMaterial3: true),
-      // darkTheme: ThemeData.dark(
+      // theme: ThemeData().copyWith(
       //   useMaterial3: true,
+      //   colorScheme: ColorScheme.fromSeed(
+      //     seedColor: Colors.deepPurple,
+      //   ),
       // ),
-      theme: ThemeData().copyWith(
-        useMaterial3: true,
-        colorScheme: ColorScheme.fromSeed(
-          seedColor: Colors.deepPurple,
-        ),
-      ),
       builder: (context, widget) => MediaQuery(
         data: MediaQuery.of(context).copyWith(textScaleFactor: 1),
         child: widget!,
@@ -50,22 +62,11 @@ class MyApp extends StatelessWidget {
       ],
 
       // supportedLocales: S.delegate.supportedLocales,
-
-      // locale: AppPref.isCheckLocale == _Contants.defaultLanguage
-      //     ? window.locale
-      //     : AppPref.isCheckLocale == _Contants.languageVietName
-      //         ? const Locale(_Contants.languageVietName, _Contants.countryVN)
-      //         : const Locale(
-      //             _Contants.languageEnglish,
-      //             _Contants.countryEnglish,
-      //           ),
       // initialRoute: Routers.getStarted,
-
       onGenerateRoute: Routers.generateRoute,
       home: StreamBuilder(
         stream: FirebaseAuth.instance.authStateChanges(),
         builder: (context, snapshot) {
-          // print("Auth state: ${snapshot.connectionState}");
           if (snapshot.connectionState == ConnectionState.waiting) {
             return const ThreeBounceLoading();
           }

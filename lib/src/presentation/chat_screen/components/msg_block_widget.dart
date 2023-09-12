@@ -9,7 +9,7 @@ class MsgBlockWidget extends StatelessWidget {
     this.userImage,
     this.username,
     this.message,
-     this.isMe,
+    this.isMe,
   }) : isFirstInSequence = true;
 
   // Create a amessage bubble that continues the sequence.
@@ -81,12 +81,9 @@ class MsgBlockWidget extends StatelessWidget {
                         left: 13,
                         right: 13,
                       ),
-                      child: Text(
-                        username!,
-                        style: const TextStyle(
-                          fontWeight: FontWeight.bold,
-                          color: Colors.black87,
-                        ),
+                      child: Paragraph(
+                        content: username!,
+                        style: STYLE_MEDIUM_BOLD,
                       ),
                     ),
 
@@ -96,8 +93,8 @@ class MsgBlockWidget extends StatelessWidget {
                       gradient: isMe!
                           ? const LinearGradient(
                               colors: [
-                                  AppColors.PRIMARY_PURPLE,
-                                  AppColors.SECONDARY_PURPLE,
+                                  Color.fromARGB(154, 156, 68, 180),
+                                  Color.fromARGB(154, 178, 84, 205),
                                 ],
                               begin: Alignment.topLeft,
                               end: Alignment.bottomRight)
@@ -144,23 +141,12 @@ class MsgBlockWidget extends StatelessWidget {
                       softWrap: true,
                       style: STYLE_MEDIUM.copyWith(
                         height: 1.3,
-                        color:
-                            isMe! ? AppColors.COLOR_WHITE : AppColors.BLACK_500,
+                        // color:
+                        //     // Theme.of(context).colorScheme.onSurface,
+                        //     isMe! ? AppColors.COLOR_WHITE : AppColors.BLACK_500,
                         fontWeight: FontWeight.w500,
                       ),
                     ),
-                    // Text(
-                    //   message,
-                    //   style: TextStyle(
-                    //     // Add a little line spacing to make the text look nicer
-                    //     // when multilined.
-                    //     height: 1.3,
-                    //     color: isMe
-                    //         ? Colors.black87
-                    //         : theme.colorScheme.onSecondary,
-                    //   ),
-                    //   softWrap: true,
-                    // ),
                   ),
                 ],
               ),

@@ -5,7 +5,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 
-class HomeScreenViewModel extends BaseViewModel {
+class ChatScreenViewModel extends BaseViewModel {
   File? selectedImage;
   final firebase = FirebaseAuth.instance;
 

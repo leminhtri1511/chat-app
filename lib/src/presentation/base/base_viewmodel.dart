@@ -13,27 +13,23 @@ abstract class BaseViewModel extends ChangeNotifier {
   Future<bool> exitApp() async {
     return await showDialog(
       context: context,
-      builder: (ctx) =>
-          // WarningDialog(
-          //   // image: AppImages.icPlus,
-          //   title: BaseWidgetLanguage.exitApp,
-          //   content: BaseWidgetLanguage.exitConfirm,
-          //   leftButtonName: BaseWidgetLanguage.cancel,
-          //   onTapLeft: () => Navigator.pop(ctx),
-          //   rightButtonName: BaseWidgetLanguage.confirm,
-          //   onTapRight: SystemNavigator.pop,
-          // ),
-          AlertDialog(
-        title: Paragraph(content: BaseWidgetLanguage.exitApp),
-        content: Paragraph(content: BaseWidgetLanguage.exitConfirm),
-        actions: <Widget>[
+      builder: (ctx) => AlertDialog(
+        title: const Paragraph(
+          content: 'Exit app',
+          style: STYLE_MEDIUM_BOLD,
+        ),
+        content: const Paragraph(
+          content: 'Are you sure you want to exit?',
+          style: STYLE_MEDIUM,
+        ),
+        actions: [
           TextButton(
-            onPressed: () => Navigator.of(ctx).pop(false), //<-- SEE HERE
-            child: const Text('No'),
+            onPressed: () => Navigator.of(ctx).pop(false),
+            child: const Paragraph(content: 'No', style: STYLE_SMALL_BOLD),
           ),
-          const TextButton(
-            onPressed: SystemNavigator.pop, // <-- SEE HERE
-            child: Text('Yes'),
+          TextButton(
+            onPressed: () => SystemNavigator.pop,
+            child: const Paragraph(content: 'Yes', style: STYLE_SMALL_BOLD),
           ),
         ],
       ),

@@ -47,6 +47,7 @@ class _BaseWidgetState<T extends BaseViewModel> extends State<BaseWidget<T>> {
   Widget build(BuildContext context) {
     SystemChrome.setSystemUIOverlayStyle(
       const SystemUiOverlayStyle(
+        statusBarColor: Colors.transparent,
         systemStatusBarContrastEnforced: true,
         systemNavigationBarColor: Colors.transparent,
         systemNavigationBarDividerColor: Colors.transparent,
@@ -66,11 +67,14 @@ class _BaseWidgetState<T extends BaseViewModel> extends State<BaseWidget<T>> {
     //     statusBarColor: Theme.of(context).colorScheme.background,
     //   ),
     // );
-    return Scaffold(
-      backgroundColor: Theme.of(context).colorScheme.surface,
-      body: ChangeNotifierProvider<T>(
-        create: (context) => viewModel!..setContext(context),
-        child: Consumer<T>(builder: widget.builder, child: widget.child),
+    return WillPopScope(
+      onWillPop: () => viewModel!.exitApp(),
+      child: Scaffold(
+        backgroundColor: Theme.of(context).colorScheme.surface,
+        body: ChangeNotifierProvider<T>(
+          create: (context) => viewModel!..setContext(context),
+          child: Consumer<T>(builder: widget.builder, child: widget.child),
+        ),
       ),
     );
   }

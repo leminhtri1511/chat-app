@@ -4,14 +4,14 @@ import 'package:flutter/material.dart';
 
 import '../../configs/configs.dart';
 import '../base/base.dart';
-import '../home_screen/home_screen.dart';
+import '../chat_screen/chat_screen.dart';
 
 class NavigationViewModel extends BaseViewModel {
   int selectedIndex = 0;
 
   final screens = [
     const HomeScreen(),
-    const ProfileScreen(),
+    const ChatScreen(),
   ];
 
   dynamic init() {}
@@ -19,13 +19,14 @@ class NavigationViewModel extends BaseViewModel {
   NavigationBarTheme bottomNavigate() {
     return NavigationBarTheme(
       data: NavigationBarThemeData(
-        indicatorColor: AppColors.SURFACE_PURPLE,
+        // indicatorColor: AppColors.SURFACE_PURPLE,
         labelTextStyle: MaterialStateProperty.all(
           const TextStyle(
-              fontSize: 15,
-              fontFamily: 'Quicksand',
-              fontWeight: FontWeight.bold,
-              color: AppColors.PRIMARY_PURPLE),
+            fontSize: 15,
+            fontFamily: 'Quicksand',
+            fontWeight: FontWeight.bold,
+            // color: AppColors.PRIMARY_PURPLE,
+          ),
         ),
       ),
       child: NavigationBar(
@@ -39,27 +40,16 @@ class NavigationViewModel extends BaseViewModel {
         },
         destinations: const [
           NavigationDestination(
-            icon: Icon(
-              Icons.home_filled,
-              size: 28,
-            ),
+            icon: Icon(CupertinoIcons.chat_bubble, size: 28),
             selectedIcon: Icon(
-              Icons.home_filled,
-              color: AppColors.PRIMARY_PURPLE,
+              CupertinoIcons.chat_bubble_fill,
+              // color: AppColors.PRIMARY_PURPLE,
               size: 28,
             ),
-            label: 'Home',
+            label: 'Chat',
           ),
           NavigationDestination(
-            icon: Icon(
-              Icons.person,
-              size: 28,
-            ),
-            selectedIcon: Icon(
-              Icons.person,
-              color: AppColors.PRIMARY_PURPLE,
-              size: 28,
-            ),
+            icon: Icon(CupertinoIcons.person_crop_circle, size: 28),
             label: 'Profile',
           ),
         ],

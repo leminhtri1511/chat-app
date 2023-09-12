@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 
 import 'app/splash.dart';
 
-import 'home_screen/home_screen.dart';
+import 'chat_screen/chat_screen.dart';
 
 class Routers {
   static const String getStarted = '/getStarted';
