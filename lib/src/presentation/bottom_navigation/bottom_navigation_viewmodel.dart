@@ -10,9 +10,8 @@ class NavigationViewModel extends BaseViewModel {
   int selectedIndex = 0;
 
   final screens = [
-    
-    const ProfileScreen(),
     const HomeScreen(),
+    const ProfileScreen(),
   ];
 
   dynamic init() {}

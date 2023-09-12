@@ -5,6 +5,7 @@ import 'package:chat_app/src/presentation/home_screen/components/chat_msg_widget
 import 'package:chat_app/src/presentation/home_screen/components/new_msg_widget.dart';
 import 'package:chat_app/src/presentation/home_screen/home_screen_viewmodel.dart';
 import 'package:chat_app/src/presentation/routers.dart';
+import 'package:chat_app/src/presentation/welcome_screens/components/divider_widget.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 
@@ -35,10 +36,8 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget buildHomeScreen() {
     return SafeArea(
       child: Column(
-        
         children: [
           buildAppBar(),
-          // const Spacer(),
           const Expanded(
             child: ChatMsgWidget(),
           ),
@@ -49,21 +48,23 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   Widget buildAppBar() => AppBar(
-        backgroundColor: Theme.of(context).colorScheme.primary,
+        // backgroundColor: Theme.of(context).colorScheme.primary,
         title: Paragraph(
-          content: 'HOME',
+          content: 'Group chat',
           style: STYLE_LARGE_BOLD.copyWith(
-              fontSize: 20, color: AppColors.COLOR_WHITE),
-        ),
-        centerTitle: true,
-        actions: [
-          IconButton(
-            onPressed: () => FirebaseAuth.instance.signOut(),
-            icon: const Icon(
-              Icons.logout_outlined,
-              color: AppColors.COLOR_WHITE,
-            ),
+            fontSize: 20,
           ),
-        ],
+        ),
+
+        centerTitle: false,
+        // actions: [
+        //   IconButton(
+        //     onPressed: () => FirebaseAuth.instance.signOut(),
+        //     icon: const Icon(
+        //       Icons.logout_outlined,
+        //       color: AppColors.COLOR_WHITE,
+        //     ),
+        //   ),
+        // ],
       );
 }

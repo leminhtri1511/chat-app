@@ -47,6 +47,8 @@ class AppImages {
 
   static const String smallChatIcon = 'assets/animations/loading-message.json';
 
+  static const String qrCode = 'assets/animations/qrCode.json';
+
   static const String chatLogo = 'assets/images/chat-logo.png';
 
   static const String background = 'assets/images/back-ground.jpg';

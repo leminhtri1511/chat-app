@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:lottie/lottie.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key});
@@ -17,6 +18,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
   String? imageUrl;
   String? userName;
+  String? userEmail;
   @override
   void initState() {
     super.initState();
@@ -32,6 +34,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
         setState(() {
           imageUrl = userData['image_url'];
           userName = userData['username'];
+          userEmail = userData['email'];
         });
       }
     }
@@ -106,16 +109,25 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 ),
               ),
             ),
-            const SizedBox(width: 30),
-            Paragraph(
-              content: userName ?? 'User has no name!',
-              style: STYLE_LARGE_BOLD,
+            const SizedBox(width: 25),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Paragraph(
+                  content: userName ?? '',
+                  style: STYLE_LARGE_BOLD,
+                ),
+                const SizedBox(
+                  height: 10,
+                ),
+                Paragraph(
+                  content: userEmail ?? '',
+                  style: STYLE_MEDIUM,
+                ),
+              ],
             ),
             const Spacer(),
-            const Icon(
-              Icons.qr_code_2_sharp,
-              color: AppColors.PRIMARY_PURPLE,
-            ),
+            Lottie.asset(AppImages.qrCode, height: 40),
             const SizedBox(width: 10)
           ],
         ),
