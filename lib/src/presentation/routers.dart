@@ -46,7 +46,7 @@ class Routers {
 
       case home:
         return animRoute(
-          const HomeScreen(),
+          const ChatScreen(),
           beginOffset: right,
           name: getStarted,
           arguments: arguments,

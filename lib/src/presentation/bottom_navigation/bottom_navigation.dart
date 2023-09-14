@@ -27,7 +27,13 @@ class _BottomNavigationState extends State<BottomNavigation> {
   Widget buildBottomNavigation() {
     return Scaffold(
       body: _viewModel!.screens[_viewModel!.selectedIndex],
-      bottomNavigationBar: _viewModel!.bottomNavigate(),
+      bottomNavigationBar: ClipRRect(
+        borderRadius: const BorderRadius.only(
+          topLeft: Radius.circular(60),
+          topRight:Radius.circular(60),
+        ),
+        child: _viewModel!.bottomNavigate(),
+      ),
     );
   }
 }

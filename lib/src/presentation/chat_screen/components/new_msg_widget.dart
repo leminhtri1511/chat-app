@@ -1,3 +1,4 @@
+import 'package:audioplayers/audioplayers.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
@@ -14,6 +15,7 @@ class NewMsgWidget extends StatefulWidget {
 
 class _NewMsgWidgetState extends State<NewMsgWidget> {
   final msgController = TextEditingController();
+  final audioSent = AudioPlayer();
 
   @override
   void dispose() {
@@ -32,13 +34,14 @@ class _NewMsgWidgetState extends State<NewMsgWidget> {
     if (enteredMsg.trim().isEmpty) {
       return;
     }
-
+    audioSent.play(AssetSource('audios/sent_msg.mp3'));
     FirebaseFirestore.instance.collection('chat').add({
       'text': enteredMsg,
       'createdAt': Timestamp.now(),
       'userId': user.uid,
       'userName': userData.data()!['username'],
       'userImage': userData.data()!['image_url'],
+      'userEmail': userData.data()!['email'],
     });
 
     msgController.clear();
@@ -62,7 +65,9 @@ class _NewMsgWidgetState extends State<NewMsgWidget> {
           ),
           IconButton(
             color: Theme.of(context).colorScheme.primary,
-            onPressed: () => submitMsg(),
+            onPressed: () {
+              submitMsg();
+            },
             icon: const Icon(Icons.send),
           ),
         ],

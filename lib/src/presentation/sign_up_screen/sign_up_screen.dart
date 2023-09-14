@@ -36,7 +36,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
             child: Column(
               // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                const SizedBox(height: 45),
+                const SizedBox(height: 25),
                 Row(
                   mainAxisSize: MainAxisSize.min,
                   children: [
@@ -62,7 +62,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 buildPasswordFormField(),
                 buildConfirmPasswordFormField(),
                 buildSignUpButton(),
-                buildGotoSignUpScreen(context),
+                buildGotoSignUpScreen(),
               ],
             ),
           ),
@@ -139,7 +139,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
     );
   }
 
-  Widget buildGotoSignUpScreen(BuildContext context) {
+  Widget buildGotoSignUpScreen() {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 10.0),
       child: Row(

@@ -58,9 +58,9 @@ class _SignInScreenState extends State<SignInScreen> {
                 const SizedBox(height: 45),
                 buildEmailFormField(),
                 buildPasswordFormField(),
-                buildForgotPassword(context),
+                buildForgotPassword(),
                 buildLogInButton(),
-                buildGotoSignUpScreen(context),
+                buildGotoSignUpScreen(),
               ],
             ),
           ),
@@ -92,18 +92,7 @@ class _SignInScreenState extends State<SignInScreen> {
     );
   }
 
-  Widget buildLogInButton() {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 20),
-      child: AppButton(
-        enableButton: true,
-        content: 'Log in',
-        onTap: () => _viewModel!.logInButton(),
-      ),
-    );
-  }
-
-  Widget buildForgotPassword(BuildContext context) {
+  Widget buildForgotPassword() {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 0.0),
       child: Row(
@@ -121,7 +110,18 @@ class _SignInScreenState extends State<SignInScreen> {
     );
   }
 
-  Widget buildGotoSignUpScreen(BuildContext context) {
+  Widget buildLogInButton() {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 20),
+      child: AppButton(
+        enableButton: true,
+        content: 'Log in',
+        onTap: () => _viewModel!.logInButton(),
+      ),
+    );
+  }
+
+  Widget buildGotoSignUpScreen() {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 15.0),
       child: Row(

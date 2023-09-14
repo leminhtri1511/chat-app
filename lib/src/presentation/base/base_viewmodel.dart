@@ -15,12 +15,12 @@ abstract class BaseViewModel extends ChangeNotifier {
       context: context,
       builder: (ctx) => AlertDialog(
         title: const Paragraph(
-          content: 'Exit app',
+          content: 'Exit app !',
           style: STYLE_MEDIUM_BOLD,
         ),
-        content: const Paragraph(
+        content:  Paragraph(
           content: 'Are you sure you want to exit?',
-          style: STYLE_MEDIUM,
+          style: STYLE_MEDIUM.copyWith(fontWeight: FontWeight.w500),
         ),
         actions: [
           TextButton(

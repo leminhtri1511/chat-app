@@ -1,4 +1,5 @@
 import 'package:chat_app/src/configs/configs.dart';
+import 'package:chat_app/src/presentation/app/splash.dart';
 import 'package:chat_app/src/presentation/bottom_navigation/navigation.dart';
 import 'package:chat_app/src/presentation/chat_screen/chat_screen.dart';
 import 'package:chat_app/src/presentation/sign_in_screen/sign_in_screen.dart';
@@ -19,7 +20,6 @@ class Constants {
 }
 
 bool iconBool = false;
-
 
 ThemeData lightTheme = ThemeData(
   useMaterial3: true,
@@ -66,12 +66,12 @@ class MyApp extends StatelessWidget {
       onGenerateRoute: Routers.generateRoute,
       home: StreamBuilder(
         stream: FirebaseAuth.instance.authStateChanges(),
-        builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
+        builder: (context, authState) {
+          if (authState.connectionState == ConnectionState.waiting) {
             return const ThreeBounceLoading();
           }
 
-          if (snapshot.hasData) {
+          if (authState.hasData) {
             return const BottomNavigation();
           }
 

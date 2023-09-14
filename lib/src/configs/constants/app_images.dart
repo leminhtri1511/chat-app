@@ -53,6 +53,8 @@ class AppImages {
 
   static const String background = 'assets/images/back-ground.jpg';
 
+  static const String imgError = 'assets/images/imgError.jpg';
+
   static const String fbIcon = 'assets/icons/fb.svg';
 
   static const String ggIcon = 'assets/icons/gg.svg';

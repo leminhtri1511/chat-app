@@ -1,5 +1,9 @@
 // ignore_for_file: use_build_context_synchronously, avoid_print
 
+import 'dart:async';
+
+import 'package:chat_app/src/configs/widget/loading/loading_diaglog.dart';
+import 'package:chat_app/src/presentation/app_routers.dart';
 import 'package:chat_app/src/presentation/routers.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/cupertino.dart';
@@ -15,15 +19,24 @@ class SignInViewModel extends BaseViewModel {
 
   void logInButton() async {
     try {
+      //
       final userLogIn = await firebase.signInWithEmailAndPassword(
         email: emailController.text,
         password: passwordController.text,
       );
 
       print(userLogIn);
-
+      // LoadingDialog.showLoadingDialog(context);
+      // Timer(
+      //   const Duration(seconds: 1),
+      //   () {
+      //     LoadingDialog.hideLoadingDialog(context);
+      //     // AppRouter.goToChatScreen(context);
+      //   },
+      // );
     } on FirebaseAuthException catch (e) {
       if (e.code == 'email-already-in-use') {}
+
       ScaffoldMessenger.of(context).clearSnackBars();
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
@@ -37,8 +50,8 @@ class SignInViewModel extends BaseViewModel {
       Navigator.pushNamed(context, Routers.navigation);
 
   Future<void> goToSignUpScreen(BuildContext context) =>
-      Navigator.pushNamed(context, Routers.signUp);
+      AppRouter.goToSignUpScreen(context);
 
   Future<void> goToForgotPasswordScreen(BuildContext context) =>
-      Navigator.pushNamed(context, Routers.forgotPass);
+      AppRouter.goForgotPassScreen(context);
 }

@@ -1,8 +1,15 @@
 import 'package:chat_app/src/configs/configs.dart';
+import 'package:chat_app/src/presentation/app_routers.dart';
 
 import 'package:chat_app/src/presentation/chat_screen/components/chat_msg_widget.dart';
 import 'package:chat_app/src/presentation/chat_screen/components/new_msg_widget.dart';
 import 'package:chat_app/src/presentation/chat_screen/chat_screen_viewmodel.dart';
+import 'package:chat_app/src/presentation/chat_screen/data/items.dart';
+import 'package:chat_app/src/presentation/chat_screen/models/menu_item.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
+import 'package:flutter/cupertino.dart';
 
 import 'package:flutter/material.dart';
 
@@ -10,14 +17,14 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 
 import '../base/base.dart';
 
-class HomeScreen extends StatefulWidget {
-  const HomeScreen({super.key});
+class ChatScreen extends StatefulWidget {
+  const ChatScreen({super.key});
 
   @override
-  State<HomeScreen> createState() => _HomeScreenState();
+  State<ChatScreen> createState() => _ChatScreenState();
 }
 
-class _HomeScreenState extends State<HomeScreen> {
+class _ChatScreenState extends State<ChatScreen> {
   ChatScreenViewModel? _viewModel;
 
   void setUpPushNotification() async {
@@ -42,40 +49,75 @@ class _HomeScreenState extends State<HomeScreen> {
     return BaseWidget<ChatScreenViewModel>(
       viewModel: ChatScreenViewModel(),
       onViewModelReady: (viewModel) => _viewModel = viewModel!..init(),
-      builder: (context, viewModel, child) => buildHomeScreen(),
+      builder: (context, viewModel, child) => buildChatScreen(),
     );
   }
 
-  Widget buildHomeScreen() {
-    return Column(
-      children: [
-        buildAppBar(),
-        const Expanded(
-          child: ChatMsgWidget(),
+  Widget buildChatScreen() {
+    return SafeArea(
+      child: Column(
+        children: [
+          buildAppBar(),
+          const Expanded(
+            child: ChatMsgWidget(),
+          ),
+          const NewMsgWidget()
+        ],
+      ),
+    );
+  }
+
+  Widget buildAppBar() {
+    return AppBar(
+      centerTitle: true,
+      title: Paragraph(
+        content: 'Group chat',
+        style: STYLE_LARGE_BOLD.copyWith(
+          fontSize: 20,
         ),
-        const NewMsgWidget()
+      ),
+      actions: [
+        // PopupMenuButton<MenuItem>(
+        //   itemBuilder: (context) => [
+        //     ...Items.items.map(buildItem).toList(),
+        //   ],
+        // ),
+        IconButton(
+          onPressed: () =>_viewModel!.showChatSettings(),
+          icon: const Icon(Icons.menu),
+        )
       ],
     );
+    //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+    //   children: [
+    //     Padding(
+    //       padding: const EdgeInsets.all(20),
+    //       child: Paragraph(
+    //         content: 'Group chat',
+    //         style: STYLE_LARGE_BOLD.copyWith(
+    //           fontSize: 20,
+    //         ),
+    //       ),
+    //     ),
+    //     IconButton(
+    //       onPressed: () => _viewModel!.deleteAllMessages(),
+    //       icon: const Icon(Icons.settings),
+    //     )
+    //   ],
+    // )
   }
 
-  Widget buildAppBar() => SafeArea(
-        child: AppBar(
-          title: Paragraph(
-            content: 'Group chat',
-            style: STYLE_LARGE_BOLD.copyWith(
-              fontSize: 20,
+  PopupMenuItem<MenuItem> buildItem(MenuItem item) => PopupMenuItem(
+        child: Row(
+          children: [
+            Icon(
+              item.icon,
             ),
-          ),
-          centerTitle: false,
-          // actions: [
-          //   IconButton(
-          //     onPressed: () => FirebaseAuth.instance.signOut(),
-          //     icon: const Icon(
-          //       Icons.logout_outlined,
-          //       color: AppColors.COLOR_WHITE,
-          //     ),
-          //   ),
-          // ],
+            Paragraph(
+              content: item.text.toString(),
+              style: STYLE_SMALL_BOLD,
+            ),
+          ],
         ),
       );
 }

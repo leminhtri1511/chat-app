@@ -1,5 +1,9 @@
+import 'package:audioplayers/audioplayers.dart';
 import 'package:chat_app/src/configs/configs.dart';
 import 'package:flutter/material.dart';
+
+String imgError =
+    'https://media.istockphoto.com/id/1409329028/vector/no-picture-available-placeholder-thumbnail-icon-illustration-design.jpg?s=612x612&w=0&k=20&c=_zOuJu755g2eEUioiOUdz_mHKJQJn-tDgIAhQzyeKUQ=';
 
 // A MessageBubble for showing a single chat message on the ChatScreen.
 class MsgBlockWidget extends StatelessWidget {
@@ -7,6 +11,7 @@ class MsgBlockWidget extends StatelessWidget {
   const MsgBlockWidget.first({
     super.key,
     this.userImage,
+    this.userEmail,
     this.username,
     this.message,
     this.isMe,
@@ -17,6 +22,7 @@ class MsgBlockWidget extends StatelessWidget {
     super.key,
     required this.message,
     required this.isMe,
+    this.userEmail,
   })  : isFirstInSequence = false,
         userImage = null,
         username = null;
@@ -36,33 +42,86 @@ class MsgBlockWidget extends StatelessWidget {
   // Not required if the message is not the first in a sequence.
   final String? username;
   final String? message;
+  final String? userEmail;
 
   // Controls how the MessageBubble will be aligned.
   final bool? isMe;
+  void showUserProfile(
+    BuildContext context,
+    String username,
+    String userImage,
+    String? userEmail,
+  ) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title:
+              const Paragraph(content: 'User Infor', style: STYLE_LARGE_BOLD),
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              CircleAvatar(
+                backgroundImage: NetworkImage(userImage),
+                radius: 40,
+              ),
+              const SizedBox(height: 16),
+              Paragraph(
+                content: username,
+                style: STYLE_LARGE_BOLD,
+              ),
+              const SizedBox(height: 16),
+              Paragraph(
+                content: userEmail ?? '',
+                style: STYLE_MEDIUM,
+              ),
+            ],
+          ),
+          actions: [
+            ElevatedButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: const Paragraph(
+                content: 'Close',
+                style: STYLE_SMALL_BOLD,
+              ),
+            ),
+          ],
+        );
+      },
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-
     return Stack(
       children: [
         if (userImage != null)
           Positioned(
             top: 15,
-            // Align user image to the right, if the message is from me.
             right: isMe! ? 0 : null,
-            child: CircleAvatar(
-              backgroundImage: NetworkImage(
-                userImage!,
+            child: GestureDetector(
+              onTap: () {
+                showUserProfile(
+                  context,
+                  username! ?? '',
+                  userImage! ?? '',
+                  userEmail ?? '',
+                );
+              },
+              child: CircleAvatar(
+                backgroundImage: NetworkImage(userImage ?? imgError),
+                backgroundColor: theme.colorScheme.primary.withAlpha(180),
+                radius: 20,
               ),
-              backgroundColor: theme.colorScheme.primary.withAlpha(180),
-              radius: 23,
             ),
           ),
         Container(
           // Add some margin to the edges of the messages, to allow space for the
           // user's image.
-          margin: const EdgeInsets.symmetric(horizontal: 46),
+          margin: const EdgeInsets.symmetric(horizontal: 35),
           child: Row(
             // The side of the chat screen the message should show at.
             mainAxisAlignment:
@@ -126,7 +185,7 @@ class MsgBlockWidget extends StatelessWidget {
                     // Set some reasonable constraints on the width of the
                     // message bubble so it can adjust to the amount of text
                     // it should show.
-                    constraints: const BoxConstraints(maxWidth: 200),
+                    constraints: const BoxConstraints(maxWidth: 250),
                     padding: const EdgeInsets.symmetric(
                       vertical: 11,
                       horizontal: 15,
@@ -141,9 +200,6 @@ class MsgBlockWidget extends StatelessWidget {
                       softWrap: true,
                       style: STYLE_MEDIUM.copyWith(
                         height: 1.3,
-                        // color:
-                        //     // Theme.of(context).colorScheme.onSurface,
-                        //     isMe! ? AppColors.COLOR_WHITE : AppColors.BLACK_500,
                         fontWeight: FontWeight.w500,
                       ),
                     ),

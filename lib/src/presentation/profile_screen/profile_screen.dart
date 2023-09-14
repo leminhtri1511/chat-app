@@ -1,4 +1,8 @@
+import 'dart:async';
+
 import 'package:chat_app/src/configs/configs.dart';
+import 'package:chat_app/src/configs/widget/loading/loading_diaglog.dart';
+import 'package:chat_app/src/presentation/app_routers.dart';
 import 'package:chat_app/src/presentation/profile_screen/components/function_bar_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -6,19 +10,21 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:lottie/lottie.dart';
 
-class ChatScreen extends StatefulWidget {
-  const ChatScreen({super.key});
+class ProfileScreen extends StatefulWidget {
+  const ProfileScreen({super.key});
 
   @override
-  _ChatScreenState createState() => _ChatScreenState();
+  _ProfileScreenState createState() => _ProfileScreenState();
 }
 
-class _ChatScreenState extends State<ChatScreen> {
+class _ProfileScreenState extends State<ProfileScreen> {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
   String? imageUrl;
   String? userName;
   String? userEmail;
+  String imgError =
+      'https://media.istockphoto.com/id/1409329028/vector/no-picture-available-placeholder-thumbnail-icon-illustration-design.jpg?s=612x612&w=0&k=20&c=_zOuJu755g2eEUioiOUdz_mHKJQJn-tDgIAhQzyeKUQ=';
 
   @override
   void initState() {
@@ -50,11 +56,13 @@ class _ChatScreenState extends State<ChatScreen> {
       context: context,
       builder: (ctx) => AlertDialog(
         title: const Paragraph(
-          content: 'Log out',
+          content: 'Log out !',
           style: STYLE_MEDIUM_BOLD,
         ),
-        content: const Paragraph(
-            content: 'Are you sure you want to log out?', style: STYLE_MEDIUM),
+        content: Paragraph(
+          content: 'Are you sure you want to log out?',
+          style: STYLE_MEDIUM.copyWith(fontWeight: FontWeight.w500),
+        ),
         actions: [
           TextButton(
             onPressed: () => Navigator.of(ctx).pop(false),
@@ -62,8 +70,17 @@ class _ChatScreenState extends State<ChatScreen> {
           ),
           TextButton(
             onPressed: () {
-              FirebaseAuth.instance.signOut();
+              // LoadingDialog.showLoadingDialog(context);
               Navigator.pop(context);
+              FirebaseAuth.instance.signOut();
+
+              // Timer(
+              //   const Duration(seconds: 1),
+              //   () {
+              //     LoadingDialog.hideLoadingDialog(context);
+              //     // AppRouter.goToSignInScreen(context);
+              //   },
+              // );
             },
             child: const Paragraph(content: 'Yes', style: STYLE_SMALL_BOLD),
           ),
@@ -109,27 +126,30 @@ class _ChatScreenState extends State<ChatScreen> {
                 padding: const EdgeInsets.all(4.0),
                 child: CircleAvatar(
                   radius: 38,
-                  backgroundImage: NetworkImage(imageUrl ?? ''),
+                  backgroundImage: NetworkImage(imageUrl ?? imgError),
                 ),
               ),
             ),
             const SizedBox(width: 25),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Paragraph(
-                  content: userName ?? '',
-                  style: STYLE_LARGE_BOLD,
-                ),
-                const SizedBox(
-                  height: 10,
-                ),
-                Paragraph(
-                  content: userEmail ?? '',
-                  style: STYLE_MEDIUM,
-                ),
-              ],
-            ),
+            if (userName == null)
+              const CircularProgressIndicator()
+            else
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Paragraph(
+                    content: userName ?? 'User not found',
+                    style: STYLE_LARGE_BOLD,
+                  ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  Paragraph(
+                    content: userEmail ?? '',
+                    style: STYLE_MEDIUM,
+                  ),
+                ],
+              ),
             const Spacer(),
             // Lottie.asset(AppImages.qrCode, height: 40),
             IconButton(

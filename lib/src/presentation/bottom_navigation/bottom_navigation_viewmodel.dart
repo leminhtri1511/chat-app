@@ -10,14 +10,15 @@ class NavigationViewModel extends BaseViewModel {
   int selectedIndex = 0;
 
   final screens = [
-    const HomeScreen(),
     const ChatScreen(),
+    const ProfileScreen(),
   ];
 
   dynamic init() {}
 
   NavigationBarTheme bottomNavigate() {
     return NavigationBarTheme(
+      
       data: NavigationBarThemeData(
         // indicatorColor: AppColors.SURFACE_PURPLE,
         labelTextStyle: MaterialStateProperty.all(
@@ -30,6 +31,7 @@ class NavigationViewModel extends BaseViewModel {
         ),
       ),
       child: NavigationBar(
+        
         labelBehavior: NavigationDestinationLabelBehavior.onlyShowSelected,
         indicatorColor: Colors.transparent,
         height: 65,
@@ -41,11 +43,6 @@ class NavigationViewModel extends BaseViewModel {
         destinations: const [
           NavigationDestination(
             icon: Icon(CupertinoIcons.chat_bubble, size: 28),
-            selectedIcon: Icon(
-              CupertinoIcons.chat_bubble_fill,
-              // color: AppColors.PRIMARY_PURPLE,
-              size: 28,
-            ),
             label: 'Chat',
           ),
           NavigationDestination(
