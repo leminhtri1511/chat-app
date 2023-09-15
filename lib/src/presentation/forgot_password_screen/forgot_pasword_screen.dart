@@ -52,9 +52,10 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                         style: STYLE_LARGE_BIG.copyWith(),
                       ),
                     ),
-                    const Padding(
-                      padding: EdgeInsets.symmetric(vertical: 30),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 30),
                       child: AppFormField(
+                        textEditingController: _viewModel!.emailController,
                         labelText: 'Email address',
                         hintText: 'Enter your email',
                       ),
@@ -62,7 +63,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                     Padding(
                       padding: const EdgeInsets.symmetric(vertical: 30),
                       child: AppButton(
-                        onTap: () {},
+                        onTap: () => _viewModel!.getResetLink(),
                         enableButton: true,
                         content: 'Reset password',
                       ),

@@ -83,7 +83,7 @@ class _AppFormFieldState extends State<AppFormField> {
             enabledBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(BorderRadiusSize.sizeSmall),
               borderSide: const BorderSide(
-                color: AppColors.BLACK_200,
+                color: AppColors.BLACK_300,
               ),
             ),
             suffixIcon: (widget.obscureText)

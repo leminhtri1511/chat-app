@@ -57,11 +57,12 @@ class SignUpViewModel extends BaseViewModel {
         const Duration(seconds: 1),
         () {
           LoadingDialog.hideLoadingDialog(context);
-          AppRouter.goToChatScreen(context);
+          goToSignInScreen(context);
           signUpSuccess(context);
         },
       );
     } on FirebaseAuthException catch (e) {
+      LoadingDialog.hideLoadingDialog(context);
       if (e.code == 'email-already-in-use') {}
 
       ScaffoldMessenger.of(context).clearSnackBars();
