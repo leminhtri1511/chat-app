@@ -17,7 +17,7 @@ class MsgBlockWidget extends StatelessWidget {
     this.isMe,
   }) : isFirstInSequence = true;
 
-  // Create a amessage bubble that continues the sequence.
+  // Create a message bubble that continues the sequence.
   const MsgBlockWidget.next({
     super.key,
     required this.message,
@@ -152,18 +152,18 @@ class MsgBlockWidget extends StatelessWidget {
                       gradient: isMe!
                           ? const LinearGradient(
                               colors: [
-                                  Color.fromARGB(154, 156, 68, 180),
-                                  Color.fromARGB(154, 178, 84, 205),
-                                ],
+                                Color.fromARGB(154, 156, 68, 180),
+                                Color.fromARGB(154, 178, 84, 205),
+                              ],
                               begin: Alignment.topLeft,
-                              end: Alignment.bottomRight)
+                              end: Alignment.bottomRight,
+                            )
                           : LinearGradient(
                               colors: [
                                 theme.colorScheme.primary.withAlpha(50),
                                 theme.colorScheme.primary.withAlpha(50),
                               ],
                             ),
-
                       // color: isMe
                       //     ? AppColors.SECONDARY_PURPLE
                       //     : theme.colorScheme.secondary.withAlpha(200),

@@ -14,15 +14,20 @@ class ChatSettings extends StatefulWidget {
 }
 
 class _ChatSettingsState extends State<ChatSettings> {
+  String imgError =
+      'https://media.istockphoto.com/id/1409329028/vector/no-picture-available-placeholder-thumbnail-icon-illustration-design.jpg?s=612x612&w=0&k=20&c=_zOuJu755g2eEUioiOUdz_mHKJQJn-tDgIAhQzyeKUQ=';
   int groupMembers = 0;
-
+  String? imageUrl;
+  String? userName;
+  String? userEmail;
+  final FirebaseFirestore firestore = FirebaseFirestore.instance;
   @override
   void initState() {
     super.initState();
-    _fetchUserCount();
+    fetchUserCount();
   }
 
-  Future<void> _fetchUserCount() async {
+  Future<void> fetchUserCount() async {
     try {
       final QuerySnapshot usersSnapshot =
           await FirebaseFirestore.instance.collection('users').get();
@@ -35,6 +40,8 @@ class _ChatSettingsState extends State<ChatSettings> {
       print('Error counting users: $error');
     }
   }
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -126,14 +133,90 @@ class _ChatSettingsState extends State<ChatSettings> {
       }
     }
 
+    Widget deleteMsgButton() => ElevatedButton.icon(
+          onPressed: () => deleteAllMessages(),
+          icon: const Icon(Icons.delete),
+          label: const Paragraph(
+            content: 'Delete chat',
+            style: STYLE_SMALL_BOLD,
+          ),
+        );
+
+    Widget groupMember() => Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 20.0),
+          child: StreamBuilder<QuerySnapshot>(
+            stream: FirebaseFirestore.instance.collection('users').snapshots(),
+            builder: (context, snapshot) {
+              if (snapshot.connectionState == ConnectionState.waiting) {
+                return const CircularProgressIndicator();
+              } else if (snapshot.hasError) {
+                return Text('Error: ${snapshot.error}');
+              } else {
+                final int userCount = snapshot.data?.size ?? 0;
+                return Center(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      Paragraph(
+                        content: 'Group members: ${userCount.toString()}',
+                        style: STYLE_MEDIUM_BOLD,
+                      ),
+                      const SizedBox(height: 20),
+                      SizedBox(
+                        height: 120,
+                        child: ListView.builder(
+                          scrollDirection: Axis.horizontal,
+                          itemCount: userCount,
+                          itemBuilder: (context, index) {
+                            final userData = snapshot.data?.docs[index];
+                            final userImageUrl = userData?['image_url'];
+                            final userUsername = userData?['username'];
+
+                            return Row(
+                              children: [
+                                Center(
+                                  child: SizedBox(
+                                    width: 90,
+                                    child: Column(
+                                      children: [
+                                        Padding(
+                                          padding: const EdgeInsets.symmetric(
+                                            horizontal: 10,
+                                            vertical: 10,
+                                          ),
+                                          child: CircleAvatar(
+                                            radius: 30,
+                                            backgroundImage: NetworkImage(
+                                                userImageUrl ?? imgError),
+                                          ),
+                                        ),
+                                        Paragraph(
+                                          content: userUsername ?? '',
+                                          style: STYLE_MEDIUM,
+                                          overflow: TextOverflow.ellipsis,
+                                        )
+                                      ],
+                                    ),
+                                  ),
+                                )
+                              ],
+                            );
+                          },
+                        ),
+                      ),
+                    ],
+                  ),
+                );
+              }
+            },
+          ),
+        );
+
     return Scaffold(
       body: SingleChildScrollView(
         child: Column(
           children: [
-            const Paragraph(
-              content: 'Advance',
-              style: STYLE_LARGE_BOLD,
-            ),
+            groupMember(),
             Padding(
               padding: const EdgeInsets.symmetric(
                 horizontal: 20.0,
@@ -143,17 +226,7 @@ class _ChatSettingsState extends State<ChatSettings> {
                 children: [
                   Column(
                     children: [
-                      membersCount(),
-                      ElevatedButton.icon(
-                        onPressed: () {
-                          deleteAllMessages();
-                        },
-                        icon: const Icon(Icons.delete),
-                        label: const Paragraph(
-                          content: 'Delete chat',
-                          style: STYLE_SMALL_BOLD,
-                        ),
-                      ),
+                      deleteMsgButton(),
                     ],
                   )
                 ],
@@ -164,31 +237,4 @@ class _ChatSettingsState extends State<ChatSettings> {
       ),
     );
   }
-
-  Widget membersCount() => Padding(
-    padding: const EdgeInsets.symmetric(vertical: 20.0),
-    child: StreamBuilder<QuerySnapshot>(
-          stream: FirebaseFirestore.instance.collection('users').snapshots(),
-          builder: (context, snapshot) {
-            if (snapshot.connectionState == ConnectionState.waiting) {
-              return const CircularProgressIndicator();
-            } else if (snapshot.hasError) {
-              return Text('Error: ${snapshot.error}');
-            } else {
-              final int userCount = snapshot.data?.size ?? 0;
-              return Center(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[
-                    Paragraph(
-                      content: 'Group members: ${userCount.toString()}',
-                      style: STYLE_MEDIUM_BOLD,
-                    )
-                  ],
-                ),
-              );
-            }
-          },
-        ),
-  );
 }

@@ -77,7 +77,7 @@ class ForgotPasswordViewModel extends BaseViewModel {
           style: STYLE_MEDIUM_BOLD,
         ),
         content: const Paragraph(
-          content: 'Please enter your registerd email',
+          content: 'Please enter your registered email',
           style: STYLE_MEDIUM,
         ),
         actions: [

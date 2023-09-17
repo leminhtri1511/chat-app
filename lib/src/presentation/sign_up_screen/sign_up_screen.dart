@@ -134,7 +134,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
       child: AppButton(
         enableButton: true,
         content: 'Sign up',
-        onTap: () => _viewModel!.signUpbutton(),
+        onTap: () => _viewModel!.signUpButton(),
       ),
     );
   }
@@ -146,7 +146,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
         mainAxisSize: MainAxisSize.min,
         children: [
           const Paragraph(
-            content: 'Alread have an account?',
+            content: 'Already have an account?',
             style: STYLE_SMALL_BOLD,
           ),
           TextButton(

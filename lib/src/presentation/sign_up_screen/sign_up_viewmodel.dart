@@ -29,7 +29,7 @@ class SignUpViewModel extends BaseViewModel {
 
   void uploadImage() {}
 
-  void signUpbutton() async {
+  void signUpButton() async {
     try {
       LoadingDialog.showLoadingDialog(context);
       final createUser = await firebase.createUserWithEmailAndPassword(

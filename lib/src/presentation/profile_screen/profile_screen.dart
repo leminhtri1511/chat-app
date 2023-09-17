@@ -152,16 +152,16 @@ class _ProfileScreenState extends State<ProfileScreen> {
               ),
             const Spacer(),
             // Lottie.asset(AppImages.qrCode, height: 40),
-            IconButton(
-              onPressed: () {
-                setState(() {
-                  iconBool = !iconBool;
-                });
-              },
-              icon: iconBool
-                  ? Icon(lightMode, size: 30)
-                  : Icon(darkMode, size: 30),
-            ),
+            // IconButton(
+            //   onPressed: () {
+            //     setState(() {
+            //       iconBool = !iconBool;
+            //     });
+            //   },
+            //   icon: iconBool
+            //       ? Icon(lightMode, size: 30)
+            //       : Icon(darkMode, size: 30),
+            // ),
             const SizedBox(width: 10)
           ],
         ),
@@ -195,7 +195,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 svgIcon: AppImages.help,
                 title: 'Help',
                 content: 'Help center, privacy policy',
-                onTap: () {},
+                onTap: () => AppRouter.goToSignInScreen(context),
               ),
             ],
           ),

@@ -19,24 +19,19 @@ class SignInViewModel extends BaseViewModel {
 
   void logInButton() async {
     try {
-      //
+      LoadingDialog.showLoadingDialog(context);
+
       final userLogIn = await firebase.signInWithEmailAndPassword(
         email: emailController.text,
         password: passwordController.text,
       );
-
       print(userLogIn);
-      // LoadingDialog.showLoadingDialog(context);
-      // Timer(
-      //   const Duration(seconds: 1),
-      //   () {
-      //     LoadingDialog.hideLoadingDialog(context);
-      //     // AppRouter.goToChatScreen(context);
-      //   },
-      // );
-    } on FirebaseAuthException catch (e) {
-      if (e.code == 'email-already-in-use') {}
 
+      LoadingDialog.hideLoadingDialog(context);
+    } on FirebaseAuthException catch (e) {
+      LoadingDialog.hideLoadingDialog(context);
+      if (e.code == 'email-already-in-use') {}
+      //
       ScaffoldMessenger.of(context).clearSnackBars();
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(

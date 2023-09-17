@@ -25,6 +25,7 @@ class ChatScreen extends StatefulWidget {
 }
 
 class _ChatScreenState extends State<ChatScreen> {
+  
   ChatScreenViewModel? _viewModel;
 
   void setUpPushNotification() async {
@@ -32,7 +33,7 @@ class _ChatScreenState extends State<ChatScreen> {
 
     await fcm.requestPermission();
 
-    // final token = await fcm.getToken();
+// final token = await fcm.getToken();
     // print('Token: ${token}');
     fcm.subscribeToTopic('chat');
   }
@@ -53,58 +54,45 @@ class _ChatScreenState extends State<ChatScreen> {
     );
   }
 
+  //MAIN WIDGET
   Widget buildChatScreen() {
     return SafeArea(
+      bottom: false,
       child: Column(
         children: [
           buildAppBar(),
           const Expanded(
             child: ChatMsgWidget(),
           ),
-          const NewMsgWidget()
+          const NewMsgWidget(),
         ],
       ),
     );
   }
 
   Widget buildAppBar() {
-    return AppBar(
-      centerTitle: true,
-      title: Paragraph(
-        content: 'Group chat',
-        style: STYLE_LARGE_BOLD.copyWith(
-          fontSize: 20,
-        ),
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 25.0),
+      child: Row(
+        children: [
+          // const Spacer(),
+          Paragraph(
+            content: 'Group chat',
+            style: STYLE_LARGE_BOLD.copyWith(
+              fontSize: 20,
+            ),
+          ),
+          const Spacer(),
+          IconButton(
+            onPressed: () => _viewModel!.showChatSettings(),
+            icon: const Icon(Icons.menu),
+          )
+        ],
+        // actions: [
+        //
+        // ],
       ),
-      actions: [
-        // PopupMenuButton<MenuItem>(
-        //   itemBuilder: (context) => [
-        //     ...Items.items.map(buildItem).toList(),
-        //   ],
-        // ),
-        IconButton(
-          onPressed: () =>_viewModel!.showChatSettings(),
-          icon: const Icon(Icons.menu),
-        )
-      ],
     );
-    //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-    //   children: [
-    //     Padding(
-    //       padding: const EdgeInsets.all(20),
-    //       child: Paragraph(
-    //         content: 'Group chat',
-    //         style: STYLE_LARGE_BOLD.copyWith(
-    //           fontSize: 20,
-    //         ),
-    //       ),
-    //     ),
-    //     IconButton(
-    //       onPressed: () => _viewModel!.deleteAllMessages(),
-    //       icon: const Icon(Icons.settings),
-    //     )
-    //   ],
-    // )
   }
 
   PopupMenuItem<MenuItem> buildItem(MenuItem item) => PopupMenuItem(
