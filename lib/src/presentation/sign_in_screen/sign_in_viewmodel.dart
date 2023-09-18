@@ -9,6 +9,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../base/base.dart';
 
 class SignInViewModel extends BaseViewModel {
@@ -19,17 +20,26 @@ class SignInViewModel extends BaseViewModel {
 
   void logInButton() async {
     try {
-      LoadingDialog.showLoadingDialog(context);
+      // LoadingDialog.showLoadingDialog(context);
 
-      final userLogIn = await firebase.signInWithEmailAndPassword(
+      final userLogIn = await firebase
+          .signInWithEmailAndPassword(
         email: emailController.text,
         password: passwordController.text,
-      );
+      )
+          .then((user) async {
+        user.user!.getIdToken().then((idToken) async {
+          final prefs = await SharedPreferences.getInstance();
+          await prefs.setString('jwt', idToken!);
+          print('idToken: ---: $idToken');
+        });
+        print('login success');
+      });
       print(userLogIn);
-
-      LoadingDialog.hideLoadingDialog(context);
+      AppRouter.goToChatScreen(context);
+      // LoadingDialog.hideLoadingDialog(context);
     } on FirebaseAuthException catch (e) {
-      LoadingDialog.hideLoadingDialog(context);
+      // LoadingDialog.hideLoadingDialog(context);
       if (e.code == 'email-already-in-use') {}
       //
       ScaffoldMessenger.of(context).clearSnackBars();

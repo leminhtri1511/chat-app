@@ -1,11 +1,15 @@
+// ignore_for_file: avoid_print, use_build_context_synchronously
+
 import 'dart:async';
 
 import 'package:chat_app/src/configs/configs.dart';
+import 'package:chat_app/src/presentation/app_routers.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
+import '../routers.dart';
 import '../welcome_screens/welcome_screen.dart';
-
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -15,17 +19,29 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
+  Timer? timer;
+
+  Timer startDelay() => timer = Timer(const Duration(seconds: 2), goToLogin);
   @override
   void initState() {
     super.initState();
-    Timer(
-      const Duration(seconds: 2),
-      () => Navigator.of(context).pushReplacement(
-        CupertinoPageRoute(
-          builder: (BuildContext context) => const WelcomeScreen(),
-        ),
-      ),
-    );
+    startDelay();
+  }
+
+  @override
+  void dispose() {
+    timer?.cancel();
+    super.dispose();
+  }
+
+  void goToLogin() async {
+    final pref = await SharedPreferences.getInstance();
+    print('đkad: ${pref.getString('jwt')}');
+    if (pref.getString('jwt') != null) {
+      await AppRouter.goToChatScreen(context);
+    } else {
+      await AppRouter.goToSignInScreen(context);
+    }
   }
 
   @override
@@ -37,14 +53,18 @@ class _SplashScreenState extends State<SplashScreen> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Image.asset(
-              'assets/images/chat-logo.png',
-              color: Colors.deepPurple[400],
+              'assets/images/app_icon.png',
+              fit: BoxFit.cover,
+              // color: Colors.deepPurple[400],
+              width: 100,
             ),
             const SizedBox(height: 10),
             Paragraph(
               content: 'Chatbox',
               style: STYLE_LARGE_BIG.copyWith(
-                  fontSize: 30, fontStyle: FontStyle.italic),
+                fontSize: 30,
+                fontStyle: FontStyle.italic,
+              ),
             )
           ],
         ),

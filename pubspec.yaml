@@ -21,7 +21,7 @@ dependencies:
   connectivity_plus: ^4.0.1
 
   # Save data local
-  shared_preferences: ^2.2.0
+  shared_preferences: ^2.2.1
 
   # language
   intl: ^0.18.0

@@ -25,8 +25,8 @@ class ChatScreen extends StatefulWidget {
 }
 
 class _ChatScreenState extends State<ChatScreen> {
-  
   ChatScreenViewModel? _viewModel;
+  final currentUser = FirebaseAuth.instance.currentUser;
 
   void setUpPushNotification() async {
     final fcm = FirebaseMessaging.instance;
@@ -71,6 +71,7 @@ class _ChatScreenState extends State<ChatScreen> {
   }
 
   Widget buildAppBar() {
+    final checkAdmin = currentUser?.email;
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 25.0),
       child: Row(
@@ -83,10 +84,11 @@ class _ChatScreenState extends State<ChatScreen> {
             ),
           ),
           const Spacer(),
-          IconButton(
-            onPressed: () => _viewModel!.showChatSettings(),
-            icon: const Icon(Icons.menu),
-          )
+          if (checkAdmin == 'leminhtri151102@gmail.com')
+            IconButton(
+              onPressed: () => _viewModel!.showChatSettings(),
+              icon: const Icon(Icons.menu),
+            )
         ],
         // actions: [
         //

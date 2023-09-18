@@ -62,22 +62,22 @@ class MyApp extends StatelessWidget {
       ],
 
       // supportedLocales: S.delegate.supportedLocales,
-      // initialRoute: Routers.getStarted,
+      initialRoute: Routers.getStarted,
       onGenerateRoute: Routers.generateRoute,
-      home: StreamBuilder(
-        stream: FirebaseAuth.instance.authStateChanges(),
-        builder: (context, authState) {
-          if (authState.connectionState == ConnectionState.waiting) {
-            return const ThreeBounceLoading();
-          }
+      // home: StreamBuilder(
+      //   stream: FirebaseAuth.instance.authStateChanges(),
+      //   builder: (context, authState) {
+      //     if (authState.connectionState == ConnectionState.waiting) {
+      //       return const ThreeBounceLoading();
+      //     }
 
-          if (authState.hasData) {
-            return const BottomNavigation();
-          }
+      //     if (authState.hasData) {
+      //       return const BottomNavigation();
+      //     }
 
-          return const SignInScreen();
-        },
-      ),
+      //     return const SignInScreen();
+      //   },
+      // ),
     );
   }
 }

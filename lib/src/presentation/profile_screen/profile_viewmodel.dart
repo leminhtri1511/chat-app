@@ -9,6 +9,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../../configs/configs.dart';
 import '../base/base.dart';
 
@@ -35,6 +36,11 @@ class ProfileViewModel extends BaseViewModel {
 
   void logOutButton() {
     logOutDialog(context);
+  }
+
+  Future<void> deletedLocal() async {
+    final pref = await SharedPreferences.getInstance();
+    await pref.clear();
   }
 
   dynamic logOutDialog(_) {

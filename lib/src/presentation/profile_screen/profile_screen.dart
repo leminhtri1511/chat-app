@@ -9,6 +9,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:lottie/lottie.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key});
@@ -51,6 +52,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
     logOutDialog(context);
   }
 
+  Future<void> deletedLocal() async {
+    final pref = await SharedPreferences.getInstance();
+    await pref.clear();
+  }
+
   dynamic logOutDialog(_) {
     showDialog(
       context: context,
@@ -73,6 +79,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
               // LoadingDialog.showLoadingDialog(context);
               Navigator.pop(context);
               FirebaseAuth.instance.signOut();
+              AppRouter.goToSignInScreen(context);
 
               // Timer(
               //   const Duration(seconds: 1),
@@ -151,7 +158,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 ],
               ),
             const Spacer(),
-            // Lottie.asset(AppImages.qrCode, height: 40),
+            Lottie.asset(AppImages.qrCode, height: 40),
             // IconButton(
             //   onPressed: () {
             //     setState(() {
@@ -207,7 +214,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
         child: AppButton(
           enableButton: true,
           content: 'Log out',
-          onTap: () => logOutButton(),
+          onTap: () {
+            logOutButton();
+            deletedLocal();
+          },
         ),
       );
 }

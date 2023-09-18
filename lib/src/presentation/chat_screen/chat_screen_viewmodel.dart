@@ -28,10 +28,10 @@ class ChatScreenViewModel extends BaseViewModel {
   }
 
   void deleteAllMessages() async {
-    final user = FirebaseAuth.instance.currentUser;
+    final currentUser = FirebaseAuth.instance.currentUser;
 
-    if (user != null) {
-      final userEmail = user.email;
+    if (currentUser != null) {
+      final userEmail = currentUser.email;
       const userEmailAdmin = "leminhtri151102@gmail.com";
 
       if (userEmail == userEmailAdmin) {
