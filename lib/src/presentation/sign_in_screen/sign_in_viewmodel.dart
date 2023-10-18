@@ -2,6 +2,7 @@
 
 import 'dart:async';
 
+import 'package:chat_app/src/configs/widget/dialog/exit_app_dialog.dart';
 import 'package:chat_app/src/configs/widget/loading/loading_diaglog.dart';
 import 'package:chat_app/src/presentation/app_routers.dart';
 import 'package:chat_app/src/presentation/routers.dart';
@@ -20,7 +21,7 @@ class SignInViewModel extends BaseViewModel {
 
   void logInButton() async {
     try {
-      // LoadingDialog.showLoadingDialog(context);
+      LoadingDialog.showLoadingDialog(context);
 
       final userLogIn = await firebase
           .signInWithEmailAndPassword(
@@ -36,10 +37,12 @@ class SignInViewModel extends BaseViewModel {
         print('login success');
       });
       print(userLogIn);
-      AppRouter.goToChatScreen(context);
-      // LoadingDialog.hideLoadingDialog(context);
+      Timer(const Duration(seconds: 1), () {
+        LoadingDialog.hideLoadingDialog(context);
+        AppRouter.goToChatScreen(context);
+      });
     } on FirebaseAuthException catch (e) {
-      // LoadingDialog.hideLoadingDialog(context);
+      LoadingDialog.hideLoadingDialog(context);
       if (e.code == 'email-already-in-use') {}
       //
       ScaffoldMessenger.of(context).clearSnackBars();
@@ -51,6 +54,10 @@ class SignInViewModel extends BaseViewModel {
     }
   }
 
+  Future<void> exitWaring() => showDialog(
+        context: context,
+        builder: (context) => const ExitAppDialog(),
+      );
   Future<void> goToHomeScreen(BuildContext context) =>
       Navigator.pushNamed(context, Routers.navigation);
 

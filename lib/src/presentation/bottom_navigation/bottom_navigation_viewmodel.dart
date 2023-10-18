@@ -18,7 +18,6 @@ class NavigationViewModel extends BaseViewModel {
 
   NavigationBarTheme bottomNavigate() {
     return NavigationBarTheme(
-      
       data: NavigationBarThemeData(
         // indicatorColor: AppColors.SURFACE_PURPLE,
         labelTextStyle: MaterialStateProperty.all(
@@ -31,7 +30,6 @@ class NavigationViewModel extends BaseViewModel {
         ),
       ),
       child: NavigationBar(
-        
         labelBehavior: NavigationDestinationLabelBehavior.onlyShowSelected,
         indicatorColor: Colors.transparent,
         height: 65,

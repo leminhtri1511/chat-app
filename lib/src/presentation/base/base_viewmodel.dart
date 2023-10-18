@@ -1,3 +1,4 @@
+import 'package:chat_app/src/configs/widget/dialog/exit_app_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -13,26 +14,7 @@ abstract class BaseViewModel extends ChangeNotifier {
   Future<bool> exitApp() async {
     return await showDialog(
       context: context,
-      builder: (ctx) => AlertDialog(
-        title: const Paragraph(
-          content: 'Exit app !',
-          style: STYLE_MEDIUM_BOLD,
-        ),
-        content:  Paragraph(
-          content: 'Are you sure you want to exit?',
-          style: STYLE_MEDIUM.copyWith(fontWeight: FontWeight.w500),
-        ),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.of(ctx).pop(false),
-            child: const Paragraph(content: 'No', style: STYLE_SMALL_BOLD),
-          ),
-          TextButton(
-            onPressed: () => SystemNavigator.pop,
-            child: const Paragraph(content: 'Yes', style: STYLE_SMALL_BOLD),
-          ),
-        ],
-      ),
+      builder: (ctx) => const ExitAppDialog(),
     );
   }
 }

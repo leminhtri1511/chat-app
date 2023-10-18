@@ -60,7 +60,7 @@ class _SplashScreenState extends State<SplashScreen> {
             ),
             const SizedBox(height: 10),
             Paragraph(
-              content: 'Chatbox',
+              content: 'C h a t b o x',
               style: STYLE_LARGE_BIG.copyWith(
                 fontSize: 30,
                 fontStyle: FontStyle.italic,
