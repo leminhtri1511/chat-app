@@ -1,16 +1,77 @@
-# chat_app
 
-A new Flutter project.
 
-## Getting Started
+# Flutter Chat App
 
-This project is a starting point for a Flutter application.
+![App Demo](demo.gif)
 
-A few resources to get you started if this is your first Flutter project:
+Flutter Chat App is a real-time messaging application built with Flutter and Firebase, allowing users to chat with each other in real-time.
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+## Features
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+- **Authentication**: Users can sign up, log in, and reset their passwords.
+- **Real-time Messaging**: Chat with other users in real-time.
+- **Private and Group Chats**: Start private conversations or create group chats.
+- **User Status**: See if other users are online or offline.
+- **Image Sharing**: Send and receive images in chats.
+- **Notifications**: Receive push notifications for new messages.
+
+## Screenshots
+
+![Screenshot 1](screenshots/screenshot1.png)
+![Screenshot 2](screenshots/screenshot2.png)
+![Screenshot 3](screenshots/screenshot3.png)
+
+## Installation
+
+1. Clone the repository:
+
+   ```
+   git clone https://github.com/leminhtri1511/chat-app.git
+   ```
+
+2. Navigate to the project folder:
+
+   ```
+   cd chat-app
+   ```
+
+3. Install dependencies:
+
+   ```
+   flutter pub get
+   ```
+
+4. Run the app:
+
+   ```
+   flutter run
+   ```
+
+   The app will be launched on your connected device or emulator.
+
+## Firebase Configuration
+
+This app uses Firebase for authentication and real-time database. To set up Firebase for your project:
+
+1. Create a Firebase project on the [Firebase Console](https://console.firebase.google.com/).
+
+2. Add your Flutter app to the Firebase project.
+
+3. Download the `google-services.json` file and place it in the `android/app` directory for Android or the `Runner` directory for iOS.
+
+4. Configure Firebase authentication and real-time database according to your app's requirements.
+
+## Contributions
+
+Contributions are welcome! If you'd like to contribute to this project, please follow the standard GitHub fork and pull request process.
+
+## License
+
+This project is licensed under the [MIT License](LICENSE).
+
+## Contact
+
+If you have any questions or suggestions, please feel free to contact us at [your.email@example.com].
+
+Happy Chatting!
+```
