@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:chat_app/src/configs/configs.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
+
 import 'package:flutter/material.dart';
 
 class ChatSettings extends StatefulWidget {
@@ -65,7 +65,7 @@ class _ChatSettingsState extends State<ChatSettings> {
       );
     }
 
-    void deleteWaring() {
+    void deleteWarning() {
       showDialog(
         context: context,
         builder: (BuildContext context) {
@@ -108,7 +108,7 @@ class _ChatSettingsState extends State<ChatSettings> {
         const userEmailAdmin = "leminhtri151102@gmail.com";
 
         if (userEmail == userEmailAdmin) {
-          deleteWaring();
+          deleteWarning();
           // Navigator.pop(context);
         } else {
           showDialog(

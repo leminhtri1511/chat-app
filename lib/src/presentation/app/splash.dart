@@ -4,12 +4,9 @@ import 'dart:async';
 
 import 'package:chat_app/src/configs/configs.dart';
 import 'package:chat_app/src/presentation/app_routers.dart';
-import 'package:flutter/cupertino.dart';
+
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
-import '../routers.dart';
-import '../welcome_screens/welcome_screen.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});

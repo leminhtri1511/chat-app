@@ -34,7 +34,7 @@ class _NewMsgWidgetState extends State<NewMsgWidget> {
     if (enteredMsg.trim().isEmpty) {
       return;
     }
-    audioSent.play(AssetSource('audios/sent_msg.mp3'));
+    audioSent.play(AssetSource('audios/sent_msg.mp3'),);
     FirebaseFirestore.instance.collection('chat').add({
       'text': enteredMsg,
       'createdAt': Timestamp.now(),

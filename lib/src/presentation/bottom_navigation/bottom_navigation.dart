@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../configs/configs.dart';
+
 import '../base/base.dart';
 
 import 'navigation.dart';

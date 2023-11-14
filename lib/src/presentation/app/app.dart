@@ -1,12 +1,5 @@
-import 'package:chat_app/src/configs/configs.dart';
-import 'package:chat_app/src/presentation/app/splash.dart';
-import 'package:chat_app/src/presentation/bottom_navigation/navigation.dart';
-import 'package:chat_app/src/presentation/chat_screen/chat_screen.dart';
-import 'package:chat_app/src/presentation/sign_in_screen/sign_in_screen.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-// import '../../configs/firebase/analytics_firebase.dart';
 import '../../intl/generated/l10n.dart';
 
 import '../routers.dart';

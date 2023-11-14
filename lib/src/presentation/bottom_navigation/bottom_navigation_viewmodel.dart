@@ -2,7 +2,7 @@ import 'package:chat_app/src/presentation/profile_screen/profile.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-import '../../configs/configs.dart';
+
 import '../base/base.dart';
 import '../chat_screen/chat_screen.dart';
 

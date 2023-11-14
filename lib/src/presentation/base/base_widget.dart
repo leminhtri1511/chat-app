@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 
-import '../../intl/generated/l10n.dart';
 import 'base_viewmodel.dart';
 
 class BaseWidget<T extends BaseViewModel> extends StatefulWidget {

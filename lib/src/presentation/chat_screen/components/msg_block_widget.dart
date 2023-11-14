@@ -1,6 +1,8 @@
 import 'package:audioplayers/audioplayers.dart';
 import 'package:chat_app/src/configs/configs.dart';
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
+import 'package:url_launcher/url_launcher_string.dart';
 
 String imgError =
     'https://media.istockphoto.com/id/1409329028/vector/no-picture-available-placeholder-thumbnail-icon-illustration-design.jpg?s=612x612&w=0&k=20&c=_zOuJu755g2eEUioiOUdz_mHKJQJn-tDgIAhQzyeKUQ=';
@@ -46,6 +48,23 @@ class MsgBlockWidget extends StatelessWidget {
 
   // Controls how the MessageBubble will be aligned.
   final bool? isMe;
+  bool isURL(String text) {
+    // Implement your logic to check if 'text' is a URL
+    // For example, you can use a regular expression to check
+    // or use a package like 'url_launcher' to handle URL validation.
+    // Here's a simple example:
+    return text.startsWith('http://') || text.startsWith('https://');
+  }
+
+  // Function to launch a URL
+  void launchURL(String url) async {
+    if (await canLaunchUrlString(url)) {
+      await launchUrlString(url);
+    } else {
+      throw 'Could not launch $url';
+    }
+  }
+
   void showUserProfile(
     BuildContext context,
     String username,
@@ -145,65 +164,83 @@ class MsgBlockWidget extends StatelessWidget {
                         style: STYLE_MEDIUM_BOLD,
                       ),
                     ),
-
+                  if (message != null && isURL(message!))
+                    GestureDetector(
+                      onTap: () =>
+                          launchURL(message!), // Launch URL when tapped
+                      child: Text(
+                        message!,
+                        style: const TextStyle(
+                          color: Colors.blue, // Link color
+                          decoration:
+                              TextDecoration.underline, // Underline the link
+                          // Add other styles as needed
+                        ),
+                      ),
+                    ),
                   // The "speech" box surrounding the message.
                   Container(
-                    decoration: BoxDecoration(
-                      gradient: isMe!
-                          ? const LinearGradient(
-                              colors: [
-                                Color.fromARGB(154, 156, 68, 180),
-                                Color.fromARGB(154, 178, 84, 205),
-                              ],
-                              begin: Alignment.topLeft,
-                              end: Alignment.bottomRight,
-                            )
-                          : LinearGradient(
-                              colors: [
-                                theme.colorScheme.primary.withAlpha(50),
-                                theme.colorScheme.primary.withAlpha(50),
-                              ],
-                            ),
-                      // color: isMe
-                      //     ? AppColors.SECONDARY_PURPLE
-                      //     : theme.colorScheme.secondary.withAlpha(200),
-                      // Only show the message bubble's "speaking edge" if first in
-                      // the chain.
-                      // Whether the "speaking edge" is on the left or right depends
-                      // on whether or not the message bubble is the current user.
-                      borderRadius: BorderRadius.only(
-                        topLeft: !isMe! && isFirstInSequence
-                            ? Radius.zero
-                            : const Radius.circular(12),
-                        topRight: isMe! && isFirstInSequence
-                            ? Radius.zero
-                            : const Radius.circular(12),
-                        bottomLeft: const Radius.circular(12),
-                        bottomRight: const Radius.circular(12),
+                      decoration: BoxDecoration(
+                        gradient: isMe!
+                            ? const LinearGradient(
+                                colors: [
+                                  Color.fromARGB(154, 156, 68, 180),
+                                  Color.fromARGB(154, 178, 84, 205),
+                                ],
+                                begin: Alignment.topLeft,
+                                end: Alignment.bottomRight,
+                              )
+                            : LinearGradient(
+                                colors: [
+                                  theme.colorScheme.primary.withAlpha(50),
+                                  theme.colorScheme.primary.withAlpha(50),
+                                ],
+                              ),
+                        // color: isMe
+                        //     ? AppColors.SECONDARY_PURPLE
+                        //     : theme.colorScheme.secondary.withAlpha(200),
+                        // Only show the message bubble's "speaking edge" if first in
+                        // the chain.
+                        // Whether the "speaking edge" is on the left or right depends
+                        // on whether or not the message bubble is the current user.
+                        borderRadius: BorderRadius.only(
+                          topLeft: !isMe! && isFirstInSequence
+                              ? Radius.zero
+                              : const Radius.circular(12),
+                          topRight: isMe! && isFirstInSequence
+                              ? Radius.zero
+                              : const Radius.circular(12),
+                          bottomLeft: const Radius.circular(12),
+                          bottomRight: const Radius.circular(12),
+                        ),
                       ),
-                    ),
-                    // Set some reasonable constraints on the width of the
-                    // message bubble so it can adjust to the amount of text
-                    // it should show.
-                    constraints: const BoxConstraints(maxWidth: 250),
-                    padding: const EdgeInsets.symmetric(
-                      vertical: 11,
-                      horizontal: 15,
-                    ),
-                    // Margin around the bubble.
-                    margin: const EdgeInsets.symmetric(
-                      vertical: 4,
-                      horizontal: 12,
-                    ),
-                    child: Paragraph(
-                      content: message,
-                      softWrap: true,
-                      style: STYLE_MEDIUM.copyWith(
-                        height: 1.3,
-                        fontWeight: FontWeight.w500,
+                      constraints: const BoxConstraints(maxWidth: 250),
+                      padding: const EdgeInsets.symmetric(
+                        vertical: 11,
+                        horizontal: 15,
                       ),
-                    ),
-                  ),
+                      margin: const EdgeInsets.symmetric(
+                        vertical: 4,
+                        horizontal: 12,
+                      ),
+                      child: SelectableText(
+                        message.toString(),
+                        style: const TextStyle(
+                          fontFamily: 'Quicksand',
+                          fontSize: 16,
+                          fontWeight: FontWeight.w500,
+                          // height: 1.3,
+                        ),
+                      )
+                      // Paragraph(
+                      //   content: message,
+                      //   softWrap: true,
+                      //   style: STYLE_MEDIUM.copyWith(
+                      //     height: 1.3,
+                      //     fontWeight: FontWeight.w500,
+                      //   ),
+                      // ),
+                      ),
                 ],
               ),
             ],
