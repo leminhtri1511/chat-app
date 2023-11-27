@@ -158,7 +158,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 ],
               ),
             const Spacer(),
-            Lottie.asset(AppImages.qrCode, height: 40),
+            // Lottie.asset(AppImages.qrCode, height: 40),
             // IconButton(
             //   onPressed: () {
             //     setState(() {

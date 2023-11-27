@@ -56,17 +56,14 @@ class _ChatScreenState extends State<ChatScreen> {
 
   //MAIN WIDGET
   Widget buildChatScreen() {
-    return SafeArea(
-      bottom: false,
-      child: Column(
-        children: [
-          buildAppBar(),
-          const Expanded(
-            child: ChatMsgWidget(),
-          ),
-          const NewMsgWidget(),
-        ],
-      ),
+    return Column(
+      children: [
+        buildAppBar(),
+        const Expanded(
+          child: ChatMsgWidget(),
+        ),
+        const NewMsgWidget(),
+      ],
     );
   }
 
@@ -74,25 +71,27 @@ class _ChatScreenState extends State<ChatScreen> {
     final checkAdmin = currentUser?.email;
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 25.0),
-      child: Row(
-        children: [
-          // const Spacer(),
-          Paragraph(
-            content: 'Group chat',
-            style: STYLE_LARGE_BOLD.copyWith(
-              fontSize: 20,
+      child: SafeArea(
+        child: Row(
+          children: [
+            // const Spacer(),
+            Paragraph(
+              content: 'Group chat',
+              style: STYLE_LARGE_BOLD.copyWith(
+                fontSize: 20,
+              ),
             ),
-          ),
-          const Spacer(),
-          if (checkAdmin == 'leminhtri151102@gmail.com')
-            IconButton(
-              onPressed: () => _viewModel!.showChatSettings(),
-              icon: const Icon(Icons.menu),
-            )
-        ],
-        // actions: [
-        //
-        // ],
+            const Spacer(),
+            if (checkAdmin == 'leminhtri151102@gmail.com')
+              IconButton(
+                onPressed: () => _viewModel!.showChatSettings(),
+                icon: const Icon(Icons.menu),
+              )
+          ],
+          // actions: [
+          //
+          // ],
+        ),
       ),
     );
   }

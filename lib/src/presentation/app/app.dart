@@ -12,19 +12,17 @@ class Constants {
   static const String defaultLanguage = 'defaultLanguage';
 }
 
-bool iconBool = false;
+// ThemeData lightTheme = ThemeData(
+//   useMaterial3: true,
+//   primarySwatch: Colors.deepPurple,
+//   brightness: Brightness.light,
+// );
 
-ThemeData lightTheme = ThemeData(
-  useMaterial3: true,
-  primarySwatch: Colors.deepPurple,
-  brightness: Brightness.light,
-);
-
-ThemeData darkTheme = ThemeData(
-  useMaterial3: true,
-  primarySwatch: Colors.deepPurple,
-  brightness: Brightness.dark,
-);
+// ThemeData darkTheme = ThemeData(
+//   useMaterial3: true,
+//   primarySwatch: Colors.deepPurple,
+//   brightness: Brightness.dark,
+// );
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
@@ -34,15 +32,15 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       key: key,
       debugShowCheckedModeBanner: false,
-      theme: lightTheme,
-      darkTheme: darkTheme,
+      // theme: lightTheme,
+      // darkTheme: darkTheme,
       // theme: ThemeData(fontFamily: 'Quicksand'),
-      // theme: ThemeData().copyWith(
-      //   useMaterial3: true,
-      //   colorScheme: ColorScheme.fromSeed(
-      //     seedColor: Colors.deepPurple,
-      //   ),
-      // ),
+      theme: ThemeData().copyWith(
+        useMaterial3: true,
+        colorScheme: ColorScheme.fromSeed(
+          seedColor: Colors.deepPurple,
+        ),
+      ),
       builder: (context, widget) => MediaQuery(
         data: MediaQuery.of(context).copyWith(textScaleFactor: 1),
         child: widget!,

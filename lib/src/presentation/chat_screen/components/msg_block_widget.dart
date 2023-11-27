@@ -53,7 +53,9 @@ class MsgBlockWidget extends StatelessWidget {
     // For example, you can use a regular expression to check
     // or use a package like 'url_launcher' to handle URL validation.
     // Here's a simple example:
-    return text.startsWith('http://') || text.startsWith('https://');
+    return text.startsWith('http://') ||
+        text.startsWith('https://') ||
+        text.endsWith('.com');
   }
 
   // Function to launch a URL
@@ -166,81 +168,85 @@ class MsgBlockWidget extends StatelessWidget {
                     ),
                   if (message != null && isURL(message!))
                     GestureDetector(
-                      onTap: () =>
-                          launchURL(message!), // Launch URL when tapped
-                      child: Text(
-                        message!,
-                        style: const TextStyle(
-                          color: Colors.blue, // Link color
-                          decoration:
-                              TextDecoration.underline, // Underline the link
-                          // Add other styles as needed
+                      onTap: () => launchURL(message!),
+                      child: Padding(
+                        padding: isMe!
+                            ? const EdgeInsets.only(right: 15.0, top: 15)
+                            : const EdgeInsets.only(left: 15.0, top: 15),
+                        child: Text(
+                          message!,
+                          style: const TextStyle(
+                            color: Colors.blue,
+                            decoration: TextDecoration.underline,
+                          ),
                         ),
                       ),
                     ),
                   // The "speech" box surrounding the message.
                   Container(
-                      decoration: BoxDecoration(
-                        gradient: isMe!
-                            ? const LinearGradient(
-                                colors: [
-                                  Color.fromARGB(154, 156, 68, 180),
-                                  Color.fromARGB(154, 178, 84, 205),
-                                ],
-                                begin: Alignment.topLeft,
-                                end: Alignment.bottomRight,
-                              )
-                            : LinearGradient(
-                                colors: [
-                                  theme.colorScheme.primary.withAlpha(50),
-                                  theme.colorScheme.primary.withAlpha(50),
-                                ],
-                              ),
-                        // color: isMe
-                        //     ? AppColors.SECONDARY_PURPLE
-                        //     : theme.colorScheme.secondary.withAlpha(200),
-                        // Only show the message bubble's "speaking edge" if first in
-                        // the chain.
-                        // Whether the "speaking edge" is on the left or right depends
-                        // on whether or not the message bubble is the current user.
-                        borderRadius: BorderRadius.only(
-                          topLeft: !isMe! && isFirstInSequence
-                              ? Radius.zero
-                              : const Radius.circular(12),
-                          topRight: isMe! && isFirstInSequence
-                              ? Radius.zero
-                              : const Radius.circular(12),
-                          bottomLeft: const Radius.circular(12),
-                          bottomRight: const Radius.circular(12),
-                        ),
+                    decoration: BoxDecoration(
+                      gradient: isMe!
+                          ? const LinearGradient(
+                              colors: [
+                                AppColors.PRIMARY_PURPLE,
+                                AppColors.PRIMARY_PURPLE,
+                              ],
+                              // begin: Alignment.bottomLeft,
+                              // end: Alignment.topRight,
+                            )
+                          : const LinearGradient(
+                              colors: [
+                                AppColors.BLACK_200,
+                                AppColors.BLACK_200,
+                              ],
+                            ),
+                      // color: isMe
+                      //     ? AppColors.SECONDARY_PURPLE
+                      //     : theme.colorScheme.secondary.withAlpha(200),
+                      // Only show the message bubble's "speaking edge" if first in
+                      // the chain.
+                      // Whether the "speaking edge" is on the left or right depends
+                      // on whether or not the message bubble is the current user.
+                      borderRadius: BorderRadius.only(
+                        topLeft: !isMe! && isFirstInSequence
+                            ? Radius.zero
+                            : const Radius.circular(12),
+                        topRight: isMe! && isFirstInSequence
+                            ? Radius.zero
+                            : const Radius.circular(12),
+                        bottomLeft: const Radius.circular(12),
+                        bottomRight: const Radius.circular(12),
                       ),
-                      constraints: const BoxConstraints(maxWidth: 250),
-                      padding: const EdgeInsets.symmetric(
-                        vertical: 11,
-                        horizontal: 15,
-                      ),
-                      margin: const EdgeInsets.symmetric(
-                        vertical: 4,
-                        horizontal: 12,
-                      ),
-                      child: SelectableText(
-                        message.toString(),
-                        style: const TextStyle(
-                          fontFamily: 'Quicksand',
-                          fontSize: 16,
-                          fontWeight: FontWeight.w500,
-                          // height: 1.3,
-                        ),
-                      )
-                      // Paragraph(
-                      //   content: message,
-                      //   softWrap: true,
-                      //   style: STYLE_MEDIUM.copyWith(
-                      //     height: 1.3,
-                      //     fontWeight: FontWeight.w500,
-                      //   ),
-                      // ),
-                      ),
+                    ),
+                    constraints: const BoxConstraints(maxWidth: 250),
+                    padding: const EdgeInsets.symmetric(
+                      vertical: 11,
+                      horizontal: 15,
+                    ),
+                    margin: const EdgeInsets.symmetric(
+                      vertical: 4,
+                      horizontal: 12,
+                    ),
+                    child: isMe!
+                        ? SelectableText(
+                            message.toString(),
+                            style: const TextStyle(
+                              fontFamily: 'Quicksand',
+                              fontSize: 16,
+                              fontWeight: FontWeight.w600,
+                              color: AppColors.COLOR_WHITE,
+                            ),
+                          )
+                        : SelectableText(
+                            message.toString(),
+                            style: const TextStyle(
+                              fontFamily: 'Quicksand',
+                              fontSize: 16,
+                              fontWeight: FontWeight.w500,
+                              color: AppColors.BLACK,
+                            ),
+                          ),
+                  ),
                 ],
               ),
             ],
