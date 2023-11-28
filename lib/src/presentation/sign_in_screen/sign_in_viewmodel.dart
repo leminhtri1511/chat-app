@@ -15,42 +15,109 @@ import '../base/base.dart';
 
 class SignInViewModel extends BaseViewModel {
   final firebase = FirebaseAuth.instance;
+
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
+
+  bool emailChecker = true;
+  bool passwordChecker = true;
+  bool enableLoginChecker = false;
+
+  String? emailErrorMsg;
+  String? passwordErrorMsg;
+
   dynamic init() {}
 
-  void logInButton() async {
-    try {
-      LoadingDialog.showLoadingDialog(context);
+  void onEmail() {
+    final emailTextChecker = emailController.text;
+    if (emailTextChecker.isEmpty) {
+      emailChecker = false;
+      emailErrorMsg = 'Please enter your email';
+    } else if (emailTextChecker.endsWith('@gmail.com')) {
+      emailChecker = true;
+      emailErrorMsg = '';
+    }
+    // else if (emailTextChecker.indexOf('@gmail.com') > 0) {
+    //   emailChecker = false;
+    //   emailErrorMsg = 'Incorrect email';
+    // }
 
-      final userLogIn = await firebase
-          .signInWithEmailAndPassword(
-        email: emailController.text,
-        password: passwordController.text,
-      )
-          .then((user) async {
-        user.user!.getIdToken().then((idToken) async {
-          final prefs = await SharedPreferences.getInstance();
-          await prefs.setString('jwt', idToken!);
-          print('idToken: ---: $idToken');
+    else {
+      emailChecker = false;
+      emailErrorMsg = 'Incorrect email';
+    }
+
+    // if (emailChecker.isNotEmpty &&
+    //     emailChecker.endsWith('@gmail.com') &&
+    //     emailChecker.indexOf('@gmail.com') > 0) {
+    //   isEmail = true;
+    //   emailErrorMsg = '';
+    // } else {
+    //   isEmail = false;
+    // }
+    notifyListeners();
+  }
+
+  void onPassword() {
+    final passwordTextChecker = passwordController.text;
+    if (passwordTextChecker.isNotEmpty) {
+      passwordChecker = true;
+      passwordErrorMsg = '';
+    } else {
+      passwordChecker = false;
+      passwordErrorMsg = 'Please enter your password';
+    }
+    notifyListeners();
+  }
+
+  void enableLoginButton() {
+    final emailTextChecker = emailController.text;
+    final passwordTextChecker = passwordController.text;
+    if (emailChecker &&
+        passwordChecker &&
+        emailTextChecker.isNotEmpty &&
+        passwordTextChecker.isNotEmpty) {
+      enableLoginChecker = true;
+    } else {
+      enableLoginChecker = false;
+    }
+    notifyListeners();
+  }
+
+  void logInButton() async {
+    if (enableLoginChecker) {
+      try {
+        LoadingDialog.showLoadingDialog(context);
+
+        final userLogIn = await firebase
+            .signInWithEmailAndPassword(
+          email: emailController.text,
+          password: passwordController.text,
+        )
+            .then((user) async {
+          user.user!.getIdToken().then((idToken) async {
+            final prefs = await SharedPreferences.getInstance();
+            await prefs.setString('jwt', idToken!);
+            print('idToken: ---: $idToken');
+          });
+          print('login success');
         });
-        print('login success');
-      });
-      print(userLogIn);
-      Timer(const Duration(seconds: 1), () {
+        print(userLogIn);
+        Timer(const Duration(seconds: 1), () {
+          LoadingDialog.hideLoadingDialog(context);
+          AppRouter.goToChatScreen(context);
+        });
+      } on FirebaseAuthException catch (e) {
         LoadingDialog.hideLoadingDialog(context);
-        AppRouter.goToChatScreen(context);
-      });
-    } on FirebaseAuthException catch (e) {
-      LoadingDialog.hideLoadingDialog(context);
-      if (e.code == 'email-already-in-use') {}
-      //
-      ScaffoldMessenger.of(context).clearSnackBars();
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text(e.message ?? 'Auth failed.'),
-        ),
-      );
+        if (e.code == 'email-already-in-use') {}
+        //
+        ScaffoldMessenger.of(context).clearSnackBars();
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(e.message ?? 'Auth failed.'),
+          ),
+        );
+      }
     }
   }
 

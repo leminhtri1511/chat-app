@@ -33,7 +33,7 @@ class _SplashScreenState extends State<SplashScreen> {
 
   void goToLogin() async {
     final pref = await SharedPreferences.getInstance();
-    print('đkad: ${pref.getString('jwt')}');
+    print('auth_token: ${pref.getString('jwt')}');
     if (pref.getString('jwt') != null) {
       await AppRouter.goToChatScreen(context);
     } else {

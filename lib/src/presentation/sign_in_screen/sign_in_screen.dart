@@ -74,8 +74,14 @@ class _SignInScreenState extends State<SignInScreen> {
       padding: const EdgeInsets.symmetric(vertical: 10),
       child: AppFormField(
         textEditingController: _viewModel!.emailController,
+        validator: _viewModel!.emailErrorMsg,
         labelText: 'Email address',
         hintText: 'Enter your email',
+        onChanged: (value) {
+          _viewModel!
+            ..onEmail()
+            ..enableLoginButton();
+        },
       ),
     );
   }
@@ -85,9 +91,15 @@ class _SignInScreenState extends State<SignInScreen> {
       padding: const EdgeInsets.symmetric(vertical: 10),
       child: AppFormField(
         textEditingController: _viewModel!.passwordController,
+        validator: _viewModel!.passwordErrorMsg,
         obscureText: true,
         labelText: 'Password',
         hintText: 'Enter password',
+        onChanged: (value) {
+          _viewModel!
+            ..onPassword()
+            ..enableLoginButton();
+        },
       ),
     );
   }
@@ -114,7 +126,7 @@ class _SignInScreenState extends State<SignInScreen> {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 20),
       child: AppButton(
-        enableButton: true,
+        enableButton: _viewModel!.enableLoginChecker,
         content: 'Log in',
         onTap: () => _viewModel!.logInButton(),
       ),

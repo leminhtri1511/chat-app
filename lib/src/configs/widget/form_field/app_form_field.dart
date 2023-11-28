@@ -105,11 +105,14 @@ class _AppFormFieldState extends State<AppFormField> {
         SizedBox(
           height: SpaceBox.sizeVerySmall,
         ),
-        Paragraph(
-          textAlign: TextAlign.center,
-          content: widget.validator ?? '',
-          fontWeight: FontWeight.w500,
-          color: AppColors.PRIMARY_RED,
+        Padding(
+          padding: const EdgeInsets.only(left: 10.0),
+          child: Paragraph(
+            textAlign: TextAlign.center,
+            content: widget.validator ?? '',
+            fontWeight: FontWeight.w500,
+            color: AppColors.PRIMARY_RED,
+          ),
         ),
         if (widget.isSpace ?? false)
           SizedBox(

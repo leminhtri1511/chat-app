@@ -152,7 +152,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
           TextButton(
             onPressed: () => _viewModel!.goToSignInScreen(context),
             child: Paragraph(
-              content: 'Log in',
+              content: 'Sign in',
               style: STYLE_SMALL_BOLD.copyWith(color: AppColors.PRIMARY_PURPLE),
             ),
           ),

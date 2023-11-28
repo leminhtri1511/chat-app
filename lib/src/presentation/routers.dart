@@ -14,7 +14,6 @@ class Routers {
   static const String signIn = '/signIn';
   static const String signUp = '/signUp';
   static const String forgotPass = '/forgotPass';
-
   static const String navigation = '/navigation';
 
   static Route<dynamic> generateRoute(RouteSettings settings) {
