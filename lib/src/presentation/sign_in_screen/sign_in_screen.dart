@@ -126,7 +126,7 @@ class _SignInScreenState extends State<SignInScreen> {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 20),
       child: AppButton(
-        enableButton: _viewModel!.enableLoginChecker,
+        enableButton: _viewModel!.enableSignInChecker,
         content: 'Log in',
         onTap: () => _viewModel!.logInButton(),
       ),

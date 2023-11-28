@@ -8,9 +8,11 @@ class PickImage extends StatefulWidget {
   const PickImage({
     super.key,
     this.onPickImage,
+    this.onChanged,
   });
 
   final void Function(File pickedImage)? onPickImage;
+  final Function(String value)? onChanged;
 
   @override
   State<PickImage> createState() => _PickImageState();
@@ -34,6 +36,7 @@ class _PickImageState extends State<PickImage> {
     });
 
     widget.onPickImage!(pickedImageFile!);
+    widget.onChanged;
   }
 
   @override

@@ -21,7 +21,7 @@ class SignInViewModel extends BaseViewModel {
 
   bool emailChecker = true;
   bool passwordChecker = true;
-  bool enableLoginChecker = false;
+  bool enableSignInChecker = false;
 
   String? emailErrorMsg;
   String? passwordErrorMsg;
@@ -37,24 +37,14 @@ class SignInViewModel extends BaseViewModel {
       emailChecker = true;
       emailErrorMsg = '';
     }
-    // else if (emailTextChecker.indexOf('@gmail.com') > 0) {
-    //   emailChecker = false;
-    //   emailErrorMsg = 'Incorrect email';
-    // }
-
+     else if (emailTextChecker.indexOf('@gmail.com') > 0) {
+      emailChecker = false;
+      emailErrorMsg = 'Incorrect email';
+    } 
     else {
       emailChecker = false;
       emailErrorMsg = 'Incorrect email';
     }
-
-    // if (emailChecker.isNotEmpty &&
-    //     emailChecker.endsWith('@gmail.com') &&
-    //     emailChecker.indexOf('@gmail.com') > 0) {
-    //   isEmail = true;
-    //   emailErrorMsg = '';
-    // } else {
-    //   isEmail = false;
-    // }
     notifyListeners();
   }
 
@@ -77,15 +67,15 @@ class SignInViewModel extends BaseViewModel {
         passwordChecker &&
         emailTextChecker.isNotEmpty &&
         passwordTextChecker.isNotEmpty) {
-      enableLoginChecker = true;
+      enableSignInChecker = true;
     } else {
-      enableLoginChecker = false;
+      enableSignInChecker = false;
     }
     notifyListeners();
   }
 
   void logInButton() async {
-    if (enableLoginChecker) {
+    if (enableSignInChecker) {
       try {
         LoadingDialog.showLoadingDialog(context);
 

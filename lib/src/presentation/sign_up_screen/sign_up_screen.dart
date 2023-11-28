@@ -78,6 +78,11 @@ class _SignUpScreenState extends State<SignUpScreen> {
         onPickImage: (pickedImage) {
           _viewModel!.selectedImage = pickedImage;
         },
+        // onChanged: (value) {
+        //   _viewModel!
+        //     ..onImage()
+        //     ..enableSignUpButton();
+        // },
       ),
     );
   }
@@ -87,9 +92,15 @@ class _SignUpScreenState extends State<SignUpScreen> {
       padding: const EdgeInsets.symmetric(vertical: 10),
       child: AppFormField(
         textEditingController: _viewModel!.emailController,
+        validator: _viewModel!.emailErrorMsg,
         keyboardType: TextInputType.emailAddress,
         labelText: 'Email address',
         hintText: 'Enter your email',
+        onChanged: (value) {
+          _viewModel!
+            ..onEmail()
+            ..enableSignUpButton();
+        },
       ),
     );
   }
@@ -99,8 +110,14 @@ class _SignUpScreenState extends State<SignUpScreen> {
       padding: const EdgeInsets.symmetric(vertical: 10),
       child: AppFormField(
         textEditingController: _viewModel!.userNameController,
+        validator: _viewModel!.nameErrorMsg,
         labelText: 'User name',
         hintText: 'Enter username',
+        onChanged: (value) {
+          _viewModel!
+            ..onUserName()
+            ..enableSignUpButton();
+        },
       ),
     );
   }
@@ -110,20 +127,33 @@ class _SignUpScreenState extends State<SignUpScreen> {
       padding: const EdgeInsets.symmetric(vertical: 10),
       child: AppFormField(
         textEditingController: _viewModel!.passwordController,
+        validator: _viewModel!.passwordErrorMsg,
         labelText: 'Password',
         hintText: 'Enter password',
         obscureText: true,
+        onChanged: (value) {
+          _viewModel!
+            ..onPassword()
+            ..enableSignUpButton();
+        },
       ),
     );
   }
 
   Widget buildConfirmPasswordFormField() {
-    return const Padding(
-      padding: EdgeInsets.symmetric(vertical: 10),
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 10),
       child: AppFormField(
+        textEditingController: _viewModel!.confirmPasswordController,
+        validator: _viewModel!.confirmPasswordErrorMsg,
         labelText: 'Confirm password',
         hintText: 'Confirm Your password',
         obscureText: true,
+        onChanged: (value) {
+          _viewModel!
+            ..onConfirmPassword()
+            ..enableSignUpButton();
+        },
       ),
     );
   }
@@ -132,7 +162,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 20),
       child: AppButton(
-        enableButton: true,
+        enableButton: _viewModel!.enableSignUpChecker,
         content: 'Sign up',
         onTap: () => _viewModel!.signUpButton(),
       ),
