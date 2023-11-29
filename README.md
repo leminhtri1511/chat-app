@@ -16,7 +16,7 @@ Flutter Chat App is a real-time messaging application built with Flutter and Fir
 - **Notifications**: Receive push notifications for new messages.
 
 ## Preview
-<a href="https://ibb.co/sCBNJpV"><img src="https://i.ibb.co/5k7SxXR/z4925022369891-67a2f11f35ea8e03cfe735fbd524bc8b.jpg" alt="z4925022369891-67a2f11f35ea8e03cfe735fbd524bc8b"  border-radius="50px" width="250px" /></a>
+<a href="https://ibb.co/sCBNJpV"><img src="https://i.ibb.co/5k7SxXR/z4925022369891-67a2f11f35ea8e03cfe735fbd524bc8b.jpg" alt="z4925022369891-67a2f11f35ea8e03cfe735fbd524bc8b" border="0" width="250px" style="border-radius: 50px" /></a>
 <a href="https://ibb.co/kKvLs7T"><img src="https://i.ibb.co/v1RN6FW/z4925022379321-c2d20a21aae669fede4d6b3554664a67.jpg" alt="z4925022379321-c2d20a21aae669fede4d6b3554664a67" border="0" width="250px" /></a>
 <a href="https://ibb.co/5k4rM1S"><img src="https://i.ibb.co/kJB4HGw/z4925022373622-d7799eaa9a36136260edce6cdb2f7cb7.jpg" alt="z4925022373622-d7799eaa9a36136260edce6cdb2f7cb7" border="0" width="250px" /></a>
 
