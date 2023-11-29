@@ -17,9 +17,9 @@ Flutter Chat App is a real-time messaging application built with Flutter and Fir
 
 ## Screenshots
 
-![Screenshot 1](screenshots/screenshot1.png)
-![Screenshot 2](screenshots/screenshot2.png)
-![Screenshot 3](screenshots/screenshot3.png)
+![Screenshot 1](https://ibb.co/sCBNJpV)
+![Screenshot 2](https://ibb.co/5k4rM1S)
+![Screenshot 3](https://ibb.co/kKvLs7T)
 
 ## Installation
 
