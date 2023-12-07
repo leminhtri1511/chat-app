@@ -18,7 +18,11 @@ class SplashScreen extends StatefulWidget {
 class _SplashScreenState extends State<SplashScreen> {
   Timer? timer;
 
-  Timer startDelay() => timer = Timer(const Duration(seconds: 2), goToLogin);
+  Timer startDelay() => timer = Timer(
+        const Duration(seconds: 2),
+        // goToLogin,
+        goToWelcomeScreen,
+      );
   @override
   void initState() {
     super.initState();
@@ -38,6 +42,16 @@ class _SplashScreenState extends State<SplashScreen> {
       await AppRouter.goToChatScreen(context);
     } else {
       await AppRouter.goToSignInScreen(context);
+    }
+  }
+
+  void goToWelcomeScreen() async {
+    final pref = await SharedPreferences.getInstance();
+    print('auth_token: ${pref.getString('jwt')}');
+    if (pref.getString('jwt') != null) {
+      await AppRouter.goToChatScreen(context);
+    } else {
+      await AppRouter.goToWelcomeScreen(context);
     }
   }
 
