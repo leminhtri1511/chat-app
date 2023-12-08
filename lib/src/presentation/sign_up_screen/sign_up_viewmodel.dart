@@ -33,7 +33,7 @@ class SignUpViewModel extends BaseViewModel {
   bool nameChecker = true;
   bool passwordChecker = true;
   bool confirmPasswordChecker = true;
-  // bool imageChecker = true;
+  bool imageChecker = true;
   bool enableSignUpChecker = false;
 
   String? emailErrorMsg;
@@ -41,15 +41,15 @@ class SignUpViewModel extends BaseViewModel {
   String? passwordErrorMsg;
   String? confirmPasswordErrorMsg;
 
-
   dynamic init() {}
 
   // void onImage() {
-  //   if (selectedImage == null) {
-  //     imageChecker = false;
-  //   } else {
+  //   if (selectedImage != null) {
   //     imageChecker = true;
+  //   } else {
+  //     imageChecker = false;
   //   }
+  //   notifyListeners();
   // }
 
   void onEmail() {
@@ -83,7 +83,7 @@ class SignUpViewModel extends BaseViewModel {
       nameErrorMsg = 'Name cannot contains numbers or special characters';
     } else if (nameTextChecker.length < nameMinimunLength) {
       nameChecker = false;
-      nameErrorMsg = 'Name too short';
+      nameErrorMsg = 'Enter more than 5 characters';
     } else {
       nameChecker = true;
       nameErrorMsg = '';
@@ -128,12 +128,12 @@ class SignUpViewModel extends BaseViewModel {
     final nameTextChecker = userNameController.text;
     final passwordTextChecker = passwordController.text;
     final confirmPasswordTextChecker = confirmPasswordController.text;
-    if (
-        emailChecker &&
+    if (emailChecker &&
         nameChecker &&
         passwordChecker &&
         confirmPasswordChecker &&
-  
+        // imageChecker &&
+        // selectedImage != null &&
         emailTextChecker.isNotEmpty &&
         nameTextChecker.isNotEmpty &&
         passwordTextChecker.isNotEmpty &&

@@ -109,6 +109,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 10),
       child: AppFormField(
+        maxLenght: 50,
+
         textEditingController: _viewModel!.userNameController,
         validator: _viewModel!.nameErrorMsg,
         labelText: 'User name',
