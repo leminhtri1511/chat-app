@@ -29,42 +29,50 @@ class _SignUpScreenState extends State<SignUpScreen> {
 
   Widget buildSignUp() {
     return SafeArea(
-      child: SingleChildScrollView(
-        child: Center(
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20),
-            child: Column(
-              // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                const SizedBox(height: 25),
-                Row(
-                  mainAxisSize: MainAxisSize.min,
+      child: Center(
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 20),
+          child: Column(
+            // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              const SizedBox(height: 25),
+              Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  const Paragraph(
+                    content: 'Sign Up',
+                    style: STYLE_LARGE_BOLD,
+                  ),
+                  const SizedBox(width: 10),
+                  Lottie.asset(AppImages.smallChatIcon),
+                ],
+              ),
+              const SizedBox(height: 15),
+              Paragraph(
+                content:
+                    'Get chatting with friends and family today by signing up for our chat app!',
+                style: STYLE_SMALL.copyWith(fontWeight: FontWeight.w500),
+                textAlign: TextAlign.center,
+              ),
+              Expanded(
+                child: ListView(
                   children: [
-                    const Paragraph(
-                      content: 'Sign Up',
-                      style: STYLE_LARGE_BOLD,
+                    Column(
+                      children: [
+                        const SizedBox(height: 25),
+                        buildPickImage(),
+                        buildEmailFormField(),
+                        buildUserNameFormField(),
+                        buildPasswordFormField(),
+                        buildConfirmPasswordFormField(),
+                        buildSignUpButton(),
+                        buildGotoSignUpScreen(),
+                      ],
                     ),
-                    const SizedBox(width: 10),
-                    Lottie.asset(AppImages.smallChatIcon),
                   ],
                 ),
-                const SizedBox(height: 15),
-                Paragraph(
-                  content:
-                      'Get chatting with friends and family today by signing up for our chat app!',
-                  style: STYLE_SMALL.copyWith(fontWeight: FontWeight.w500),
-                  textAlign: TextAlign.center,
-                ),
-                const SizedBox(height: 45),
-                buildPickImage(),
-                buildEmailFormField(),
-                buildUserNameFormField(),
-                buildPasswordFormField(),
-                buildConfirmPasswordFormField(),
-                buildSignUpButton(),
-                buildGotoSignUpScreen(),
-              ],
-            ),
+              ),
+            ],
           ),
         ),
       ),
@@ -110,7 +118,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
       padding: const EdgeInsets.symmetric(vertical: 10),
       child: AppFormField(
         maxLenght: 50,
-
         textEditingController: _viewModel!.userNameController,
         validator: _viewModel!.nameErrorMsg,
         labelText: 'User name',

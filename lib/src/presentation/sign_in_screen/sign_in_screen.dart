@@ -29,40 +29,48 @@ class _SignInScreenState extends State<SignInScreen> {
 
   Widget buildSignIn() {
     return SafeArea(
-      child: SingleChildScrollView(
-        child: Center(
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20),
-            child: Column(
-              // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                const SizedBox(height: 45),
-                Row(
-                  mainAxisSize: MainAxisSize.min,
+      child: Center(
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 20),
+          child: Column(
+            // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              const SizedBox(height: 45),
+              Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  const Paragraph(
+                    content: 'Sign In',
+                    style: STYLE_LARGE_BOLD,
+                  ),
+                  const SizedBox(width: 10),
+                  Lottie.asset(AppImages.smallChatIcon),
+                ],
+              ),
+              const SizedBox(height: 15),
+              Paragraph(
+                content:
+                    'Welcome back! Sign in using your social account or email to continue us',
+                style: STYLE_SMALL.copyWith(fontWeight: FontWeight.w500),
+                textAlign: TextAlign.center,
+              ),
+              Expanded(
+                child: ListView(
                   children: [
-                    const Paragraph(
-                      content: 'Sign In',
-                      style: STYLE_LARGE_BOLD,
+                    Column(
+                      children: [
+                        const SizedBox(height: 45),
+                        buildEmailFormField(),
+                        buildPasswordFormField(),
+                        buildForgotPassword(),
+                        buildLogInButton(),
+                        buildGotoSignUpScreen(),
+                      ],
                     ),
-                    const SizedBox(width: 10),
-                    Lottie.asset(AppImages.smallChatIcon),
                   ],
                 ),
-                const SizedBox(height: 15),
-                Paragraph(
-                  content:
-                      'Welcome back! Sign in using your social account or email to continue us',
-                  style: STYLE_SMALL.copyWith(fontWeight: FontWeight.w500),
-                  textAlign: TextAlign.center,
-                ),
-                const SizedBox(height: 45),
-                buildEmailFormField(),
-                buildPasswordFormField(),
-                buildForgotPassword(),
-                buildLogInButton(),
-                buildGotoSignUpScreen(),
-              ],
-            ),
+              ),
+            ],
           ),
         ),
       ),
