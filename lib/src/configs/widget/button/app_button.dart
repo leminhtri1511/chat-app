@@ -7,35 +7,45 @@ import '../../constants/app_space.dart';
 
 class AppButton extends StatelessWidget {
   const AppButton({
-    Key? key,
     this.enableButton = false,
     this.content,
-    this.onTap, this.width, 
-  }) : super(key: key);
-  final Function? onTap;
+    this.onTap,
+    this.width,
+    this.buttonColor,
+    super.key,
+  });
+
+  final VoidCallback? onTap;
   final bool enableButton;
   final String? content;
   final double? width;
+  final List<Color>? buttonColor;
+
   @override
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () => enableButton ? onTap!() : null,
-      
+      // onTap: onTap,
       child: Container(
-        width: width?? MediaQuery.of(context).size.width,
+        width: width ?? MediaQuery.of(context).size.width,
         padding: EdgeInsets.symmetric(vertical: SizeToPadding.sizeSmall),
         decoration: BoxDecoration(
-          gradient: LinearGradient(
-            colors: [
-              if (enableButton) AppColors.PRIMARY_PURPLE else AppColors.BLACK_200,
-              if (enableButton)
-                AppColors.SECONDARY_PURPLE
-              else
-                AppColors.BLACK_200,
-            ],
-            begin: Alignment.topLeft,
-            end: Alignment.bottomRight,
-          ),
+          gradient: enableButton == true
+              ? LinearGradient(
+                  colors: buttonColor ??
+                      [
+                        AppColors.PRIMARY_PURPLE,
+                        AppColors.SECONDARY_PURPLE,
+                      ],
+                  begin: Alignment.topLeft,
+                  end: Alignment.bottomRight,
+                )
+              : const LinearGradient(
+                  colors: [
+                    AppColors.BLACK_200,
+                    AppColors.BLACK_200,
+                  ],
+                ),
           borderRadius: BorderRadius.all(
             Radius.circular(BorderRadiusSize.sizeSmall),
           ),

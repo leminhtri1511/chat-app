@@ -16,7 +16,7 @@ class AppFormField extends StatefulWidget {
     this.obscureText = false,
     this.isSpace = false,
     this.keyboardType,
-    this.maxLenght,
+    this.maxLength,
     this.maxLines,
     this.counterText,
     this.iconButton,
@@ -29,7 +29,7 @@ class AppFormField extends StatefulWidget {
   final TextEditingController? textEditingController;
   final Function(String value)? onChanged;
   final TextInputType? keyboardType;
-  final int? maxLenght;
+  final int? maxLength;
   final int? maxLines;
   final String? counterText;
   final IconButton? iconButton;
@@ -60,7 +60,7 @@ class _AppFormFieldState extends State<AppFormField> {
         ),
         TextFormField(
           maxLines: widget.maxLines ?? 1,
-          maxLength: widget.maxLenght,
+          maxLength: widget.maxLength,
           keyboardType: widget.keyboardType,
           controller: widget.textEditingController,
           onChanged: widget.onChanged,
@@ -111,7 +111,7 @@ class _AppFormFieldState extends State<AppFormField> {
             textAlign: TextAlign.center,
             content: widget.validator ?? '',
             fontWeight: FontWeight.w500,
-            color: AppColors.PRIMARY_RED,
+            color: AppColors.FIRST_RED,
           ),
         ),
         if (widget.isSpace ?? false)

@@ -48,17 +48,25 @@ class ProfileViewModel extends BaseViewModel {
   dynamic logOutDialog(_) {
     showDialog(
       context: context,
+      barrierDismissible: false,
       builder: (ctx) => WarningDialog(
-        image: AppImages.icWarning,
-        title: 'Logging out!',
-        leftButtonName: 'Yes',
-        leftButtonColor: AppColors.COLOR_YELLOW,
-        onTapLeft: () {
+        image: AppImages.icWarning2,
+        title: 'Logging out',
+        content: 'Are you sure you want to log out?',
+        leftButtonName: 'No',
+        rightButtonName: 'Yes',
+        leftButtonColor: AppColors.BLACK_500,
+        rightButtonColor: const [
+          AppColors.FIRST_RED,
+          AppColors.SECOND_RED
+          // AppColors.FIRST_YELLOW,
+          // AppColors.SECOND_YELLOW
+        ],
+        onTapLeft: () => Navigator.pop(context),
+        onTapRight: () {
           deletedLocal();
           goToSignInScreen(context);
         },
-        rightButtonName: 'No',
-        onTapRight: () => Navigator.pop(context),
       ),
     );
   }

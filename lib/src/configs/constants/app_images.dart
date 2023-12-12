@@ -23,6 +23,8 @@ class AppImages {
 
   static const String notification = 'assets/icons/notification.svg';
 
+  static const String logOut = 'assets/icons/log_out.svg';
+
   static const String icCheck = 'assets/icons/check.svg';
 
   static const String icSuccess = 'assets/images/ic_success.png';
@@ -30,4 +32,6 @@ class AppImages {
   static const String icFalse = 'assets/images/ic_false.png';
 
   static const String icWarning = 'assets/images/ic_warning.png';
+
+  static const String icWarning2 = 'assets/images/ic_warning2.png';
 }

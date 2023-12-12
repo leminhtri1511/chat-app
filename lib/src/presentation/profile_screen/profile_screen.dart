@@ -28,15 +28,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
     return SafeArea(
       child: Column(
         children: [
-          // const Paragraph(
-          //   content: 'PROFILE',
-          //   style: STYLE_LARGE_BOLD,
-          // ),
           buildAvatarRow(),
           const Divider(),
           buildSettingList(),
-          // const Spacer(),
-          buildLogOutButton(),
+          // buildLogOutButton(),
         ],
       ),
     );
@@ -48,7 +43,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
           children: [
             Container(
               decoration: BoxDecoration(
-                border: Border.all(color: AppColors.SECONDARY_PURPLE, width: 1.5),
+                border:
+                    Border.all(color: AppColors.SECONDARY_PURPLE, width: 1.5),
                 borderRadius: BorderRadius.circular(99),
               ),
               child: Padding(
@@ -125,7 +121,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 svgIcon: AppImages.help,
                 title: 'Help',
                 content: 'Help center, privacy policy',
-                onTap: () => AppRouter.goToSignInScreen(context),
+                onTap: () {},
+              ),
+              FunctionBarWidget(
+                svgIcon: AppImages.logOut,
+                title: 'Log out',
+                titleColor: AppColors.FIRST_RED,
+                onTap: () =>_viewModel!.logOutButton(),
               ),
             ],
           ),

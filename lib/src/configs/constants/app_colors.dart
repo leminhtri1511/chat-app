@@ -8,6 +8,10 @@ import 'package:flutter/material.dart';
 // Color RED_COLOR = Colors.red[700]!;
 
 class AppColors {
+  static const Color FIRST_RED = Color.fromRGBO(221, 76, 68, 1);
+
+    static const Color SECOND_RED = Color.fromRGBO(203, 80, 73, 1);
+
   static const Color PRIMARY_PURPLE = Color.fromRGBO(130, 64, 192, 1);
 
   static const Color SECONDARY_PURPLE = Color.fromRGBO(128, 28, 156, 0.604);
@@ -20,7 +24,9 @@ class AppColors {
 
   static const Color COLOR_GREEN = Color.fromRGBO(75, 205, 93, 1);
 
-  static const Color COLOR_YELLOW = Color.fromRGBO(230, 185, 37, 1);
+  static const Color FIRST_YELLOW = Color.fromRGBO(226, 189, 69, 1);
+
+  static const Color SECOND_YELLOW = Color.fromRGBO(229, 198, 95, 1);
 
   static const Color BLACK = Colors.black;
 
@@ -34,10 +40,6 @@ class AppColors {
 
   static const Color BLACK_500 = Color.fromRGBO(36, 49, 62, 1);
 
-  static const Color PRIMARY_YELLOW = Color.fromRGBO(255, 245, 228, 1);
-
-  static const Color PRIMARY_RED = Color.fromRGBO(233, 49, 38, 1);
-
   // static const Color LIGHT_ORANGE = Color.fromRGBO(227, 77, 48, 0.1);
 
   // static const Color LIGHT_SOLID_ORANGE = Color.fromRGBO(237, 53, 50, 0.1);
@@ -45,6 +47,4 @@ class AppColors {
   // static const Color PRIMARY_LIGHT_PINK = Color.fromRGBO(213, 56, 123, 0.1);
 
   // static const Color LIGHT_SOLID_PINK = Color.fromRGBO(237, 50, 225, 0.1);
-
-
 }

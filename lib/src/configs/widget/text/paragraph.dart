@@ -14,6 +14,7 @@ class Paragraph extends StatelessWidget {
     this.textAlign,
     this.maxLines,
     this.softWrap,
+    this.fontSize,
   });
   final String? content;
   final TextStyle? style;
@@ -23,6 +24,7 @@ class Paragraph extends StatelessWidget {
   final TextOverflow? overflow;
   final int? maxLines;
   final bool? softWrap;
+  final double? fontSize;
 
   @override
   Widget build(BuildContext context) {
@@ -30,8 +32,12 @@ class Paragraph extends StatelessWidget {
       maxLines: maxLines,
       textAlign: textAlign,
       content ?? '',
-      style:
-          style ?? STYLE_SMALL.copyWith(fontWeight: fontWeight, color: color),
+      style: style ??
+          STYLE_SMALL.copyWith(
+            fontWeight: fontWeight,
+            color: color,
+            fontSize: fontSize,
+          ),
       overflow: overflow,
       softWrap: softWrap,
     );

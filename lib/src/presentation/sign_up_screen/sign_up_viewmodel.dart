@@ -5,6 +5,7 @@ import 'dart:io';
 
 import 'package:chat_app/src/presentation/app_routers.dart';
 import 'package:chat_app/src/presentation/base/base.dart';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -165,15 +166,15 @@ class SignUpViewModel extends BaseViewModel {
           'password': passwordController.text,
           'image_url': imageUrl,
         });
+        LoadingDialog.hideLoadingDialog(context);
+        // goToSignInScreen(context);
+        signUpSuccessDialog(context);
+        // Timer(
+        //   const Duration(seconds: 1),
+        //   () {
 
-        Timer(
-          const Duration(seconds: 1),
-          () {
-            LoadingDialog.hideLoadingDialog(context);
-            goToSignInScreen(context);
-            signUpSuccessDialog(context);
-          },
-        );
+        //   },
+        // );
         // signUpSuccessDialog(context);
       } on FirebaseAuthException catch (e) {
         LoadingDialog.hideLoadingDialog(context);
@@ -183,21 +184,17 @@ class SignUpViewModel extends BaseViewModel {
     }
   }
 
-  Future<void> goToSignInScreen(BuildContext context) =>
-      AppRouter.goToSignInScreen(context);
-
-  Future<void> goToHomeScreen(BuildContext context) =>
-      Navigator.pushNamed(context, Routers.home);
-
   dynamic signUpSuccessDialog(_) {
     showDialog(
       context: context,
+      barrierDismissible: false,
       builder: (ctx) => WarningOneDialog(
         image: AppImages.icSuccess,
         title: 'Sign up successfully',
+        content: 'Now you can log in to your account',
         buttonName: 'Log in',
         buttonColor: AppColors.COLOR_GREEN,
-        onTap: () => Navigator.pop(context),
+        onTap: () => goToSignInScreen(context),
       ),
     );
   }
@@ -209,8 +206,9 @@ class SignUpViewModel extends BaseViewModel {
       builder: (ctx) => WarningOneDialog(
         image: AppImages.icFalse,
         title: 'Sign up fail',
+        content: 'Please check your information and try again',
         buttonName: 'Cancel',
-        buttonColor: AppColors.PRIMARY_RED,
+        buttonColor: AppColors.FIRST_RED,
         onTap: () {
           Navigator.pop(context);
           ScaffoldMessenger.of(context).clearSnackBars();
@@ -223,4 +221,7 @@ class SignUpViewModel extends BaseViewModel {
       ),
     );
   }
+
+  Future<void> goToSignInScreen(BuildContext context) =>
+      AppRouter.goToSignInScreen(context);
 }
