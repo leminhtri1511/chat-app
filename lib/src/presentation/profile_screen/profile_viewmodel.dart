@@ -18,8 +18,14 @@ class ProfileViewModel extends BaseViewModel {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
   String? imageUrl;
   String? userName;
+  String? userEmail;
+  String imgError =
+      'https://media.istockphoto.com/id/1409329028/vector/no-picture-available-placeholder-thumbnail-icon-illustration-design.jpg?s=612x612&w=0&k=20&c=_zOuJu755g2eEUioiOUdz_mHKJQJn-tDgIAhQzyeKUQ=';
 
-  dynamic init() {}
+  dynamic init() {
+    //  super.initState();
+    loadUserProfileImage();
+  }
 
   Future<void> loadUserProfileImage() async {
     final user = _auth.currentUser;
@@ -28,7 +34,8 @@ class ProfileViewModel extends BaseViewModel {
       final userData = await _firestore.collection('users').doc(userId).get();
       if (userData.exists) {
         imageUrl = userData['image_url'];
-        userName = userData['userName'];
+        userName = userData['username'];
+        userEmail = userData['email'];
         notifyListeners();
       }
     }
@@ -38,36 +45,34 @@ class ProfileViewModel extends BaseViewModel {
     logOutDialog(context);
   }
 
+  dynamic logOutDialog(_) {
+    showDialog(
+      context: context,
+      builder: (ctx) => WarningDialog(
+        image: AppImages.icWarning,
+        title: 'Logging out!',
+        leftButtonName: 'Yes',
+        leftButtonColor: AppColors.COLOR_YELLOW,
+        onTapLeft: () {
+          deletedLocal();
+          goToSignInScreen(context);
+        },
+        rightButtonName: 'No',
+        onTapRight: () => Navigator.pop(context),
+      ),
+    );
+  }
+
   Future<void> deletedLocal() async {
     final pref = await SharedPreferences.getInstance();
     await pref.clear();
   }
 
-  dynamic logOutDialog(_) {
-    showDialog(
-      context: context,
-      builder: (ctx) => AlertDialog(
-        title: const Paragraph(content: 'Log out'),
-        content: const Paragraph(content: 'Are you sure you want to log out?'),
-        actions: <Widget>[
-          TextButton(
-            onPressed: () => Navigator.of(ctx).pop(false),
-            child: const Text('No'),
-          ),
-          TextButton(
-            onPressed: () => FirebaseAuth.instance.signOut(),
-            child: const Text('Yes'),
-          ),
-        ],
-      ),
-    );
-  }
-//
   // Future<void> goToHomeScreen(BuildContext context) =>
   //     Navigator.pushNamed(context, Routers.navigation);
 
-  // Future<void> goToSignUpScreen(BuildContext context) =>
-  //     Navigator.pushNamed(context, Routers.signUp);
+  Future<void> goToSignInScreen(BuildContext context) =>
+      Navigator.pushNamed(context, Routers.signIn);
 
   // Future<void> goToForgotPasswordScreen(BuildContext context) =>
   //     Navigator.pushNamed(context, Routers.forgotPass);

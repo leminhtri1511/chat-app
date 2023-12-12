@@ -3,7 +3,7 @@
 import 'dart:async';
 
 import 'package:chat_app/src/configs/widget/dialog/exit_app_dialog.dart';
-import 'package:chat_app/src/configs/widget/loading/loading_diaglog.dart';
+import 'package:chat_app/src/configs/widget/loading/loading_dialog.dart';
 import 'package:chat_app/src/presentation/app_routers.dart';
 import 'package:chat_app/src/presentation/routers.dart';
 import 'package:firebase_core/firebase_core.dart';

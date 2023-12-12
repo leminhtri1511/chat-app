@@ -34,7 +34,7 @@ class AppOutlineButton extends StatelessWidget {
           content: content,
           textAlign: TextAlign.center,
           style: STYLE_MEDIUM.copyWith(
-            color: colorContent ?? AppColors.PRIMARY_PURPLE,
+            color: color ?? AppColors.PRIMARY_PURPLE,
             fontWeight: FontWeight.bold,
           ),
         ),

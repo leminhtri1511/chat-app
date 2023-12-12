@@ -1,106 +1,30 @@
-import 'dart:async';
-
 import 'package:chat_app/src/configs/configs.dart';
-import 'package:chat_app/src/configs/widget/loading/loading_diaglog.dart';
 import 'package:chat_app/src/presentation/app_routers.dart';
 import 'package:chat_app/src/presentation/profile_screen/components/function_bar_widget.dart';
+import 'package:chat_app/src/presentation/profile_screen/profile.dart';
 import 'package:flutter/material.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter_svg/svg.dart';
-import 'package:lottie/lottie.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import '../base/base.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key});
 
   @override
-  _ProfileScreenState createState() => _ProfileScreenState();
+  State<ProfileScreen> createState() => _ProfileScreenState();
 }
 
 class _ProfileScreenState extends State<ProfileScreen> {
-  final FirebaseAuth _auth = FirebaseAuth.instance;
-  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
-  String? imageUrl;
-  String? userName;
-  String? userEmail;
-  String imgError =
-      'https://media.istockphoto.com/id/1409329028/vector/no-picture-available-placeholder-thumbnail-icon-illustration-design.jpg?s=612x612&w=0&k=20&c=_zOuJu755g2eEUioiOUdz_mHKJQJn-tDgIAhQzyeKUQ=';
+  ProfileViewModel? _viewModel;
 
   @override
-  void initState() {
-    super.initState();
-    _loadUserProfileImage();
-  }
-
-  Future<void> _loadUserProfileImage() async {
-    final user = _auth.currentUser;
-    if (user != null) {
-      final userId = user.uid;
-      final userData = await _firestore.collection('users').doc(userId).get();
-      if (userData.exists) {
-        setState(() {
-          imageUrl = userData['image_url'];
-          userName = userData['username'];
-          userEmail = userData['email'];
-        });
-      }
-    }
-  }
-
-  void logOutButton() {
-    logOutDialog(context);
-  }
-
-  Future<void> deletedLocal() async {
-    final pref = await SharedPreferences.getInstance();
-    await pref.clear();
-  }
-
-  dynamic logOutDialog(_) {
-    showDialog(
-      context: context,
-      builder: (ctx) => AlertDialog(
-        title: const Paragraph(
-          content: 'Log out !',
-          style: STYLE_MEDIUM_BOLD,
-        ),
-        content: Paragraph(
-          content: 'Are you sure you want to log out?',
-          style: STYLE_MEDIUM.copyWith(fontWeight: FontWeight.w500),
-        ),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.of(ctx).pop(false),
-            child: const Paragraph(content: 'No', style: STYLE_SMALL_BOLD),
-          ),
-          TextButton(
-            onPressed: () {
-              // LoadingDialog.showLoadingDialog(context);
-              Navigator.pop(context);
-              FirebaseAuth.instance.signOut();
-              AppRouter.goToSignInScreen(context);
-
-              // Timer(
-              //   const Duration(seconds: 1),
-              //   () {
-              //     LoadingDialog.hideLoadingDialog(context);
-              //     // AppRouter.goToSignInScreen(context);
-              //   },
-              // );
-            },
-            child: const Paragraph(content: 'Yes', style: STYLE_SMALL_BOLD),
-          ),
-        ],
-      ),
+  Widget build(BuildContext context) {
+    return BaseWidget<ProfileViewModel>(
+      viewModel: ProfileViewModel(),
+      onViewModelReady: (viewModel) => _viewModel = viewModel!..init(),
+      builder: (context, viewModel, child) => buildProfile(),
     );
   }
 
-  IconData lightMode = Icons.light_mode_rounded;
-  IconData darkMode = Icons.dark_mode_rounded;
-  bool iconBool = false;
-  @override
-  Widget build(BuildContext context) {
+  Widget buildProfile() {
     return SafeArea(
       child: Column(
         children: [
@@ -108,11 +32,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
           //   content: 'PROFILE',
           //   style: STYLE_LARGE_BOLD,
           // ),
-
           buildAvatarRow(),
           const Divider(),
           buildSettingList(),
-
           // const Spacer(),
           buildLogOutButton(),
         ],
@@ -126,33 +48,34 @@ class _ProfileScreenState extends State<ProfileScreen> {
           children: [
             Container(
               decoration: BoxDecoration(
-                border: Border.all(color: AppColors.SECONDARY_PURPLE),
+                border: Border.all(color: AppColors.SECONDARY_PURPLE, width: 1.5),
                 borderRadius: BorderRadius.circular(99),
               ),
               child: Padding(
                 padding: const EdgeInsets.all(4.0),
                 child: CircleAvatar(
                   radius: 38,
-                  backgroundImage: NetworkImage(imageUrl ?? imgError),
+                  backgroundImage: NetworkImage(
+                      _viewModel!.imageUrl ?? _viewModel!.imgError),
                 ),
               ),
             ),
             const SizedBox(width: 25),
-            if (userName == null)
+            if (_viewModel!.userName == null)
               const CircularProgressIndicator()
             else
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Paragraph(
-                    content: userName ?? 'User not found',
+                    content: _viewModel!.userName ?? 'User not found',
                     style: STYLE_LARGE_BOLD,
                   ),
                   const SizedBox(
                     height: 10,
                   ),
                   Paragraph(
-                    content: userEmail ?? '',
+                    content: _viewModel!.userEmail ?? '',
                     style: STYLE_MEDIUM,
                   ),
                 ],
@@ -215,8 +138,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
           enableButton: true,
           content: 'Log out',
           onTap: () {
-            logOutButton();
-            deletedLocal();
+            _viewModel!.logOutButton();
+            // _viewModel!.deletedLocal();
           },
         ),
       );

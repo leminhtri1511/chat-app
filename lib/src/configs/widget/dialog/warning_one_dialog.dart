@@ -5,6 +5,7 @@ import '../../constants/app_colors.dart';
 import '../../constants/app_space.dart';
 import '../../constants/app_styles.dart';
 import '../button/app_button.dart';
+import '../button/app_outline_button.dart';
 import '../text/paragraph.dart';
 
 class WarningOneDialog extends StatelessWidget {
@@ -14,20 +15,19 @@ class WarningOneDialog extends StatelessWidget {
     this.image,
     this.title,
     this.buttonName,
-    this.color,
-    this.colorNameLeft,
+    this.buttonColor,
     this.onTap,
   }) : super(key: key);
   final String? content;
   final String? title;
   final String? buttonName;
   final String? image;
-  final Color? color;
-  final Color? colorNameLeft;
-  final Function()? onTap;
+  final Color? buttonColor;
+  final VoidCallback? onTap;
 
   dynamic dialogContent(BuildContext context) {
-    return DecoratedBox(
+    return Container(
+      width: 150,
       decoration: BoxDecoration(
         color: Colors.white,
         shape: BoxShape.rectangle,
@@ -41,46 +41,52 @@ class WarningOneDialog extends StatelessWidget {
         ],
       ),
       child: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 40),
+        padding: EdgeInsets.symmetric(
+          vertical: 40,
+          horizontal: SizeToPadding.sizeMedium,
+        ),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            CircleAvatar(
-              backgroundColor: AppColors.COLOR_WHITE,
-              radius: 35,
-              child: SvgPicture.asset(
-                image ?? '',
+            if (image != null)
+              CircleAvatar(
+                backgroundColor: AppColors.COLOR_WHITE,
+                radius: 35,
+                child: 
+                Image.asset(
+                  image ?? '',
+                  fit: BoxFit.cover,
+                ),
               ),
-            ),
             const SizedBox(
               height: 25,
             ),
             Paragraph(
               content: title,
-              style: STYLE_BIG.copyWith(fontWeight: FontWeight.w500),
               textAlign: TextAlign.center,
+              style: STYLE_BIG.copyWith(fontWeight: FontWeight.w500),
             ),
-            if (content != null)
-              Padding(
-                padding: EdgeInsets.symmetric(
-                  horizontal: SizeToPadding.sizeSmall,
-                  vertical: SizeToPadding.sizeLarge,
-                ),
-                child: Paragraph(
-                  content: content ?? '',
-                  style: STYLE_MEDIUM.copyWith(fontWeight: FontWeight.w500),
-                ),
+            // if (content != null)
+            Padding(
+              padding: EdgeInsets.symmetric(
+                horizontal: SizeToPadding.sizeSmall,
+                vertical: SizeToPadding.sizeLarge,
               ),
+              child: Paragraph(
+                content: content ?? '',
+                textAlign: TextAlign.center,
+              ),
+            ),
             if (buttonName != null) const SizedBox(height: 10),
             if (buttonName != null)
-              Padding(
+             Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 60),
-                child: AppButton(
-                  enableButton: true,
+                child: AppOutlineButton(
                   content: buttonName,
-                  onTap: () => onTap!(),
+                  onTap: onTap,
+                  color: buttonColor,
                 ),
-              )
+              ),
           ],
         ),
       ),

@@ -172,8 +172,13 @@ class _SignUpScreenState extends State<SignUpScreen> {
       padding: const EdgeInsets.symmetric(vertical: 20),
       child: AppButton(
         enableButton: _viewModel!.enableSignUpChecker,
+        // enableButton: true,
         content: 'Sign up',
-        onTap: () => _viewModel!.signUpButton(),
+        onTap: () {
+          _viewModel!.signUpButton();
+          // _viewModel!.signUpSuccessDialog(context);
+          // _viewModel!.signUpFailDialog(context);
+        },
       ),
     );
   }

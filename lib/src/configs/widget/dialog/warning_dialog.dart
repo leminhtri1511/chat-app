@@ -11,8 +11,8 @@ class WarningDialog extends StatelessWidget {
     this.image,
     this.title,
     this.leftButtonName,
-    this.color,
-    this.colorNameLeft,
+    this.leftButtonColor,
+    this.rightButtonColor,
     this.rightButtonName,
     this.onTapLeft,
     this.onTapRight,
@@ -22,10 +22,22 @@ class WarningDialog extends StatelessWidget {
   final String? leftButtonName;
   final String? rightButtonName;
   final String? image;
-  final Color? color;
-  final Color? colorNameLeft;
-  final Function()? onTapLeft;
-  final Function()? onTapRight;
+  final Color? leftButtonColor;
+  final Color? rightButtonColor;
+  final VoidCallback? onTapLeft;
+  final VoidCallback? onTapRight;
+
+  @override
+  Widget build(BuildContext context) {
+    return Dialog(
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(10),
+      ),
+      elevation: 0,
+      backgroundColor: Colors.transparent,
+      child: dialogContent(context),
+    );
+  }
 
   dynamic dialogContent(BuildContext context) {
     return DecoratedBox(
@@ -46,13 +58,14 @@ class WarningDialog extends StatelessWidget {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            CircleAvatar(
-              backgroundColor: AppColors.COLOR_WHITE,
-              radius: 35,
-              child: SvgPicture.asset(
-                image ?? '',
+            if (image != null)
+              CircleAvatar(
+                backgroundColor: AppColors.COLOR_WHITE,
+                radius: 35,
+                child: Image.asset(
+                  image ?? '',
+                ),
               ),
-            ),
             const SizedBox(
               height: 25,
             ),
@@ -76,16 +89,17 @@ class WarningDialog extends StatelessWidget {
               children: [
                 Expanded(
                   child: Padding(
-                    padding: const EdgeInsets.only(left: 15, right: 5),
+                    padding: const EdgeInsets.only(left: 35, right: 5),
                     child: AppOutlineButton(
                       content: leftButtonName,
+                      color: leftButtonColor,
                       onTap: () => onTapLeft!(),
                     ),
                   ),
                 ),
                 Expanded(
                   child: Padding(
-                    padding: const EdgeInsets.only(left: 5, right: 15),
+                    padding: const EdgeInsets.only(left: 5, right: 35),
                     child: AppButton(
                       enableButton: true,
                       content: rightButtonName,
@@ -98,18 +112,6 @@ class WarningDialog extends StatelessWidget {
           ],
         ),
       ),
-    );
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Dialog(
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(10),
-      ),
-      elevation: 0,
-      backgroundColor: Colors.transparent,
-      child: dialogContent(context),
     );
   }
 }

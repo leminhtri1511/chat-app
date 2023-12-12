@@ -5,17 +5,13 @@ import 'dart:io';
 
 import 'package:chat_app/src/presentation/app_routers.dart';
 import 'package:chat_app/src/presentation/base/base.dart';
-import 'package:chat_app/src/presentation/bottom_navigation/bottom_navigation.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
-
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:restart_app/restart_app.dart';
 
 import '../../configs/configs.dart';
-import '../../configs/widget/loading/loading_diaglog.dart';
+import '../../configs/widget/loading/loading_dialog.dart';
 import '../routers.dart';
 
 class SignUpViewModel extends BaseViewModel {
@@ -74,14 +70,14 @@ class SignUpViewModel extends BaseViewModel {
 
   void onUserName() {
     final nameTextChecker = userNameController.text;
-    const nameMinimunLength = 5;
+    const nameMinimumLength = 5;
     if (nameTextChecker.isEmpty) {
       nameChecker = false;
       nameErrorMsg = 'Please enter your full name';
     } else if (nameTextChecker.contains(specialChars)) {
       nameChecker = false;
       nameErrorMsg = 'Name cannot contains numbers or special characters';
-    } else if (nameTextChecker.length < nameMinimunLength) {
+    } else if (nameTextChecker.length < nameMinimumLength) {
       nameChecker = false;
       nameErrorMsg = 'Enter more than 5 characters';
     } else {
@@ -175,19 +171,14 @@ class SignUpViewModel extends BaseViewModel {
           () {
             LoadingDialog.hideLoadingDialog(context);
             goToSignInScreen(context);
-            signUpSuccess(context);
+            signUpSuccessDialog(context);
           },
         );
+        // signUpSuccessDialog(context);
       } on FirebaseAuthException catch (e) {
         LoadingDialog.hideLoadingDialog(context);
         if (e.code == 'email-already-in-use') {}
-
-        ScaffoldMessenger.of(context).clearSnackBars();
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text(e.message ?? 'Auth failed.'),
-          ),
-        );
+        signUpFailDialog(e);
       }
     }
   }
@@ -198,20 +189,37 @@ class SignUpViewModel extends BaseViewModel {
   Future<void> goToHomeScreen(BuildContext context) =>
       Navigator.pushNamed(context, Routers.home);
 
-  dynamic signUpSuccess(_) {
+  dynamic signUpSuccessDialog(_) {
     showDialog(
       context: context,
-      builder: (ctx) => AlertDialog(
-        title: const Paragraph(
-          content: 'Sign up successfully!',
-          style: STYLE_LARGE_BOLD,
-        ),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.of(ctx).pop(false),
-            child: const Paragraph(content: 'Great', style: STYLE_SMALL_BOLD),
-          ),
-        ],
+      builder: (ctx) => WarningOneDialog(
+        image: AppImages.icSuccess,
+        title: 'Sign up successfully',
+        buttonName: 'Log in',
+        buttonColor: AppColors.COLOR_GREEN,
+        onTap: () => Navigator.pop(context),
+      ),
+    );
+  }
+
+  dynamic signUpFailDialog(e) {
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (ctx) => WarningOneDialog(
+        image: AppImages.icFalse,
+        title: 'Sign up fail',
+        buttonName: 'Cancel',
+        buttonColor: AppColors.PRIMARY_RED,
+        onTap: () {
+          Navigator.pop(context);
+          ScaffoldMessenger.of(context).clearSnackBars();
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text(e.message ?? 'Auth failed.'),
+            ),
+          );
+        },
       ),
     );
   }
