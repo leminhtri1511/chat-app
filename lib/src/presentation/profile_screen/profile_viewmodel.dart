@@ -1,37 +1,53 @@
 // ignore_for_file: use_build_context_synchronously, avoid_print
 
-import 'package:chat_app/src/configs/language/base_widget_language.dart';
 import 'package:chat_app/src/presentation/routers.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_core/firebase_core.dart';
-import 'package:firebase_storage/firebase_storage.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../configs/configs.dart';
 import '../base/base.dart';
 
 class ProfileViewModel extends BaseViewModel {
-  final FirebaseAuth _auth = FirebaseAuth.instance;
-  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
-  String? imageUrl;
-  String? userName;
-  String? userEmail;
+  final FirebaseAuth auth = FirebaseAuth.instance;
+  final FirebaseFirestore firestore = FirebaseFirestore.instance;
+  bool isLoggedIn = false;
+  late String imageUrl =
+      'https://media.istockphoto.com/id/1409329028/vector/no-picture-available-placeholder-thumbnail-icon-illustration-design.jpg?s=612x612&w=0&k=20&c=_zOuJu755g2eEUioiOUdz_mHKJQJn-tDgIAhQzyeKUQ=';
+
+  late String userName = '';
+  late String userEmail = '';
   String imgError =
       'https://media.istockphoto.com/id/1409329028/vector/no-picture-available-placeholder-thumbnail-icon-illustration-design.jpg?s=612x612&w=0&k=20&c=_zOuJu755g2eEUioiOUdz_mHKJQJn-tDgIAhQzyeKUQ=';
 
-  dynamic init() {
-    //  super.initState();
-    loadUserProfileImage();
+  dynamic init() async {
+    final prefs = await SharedPreferences.getInstance();
+    isLoggedIn = auth.currentUser != null;
+    if (isLoggedIn) {
+      await loadLocalData();
+      imageUrl = prefs.getString('cachedImageUrl') ?? imgError;
+      userName = prefs.getString('cachedUserName') ?? 'User not found';
+      userEmail = prefs.getString('cachedUserEmail') ?? '';
+    } else {
+      await loadUserInfor();
+    }
+
+    // if (isLoggedIn == false) {
+    //   await loadLocalData();
+    //   imageUrl = prefs.getString('cachedImageUrl') ?? imgError;
+    //   userName = prefs.getString('cachedUserName') ?? 'User not found';
+    //   userEmail = prefs.getString('cachedUserEmail') ?? '';
+    // } else {
+    //   await loadUserInfor();
+    // }
   }
 
-  Future<void> loadUserProfileImage() async {
-    final user = _auth.currentUser;
+  Future<void> loadUserInfor() async {
+    final user = auth.currentUser;
+
     if (user != null) {
       final userId = user.uid;
-      final userData = await _firestore.collection('users').doc(userId).get();
+      final userData = await firestore.collection('users').doc(userId).get();
       if (userData.exists) {
         imageUrl = userData['image_url'];
         userName = userData['username'];
@@ -39,6 +55,21 @@ class ProfileViewModel extends BaseViewModel {
         notifyListeners();
       }
     }
+    final prefs = await SharedPreferences.getInstance();
+    prefs.setString('cachedImageUrl', imageUrl);
+    prefs.setString('cachedUserName', userName);
+    prefs.setString('cachedUserEmail', userEmail);
+  }
+
+  Future<void> loadLocalData() async {
+    final prefs = await SharedPreferences.getInstance();
+    imageUrl = prefs.getString('cachedImageUrl') ?? '';
+    userName = prefs.getString('cachedUserName') ?? 'User not found';
+    userEmail = prefs.getString('cachedUserEmail') ?? '';
+    print('localImage: --- ${prefs.getString('cachedImageUrl')}');
+    print('localUserName: --- ${prefs.getString('cachedUserName')}');
+    print('localUserEmail: --- ${prefs.getString('cachedUserEmail')}');
+    notifyListeners();
   }
 
   void logOutButton() {

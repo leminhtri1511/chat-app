@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:chat_app/src/configs/configs.dart';
 import 'package:chat_app/src/presentation/app_routers.dart';
 import 'package:chat_app/src/presentation/profile_screen/components/function_bar_widget.dart';
@@ -31,7 +32,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
           buildAvatarRow(),
           const Divider(),
           buildSettingList(),
-          // buildLogOutButton(),
         ],
       ),
     );
@@ -41,41 +41,31 @@ class _ProfileScreenState extends State<ProfileScreen> {
         padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 20),
         child: Row(
           children: [
-            Container(
-              decoration: BoxDecoration(
-                border:
-                    Border.all(color: AppColors.SECONDARY_PURPLE, width: 1.5),
-                borderRadius: BorderRadius.circular(99),
+            CachedNetworkImage(
+              imageUrl: _viewModel!.imageUrl,
+              placeholder: (context, url) => buildAvatarImage(
+                NetworkImage(_viewModel!.imgError),
               ),
-              child: Padding(
-                padding: const EdgeInsets.all(4.0),
-                child: CircleAvatar(
-                  radius: 38,
-                  backgroundImage: NetworkImage(
-                      _viewModel!.imageUrl ?? _viewModel!.imgError),
-                ),
-              ),
+              imageBuilder: (context, imageProvider) =>
+                  buildAvatarImage(imageProvider),
             ),
             const SizedBox(width: 25),
-            if (_viewModel!.userName == null)
-              const CircularProgressIndicator()
-            else
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Paragraph(
-                    content: _viewModel!.userName ?? 'User not found',
-                    style: STYLE_LARGE_BOLD,
-                  ),
-                  const SizedBox(
-                    height: 10,
-                  ),
-                  Paragraph(
-                    content: _viewModel!.userEmail ?? '',
-                    style: STYLE_MEDIUM,
-                  ),
-                ],
-              ),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Paragraph(
+                  content: _viewModel!.userName,
+                  style: STYLE_LARGE_BOLD,
+                ),
+                const SizedBox(
+                  height: 10,
+                ),
+                Paragraph(
+                  content: _viewModel!.userEmail,
+                  style: STYLE_MEDIUM,
+                ),
+              ],
+            ),
             const Spacer(),
             // Lottie.asset(AppImages.qrCode, height: 40),
             // IconButton(
@@ -127,22 +117,28 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 svgIcon: AppImages.logOut,
                 title: 'Log out',
                 titleColor: AppColors.FIRST_RED,
-                onTap: () =>_viewModel!.logOutButton(),
+                onTap: () => _viewModel!.logOutButton(),
               ),
             ],
           ),
         ),
       );
 
-  Widget buildLogOutButton() => Padding(
-        padding: const EdgeInsets.symmetric(vertical: 35, horizontal: 20),
-        child: AppButton(
-          enableButton: true,
-          content: 'Log out',
-          onTap: () {
-            _viewModel!.logOutButton();
-            // _viewModel!.deletedLocal();
-          },
+  Widget buildAvatarImage(ImageProvider<Object>? backgroundImage) => Container(
+        decoration: BoxDecoration(
+          border: Border.all(
+            color: AppColors.SECONDARY_PURPLE,
+            width: 1.5,
+          ),
+          borderRadius: BorderRadius.circular(99),
+        ),
+        child: Padding(
+          padding: const EdgeInsets.all(4.0),
+          child: CircleAvatar(
+            radius: 38,
+            backgroundColor: Colors.transparent,
+            backgroundImage: backgroundImage,
+          ),
         ),
       );
 }
