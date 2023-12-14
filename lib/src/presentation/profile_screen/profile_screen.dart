@@ -42,7 +42,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
         child: Row(
           children: [
             CachedNetworkImage(
-              imageUrl: _viewModel!.imageUrl,
+              imageUrl: _viewModel!.imageUrl ?? _viewModel!.imgError,
               placeholder: (context, url) => buildAvatarImage(
                 NetworkImage(_viewModel!.imgError),
               ),

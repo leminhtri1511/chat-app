@@ -189,7 +189,7 @@ class SignUpViewModel extends BaseViewModel {
       context: context,
       barrierDismissible: false,
       builder: (ctx) => WarningOneDialog(
-        image: AppImages.icSuccess,
+        imagePng: AppImages.icSuccess,
         title: 'Sign up successfully',
         content: 'Now you can log in to your account',
         buttonName: 'Log in',
@@ -204,7 +204,7 @@ class SignUpViewModel extends BaseViewModel {
       context: context,
       barrierDismissible: false,
       builder: (ctx) => WarningOneDialog(
-        image: AppImages.icFalse,
+        imagePng: AppImages.icFalse,
         title: 'Sign up fail',
         content: 'Please check your information and try again',
         buttonName: 'Cancel',

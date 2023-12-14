@@ -11,35 +11,17 @@ import '../base/base.dart';
 class ProfileViewModel extends BaseViewModel {
   final FirebaseAuth auth = FirebaseAuth.instance;
   final FirebaseFirestore firestore = FirebaseFirestore.instance;
-  bool isLoggedIn = false;
-  late String imageUrl =
-      'https://media.istockphoto.com/id/1409329028/vector/no-picture-available-placeholder-thumbnail-icon-illustration-design.jpg?s=612x612&w=0&k=20&c=_zOuJu755g2eEUioiOUdz_mHKJQJn-tDgIAhQzyeKUQ=';
 
-  late String userName = '';
-  late String userEmail = '';
+  String? imageUrl;
+  String? userName;
+  String? userEmail;
   String imgError =
       'https://media.istockphoto.com/id/1409329028/vector/no-picture-available-placeholder-thumbnail-icon-illustration-design.jpg?s=612x612&w=0&k=20&c=_zOuJu755g2eEUioiOUdz_mHKJQJn-tDgIAhQzyeKUQ=';
 
   dynamic init() async {
-    final prefs = await SharedPreferences.getInstance();
-    isLoggedIn = auth.currentUser != null;
-    if (isLoggedIn) {
-      await loadLocalData();
-      imageUrl = prefs.getString('cachedImageUrl') ?? imgError;
-      userName = prefs.getString('cachedUserName') ?? 'User not found';
-      userEmail = prefs.getString('cachedUserEmail') ?? '';
-    } else {
-      await loadUserInfor();
-    }
-
-    // if (isLoggedIn == false) {
-    //   await loadLocalData();
-    //   imageUrl = prefs.getString('cachedImageUrl') ?? imgError;
-    //   userName = prefs.getString('cachedUserName') ?? 'User not found';
-    //   userEmail = prefs.getString('cachedUserEmail') ?? '';
-    // } else {
-    //   await loadUserInfor();
-    // }
+    //  super.initState();
+    loadUserInfor();
+    // loadLocalData();
   }
 
   Future<void> loadUserInfor() async {
@@ -52,25 +34,23 @@ class ProfileViewModel extends BaseViewModel {
         imageUrl = userData['image_url'];
         userName = userData['username'];
         userEmail = userData['email'];
+
         notifyListeners();
       }
     }
-    final prefs = await SharedPreferences.getInstance();
-    prefs.setString('cachedImageUrl', imageUrl);
-    prefs.setString('cachedUserName', userName);
-    prefs.setString('cachedUserEmail', userEmail);
+    // final prefs = await SharedPreferences.getInstance();
+    // prefs.setString('cachedImageUrl', imageUrl ?? '');
+    // prefs.setString('cachedUserName', userName ?? 'User not found');
+    // prefs.setString('cachedUserEmail', userEmail ?? '');
   }
 
-  Future<void> loadLocalData() async {
-    final prefs = await SharedPreferences.getInstance();
-    imageUrl = prefs.getString('cachedImageUrl') ?? '';
-    userName = prefs.getString('cachedUserName') ?? 'User not found';
-    userEmail = prefs.getString('cachedUserEmail') ?? '';
-    print('localImage: --- ${prefs.getString('cachedImageUrl')}');
-    print('localUserName: --- ${prefs.getString('cachedUserName')}');
-    print('localUserEmail: --- ${prefs.getString('cachedUserEmail')}');
-    notifyListeners();
-  }
+  // Future<void> loadLocalData() async {
+  //   final prefs = await SharedPreferences.getInstance();
+  //   imageUrl = prefs.getString('cachedImageUrl') ?? '';
+  //   userName = prefs.getString('cachedUserName') ?? 'User not found';
+  //   userEmail = prefs.getString('cachedUserEmail') ?? '';
+  //   notifyListeners();
+  // }
 
   void logOutButton() {
     logOutDialog(context);

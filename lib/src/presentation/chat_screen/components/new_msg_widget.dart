@@ -1,5 +1,10 @@
+import 'dart:math';
+
 import 'package:audioplayers/audioplayers.dart';
+import 'package:chat_app/src/configs/app_result/app_result.dart';
+import 'package:chat_app/src/configs/configs.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 import 'package:flutter/material.dart';
@@ -34,7 +39,9 @@ class _NewMsgWidgetState extends State<NewMsgWidget> {
     if (enteredMsg.trim().isEmpty) {
       return;
     }
-    audioSent.play(AssetSource('audios/sent_msg.mp3'),);
+    audioSent.play(
+      AssetSource('audios/sent_msg.mp3'),
+    );
     FirebaseFirestore.instance.collection('chat').add({
       'text': enteredMsg,
       'createdAt': Timestamp.now(),
@@ -45,7 +52,7 @@ class _NewMsgWidgetState extends State<NewMsgWidget> {
     });
 
     msgController.clear();
-    // FocusScope.of(context).unfocus();
+// FocusScope.of(context).unfocus();
   }
 
   @override

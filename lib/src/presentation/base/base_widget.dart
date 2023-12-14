@@ -72,7 +72,10 @@ class _BaseWidgetState<T extends BaseViewModel> extends State<BaseWidget<T>> {
         backgroundColor: Theme.of(context).colorScheme.surface,
         body: ChangeNotifierProvider<T>(
           create: (context) => viewModel!..setContext(context),
-          child: Consumer<T>(builder: widget.builder, child: widget.child),
+          child: Consumer<T>(
+            builder: widget.builder,
+            child: widget.child,
+          ),
         ),
       ),
     );

@@ -2,6 +2,7 @@ import 'package:audioplayers/audioplayers.dart';
 import 'package:chat_app/src/configs/configs.dart';
 import 'package:chat_app/src/presentation/chat_screen/components/msg_block_widget.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -15,6 +16,7 @@ class ChatMsgWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final authUser = FirebaseAuth.instance.currentUser;
+
     // final msgIncome = AudioPlayer().play(AssetSource('audios/income_msg.mp3'));
     return Center(
       child: StreamBuilder(
@@ -24,24 +26,27 @@ class ChatMsgWidget extends StatelessWidget {
             .snapshots(),
         builder: (context, chatSnapshots) {
           final loadedMsg = chatSnapshots.data?.docs;
+
           if (chatSnapshots.connectionState == ConnectionState.waiting) {
             return const Center(
               child: ThreeBounceLoading(),
             );
           }
-    
+          
           if (!chatSnapshots.hasData || chatSnapshots.data!.docs.isEmpty) {
             return const Paragraph(
               content: 'No msg yet!',
               style: STYLE_MEDIUM,
             );
           }
+
           if (chatSnapshots.hasError) {
             return const Paragraph(
               content: 'Something went wrong...',
               style: STYLE_MEDIUM,
             );
           }
+
           return ListView.builder(
             padding: const EdgeInsets.only(
               bottom: 40,
@@ -58,7 +63,7 @@ class ChatMsgWidget extends StatelessWidget {
               final currentMsgUserId = chatMsg?['userId'];
               final nextMsgUserId = nextMsg != null ? nextMsg['userId'] : null;
               final nextUserIsSame = nextMsgUserId == currentMsgUserId;
-    
+
               if (nextUserIsSame) {
                 return MsgBlockWidget.next(
                   userEmail: chatMsg?['userEmail'],

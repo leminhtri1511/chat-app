@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:lottie/lottie.dart';
 
 import '../../constants/app_colors.dart';
 import '../../constants/app_space.dart';
@@ -12,16 +13,20 @@ class WarningOneDialog extends StatelessWidget {
   const WarningOneDialog({
     super.key,
     this.content,
-    this.image,
+    this.imagePng,
     this.title,
     this.buttonName,
     this.buttonColor,
     this.onTap,
+    this.imageSvg,
+    this.imageLottie,
   });
   final String? content;
   final String? title;
   final String? buttonName;
-  final String? image;
+  final String? imagePng;
+  final String? imageSvg;
+  final String? imageLottie;
   final Color? buttonColor;
   final VoidCallback? onTap;
 
@@ -61,14 +66,25 @@ class WarningOneDialog extends StatelessWidget {
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              if (image != null)
+              if (imagePng != null)
                 CircleAvatar(
                   backgroundColor: AppColors.COLOR_WHITE,
                   radius: 35,
                   child: Image.asset(
-                    image ?? '',
+                    imagePng ?? '',
                     fit: BoxFit.cover,
                   ),
+                ),
+              if (imageSvg != null)
+                CircleAvatar(
+                  backgroundColor: AppColors.COLOR_WHITE,
+                  radius: 35,
+                  child: SvgPicture.asset(imageSvg ?? ''),
+                ),
+              if (imageLottie != null)
+                SizedBox(
+                  height: 100,
+                  child: Lottie.asset(imageLottie ?? ''),
                 ),
               const SizedBox(
                 height: 10,
@@ -78,7 +94,6 @@ class WarningOneDialog extends StatelessWidget {
                 textAlign: TextAlign.center,
                 style: STYLE_LARGE_BIG.copyWith(fontWeight: FontWeight.w600),
               ),
-
               Padding(
                 padding: EdgeInsets.symmetric(
                   horizontal: SizeToPadding.sizeSmall,

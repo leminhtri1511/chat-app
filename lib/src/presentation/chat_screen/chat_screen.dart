@@ -26,24 +26,6 @@ class ChatScreen extends StatefulWidget {
 
 class _ChatScreenState extends State<ChatScreen> {
   ChatScreenViewModel? _viewModel;
-  final currentUser = FirebaseAuth.instance.currentUser;
-
-  void setUpPushNotification() async {
-    final fcm = FirebaseMessaging.instance;
-
-    await fcm.requestPermission();
-
-    // final token = await fcm.getToken();
-    // print('Token: ${token}');
-    fcm.subscribeToTopic('chat');
-  }
-
-  @override
-  void initState() {
-    super.initState();
-
-    setUpPushNotification();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -54,7 +36,7 @@ class _ChatScreenState extends State<ChatScreen> {
     );
   }
 
-  //MAIN WIDGET
+  // MAIN WIDGET
   Widget buildChatScreen() {
     return Column(
       children: [
@@ -68,13 +50,12 @@ class _ChatScreenState extends State<ChatScreen> {
   }
 
   Widget buildAppBar() {
-    final checkAdmin = currentUser?.email;
+    final checkAdmin = _viewModel!.currentUser?.email;
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 25.0),
+      padding: const EdgeInsets.symmetric(horizontal: 25.0, vertical: 10),
       child: SafeArea(
         child: Row(
           children: [
-            // const Spacer(),
             Paragraph(
               content: 'Group chat',
               style: STYLE_LARGE_BOLD.copyWith(
@@ -88,25 +69,20 @@ class _ChatScreenState extends State<ChatScreen> {
                 icon: const Icon(Icons.menu),
               )
           ],
-          // actions: [
-          //
-          // ],
         ),
       ),
     );
   }
 
-  PopupMenuItem<MenuItem> buildItem(MenuItem item) => PopupMenuItem(
-        child: Row(
-          children: [
-            Icon(
-              item.icon,
-            ),
-            Paragraph(
-              content: item.text.toString(),
-              style: STYLE_SMALL_BOLD,
-            ),
-          ],
-        ),
-      );
+  // PopupMenuItem<MenuItem> buildItem(MenuItem item) => PopupMenuItem(
+  //       child: Row(
+  //         children: [
+  //           Icon(item.icon),
+  //           Paragraph(
+  //             content: item.text.toString(),
+  //             style: STYLE_SMALL_BOLD,
+  //           ),
+  //         ],
+  //       ),
+  //     );
 }
