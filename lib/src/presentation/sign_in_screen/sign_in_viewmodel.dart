@@ -2,15 +2,12 @@
 
 import 'dart:async';
 
-import 'package:chat_app/src/configs/widget/dialog/exit_app_dialog.dart';
 import 'package:chat_app/src/configs/widget/loading/loading_dialog.dart';
-import 'package:chat_app/src/presentation/app_routers.dart';
 import 'package:chat_app/src/presentation/routers.dart';
-import 'package:firebase_core/firebase_core.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import '../../configs/configs.dart';
 import '../base/base.dart';
 
 class SignInViewModel extends BaseViewModel {
@@ -36,12 +33,10 @@ class SignInViewModel extends BaseViewModel {
     } else if (emailTextChecker.endsWith('@gmail.com')) {
       emailChecker = true;
       emailErrorMsg = '';
-    }
-     else if (emailTextChecker.indexOf('@gmail.com') > 0) {
+    } else if (emailTextChecker.indexOf('@gmail.com') > 0) {
       emailChecker = false;
       emailErrorMsg = 'Incorrect email';
-    } 
-    else {
+    } else {
       emailChecker = false;
       emailErrorMsg = 'Incorrect email';
     }
@@ -74,7 +69,7 @@ class SignInViewModel extends BaseViewModel {
     notifyListeners();
   }
 
-  void logInButton() async {
+  Future<void> logInButton() async {
     if (enableSignInChecker) {
       try {
         LoadingDialog.showLoadingDialog(context);
@@ -84,19 +79,26 @@ class SignInViewModel extends BaseViewModel {
           email: emailController.text,
           password: passwordController.text,
         )
-            .then((user) async {
-          user.user!.getIdToken().then((idToken) async {
-            final prefs = await SharedPreferences.getInstance();
-            await prefs.setString('jwt', idToken!);
-            print('idToken: ---: $idToken');
-          });
-          print('login success');
-        });
+            .then(
+          (user) async {
+            user.user!.getIdToken().then((idToken) async {
+              final prefs = await SharedPreferences.getInstance();
+              await prefs.setString('jwt', idToken!);
+              print('idToken: ---: $idToken');
+            });
+            print('login success');
+          },
+        );
+
         print(userLogIn);
-        Timer(const Duration(seconds: 1), () {
-          LoadingDialog.hideLoadingDialog(context);
-          AppRouter.goToChatScreen(context);
-        });
+
+        Timer(
+          const Duration(seconds: 1),
+          () {
+            LoadingDialog.hideLoadingDialog(context);
+            goToHomeScreen(context);
+          },
+        );
       } on FirebaseAuthException catch (e) {
         LoadingDialog.hideLoadingDialog(context);
         if (e.code == 'email-already-in-use') {}
@@ -105,22 +107,26 @@ class SignInViewModel extends BaseViewModel {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             content: Text(e.message ?? 'Auth failed.'),
+            
           ),
         );
       }
     }
   }
 
-  Future<void> exitWaring() => showDialog(
-        context: context,
-        builder: (context) => const ExitAppDialog(),
-      );
+  showNetWorkDialog(_) {
+    showDialog(
+      context: context,
+      builder: (context) => const WarningDialog(),
+    );
+  }
+
   Future<void> goToHomeScreen(BuildContext context) =>
       Navigator.pushNamed(context, Routers.navigation);
 
   Future<void> goToSignUpScreen(BuildContext context) =>
-      AppRouter.goToSignUpScreen(context);
+      Navigator.pushNamed(context, Routers.signUp);
 
   Future<void> goToForgotPasswordScreen(BuildContext context) =>
-      AppRouter.goForgotPassScreen(context);
+      Navigator.pushNamed(context, Routers.forgotPass);
 }

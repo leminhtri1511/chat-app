@@ -41,7 +41,7 @@ class WarningDialog extends StatelessWidget {
 
   dynamic dialogContent(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 35.0),
+      padding: const EdgeInsets.symmetric(horizontal: 25.0),
       child: DecoratedBox(
         decoration: BoxDecoration(
           color: Colors.white,

@@ -70,7 +70,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                     children: [
                       Column(
                         children: [
-                          const SizedBox(height: 15),
+                          const SizedBox(height: 5),
                           const Paragraph(
                             content: 'Connect friends easily & quickly',
                             style: TextStyle(
@@ -86,10 +86,8 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                             style: STYLE_SMALL_BOLD.copyWith(
                                 color: AppColors.COLOR_WHITE),
                           ),
-                          const SizedBox(height: 20),
-                          const SizedBox(
-                            height: 40,
-                          ),
+                          // const SizedBox(height: 20),
+                          const SizedBox(height: 30),
                           const Row(
                             mainAxisSize: MainAxisSize.min,
                             children: [
@@ -107,16 +105,16 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                               children: [
-                                const DiverderWidget(
+                                const DividerWidget(
                                   width: 160,
-                                  color: AppColors.BLACK_400,
+                                  color: Color.fromARGB(255, 95, 117, 140),
                                 ),
                                 Paragraph(
                                   content: 'OR',
                                   style: STYLE_LARGE.copyWith(
                                       color: AppColors.COLOR_WHITE),
                                 ),
-                                const DiverderWidget(
+                                const DividerWidget(
                                   color: AppColors.BLACK_400,
                                   width: 160,
                                 )
@@ -136,12 +134,12 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                             ),
                           ),
                           Padding(
-                            padding: const EdgeInsets.symmetric(vertical: 25),
+                            padding: const EdgeInsets.symmetric(vertical: 20),
                             child: Row(
                               mainAxisSize: MainAxisSize.min,
                               children: [
                                 Paragraph(
-                                  content: 'Alread have an account?',
+                                  content: 'Already have an account?',
                                   style: STYLE_SMALL_BOLD.copyWith(
                                       color: AppColors.BLACK_300),
                                 ),

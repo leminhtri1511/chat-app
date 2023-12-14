@@ -48,7 +48,7 @@ class ProfileViewModel extends BaseViewModel {
   dynamic logOutDialog(_) {
     showDialog(
       context: context,
-      barrierDismissible: false,
+      barrierDismissible: true,
       builder: (ctx) => WarningDialog(
         image: AppImages.icWarning2,
         title: 'Logging out',

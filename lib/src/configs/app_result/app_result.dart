@@ -1,5 +1,9 @@
 sealed class Result<S, E extends Exception> {
   const Result();
+
+  when(
+      {required Function(dynamic service) success,
+      required Null Function(dynamic exception) failure}) {}
 }
 
 final class Success<S, E extends Exception> extends Result<S, E> {

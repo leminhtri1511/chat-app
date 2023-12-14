@@ -68,6 +68,7 @@ dependencies:
   audioplayers: ^5.1.0
   flutter_launcher_icons: ^0.13.1
   url_launcher: ^6.2.1
+  rename: ^3.0.1
 
 dev_dependencies:
   flutter_test:

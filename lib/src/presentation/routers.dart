@@ -22,6 +22,7 @@ class Routers {
       case getStarted:
         return animRoute(
           const SplashScreen(),
+          // const SignUpScreen(),
           beginOffset: right,
           name: getStarted,
           arguments: arguments,

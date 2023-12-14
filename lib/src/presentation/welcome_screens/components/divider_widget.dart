@@ -1,10 +1,7 @@
-
-
-import 'package:chat_app/src/configs/configs.dart';
 import 'package:flutter/cupertino.dart';
 
-class DiverderWidget extends StatelessWidget {
-  const DiverderWidget({
+class DividerWidget extends StatelessWidget {
+  const DividerWidget({
     super.key,
     this.width,
     this.color,

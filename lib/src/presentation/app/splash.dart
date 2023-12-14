@@ -4,6 +4,7 @@ import 'dart:async';
 
 import 'package:chat_app/src/configs/configs.dart';
 import 'package:chat_app/src/presentation/app_routers.dart';
+import 'package:chat_app/src/presentation/routers.dart';
 
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -19,7 +20,7 @@ class _SplashScreenState extends State<SplashScreen> {
   Timer? timer;
 
   Timer startDelay() => timer = Timer(
-        const Duration(seconds: 2),
+        const Duration(seconds: 1),
         // goToLogin,
         goToWelcomeScreen,
       );
@@ -49,9 +50,9 @@ class _SplashScreenState extends State<SplashScreen> {
     final pref = await SharedPreferences.getInstance();
     print('auth_token: ${pref.getString('jwt')}');
     if (pref.getString('jwt') != null) {
-      await AppRouter.goToChatScreen(context);
+      await Navigator.pushNamed(context, Routers.navigation);
     } else {
-      await AppRouter.goToWelcomeScreen(context);
+      await Navigator.pushNamed(context, Routers.signIn);
     }
   }
 

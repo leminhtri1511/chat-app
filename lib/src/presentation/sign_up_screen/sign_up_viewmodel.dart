@@ -167,7 +167,7 @@ class SignUpViewModel extends BaseViewModel {
           'image_url': imageUrl,
         });
         LoadingDialog.hideLoadingDialog(context);
-        // goToSignInScreen(context);
+        goToSignInScreen(context);
         signUpSuccessDialog(context);
         // Timer(
         //   const Duration(seconds: 1),
@@ -194,7 +194,7 @@ class SignUpViewModel extends BaseViewModel {
         content: 'Now you can log in to your account',
         buttonName: 'Log in',
         buttonColor: AppColors.COLOR_GREEN,
-        onTap: () => goToSignInScreen(context),
+        onTap: () => Navigator.pop(context),
       ),
     );
   }
