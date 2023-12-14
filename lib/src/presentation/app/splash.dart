@@ -22,8 +22,9 @@ class _SplashScreenState extends State<SplashScreen> {
   Timer startDelay() => timer = Timer(
         const Duration(seconds: 1),
         // goToLogin,
-        goToWelcomeScreen,
+        welcomeScreen,
       );
+
   @override
   void initState() {
     super.initState();
@@ -46,9 +47,9 @@ class _SplashScreenState extends State<SplashScreen> {
     }
   }
 
-  void goToWelcomeScreen() async {
+  void welcomeScreen() async {
     final pref = await SharedPreferences.getInstance();
-    print('auth_token: ${pref.getString('jwt')}');
+    print('idToken: --- ${pref.getString('jwt')}');
     if (pref.getString('jwt') != null) {
       await Navigator.pushNamed(context, Routers.navigation);
     } else {
@@ -66,8 +67,7 @@ class _SplashScreenState extends State<SplashScreen> {
           children: [
             Image.asset(
               'assets/images/app_icon.png',
-              fit: BoxFit.cover,
-              // color: Colors.deepPurple[400],
+              // fit: BoxFit.cover,
               width: 100,
             ),
             const SizedBox(height: 10),

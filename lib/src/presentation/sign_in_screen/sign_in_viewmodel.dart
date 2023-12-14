@@ -84,7 +84,7 @@ class SignInViewModel extends BaseViewModel {
             user.user!.getIdToken().then((idToken) async {
               final prefs = await SharedPreferences.getInstance();
               await prefs.setString('jwt', idToken!);
-              print('idToken: ---: $idToken');
+              print('idToken: --- $idToken');
             });
             print('login success');
           },
