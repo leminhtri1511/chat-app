@@ -4,6 +4,7 @@ import 'dart:async';
 
 import 'package:chat_app/src/configs/widget/loading/loading_dialog.dart';
 import 'package:chat_app/src/presentation/routers.dart';
+import 'package:chat_app/src/resources/authentication.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -74,24 +75,12 @@ class SignInViewModel extends BaseViewModel {
       try {
         LoadingDialog.showLoadingDialog(context);
 
-        final userLogIn = await firebase
-            .signInWithEmailAndPassword(
-          email: emailController.text,
-          password: passwordController.text,
-        )
-            .then(
-          (user) async {
-            user.user!.getIdToken().then((idToken) async {
-              final prefs = await SharedPreferences.getInstance();
-              await prefs.setString('jwt', idToken!);
-              print('idToken: --- $idToken');
-            });
-            print('login success');
-          },
+        Authentication().signIn(
+          emailController.text,
+          passwordController.text,
         );
-
-        print(userLogIn);
-
+        // print('a: $userLogIn');
+        // if (userLogIn) {
         Timer(
           const Duration(seconds: 1),
           () {
@@ -99,15 +88,31 @@ class SignInViewModel extends BaseViewModel {
             goToHomeScreen(context);
           },
         );
+        // }  e
+        // final userLogIn = await firebase
+        //     .signInWithEmailAndPassword(
+        //   email: emailController.text,
+        //   password: passwordController.text,
+        // )
+        //     .then(
+        //   (user) async {
+        //     user.user!.getIdToken().then((idToken) async {
+        //       final prefs = await SharedPreferences.getInstance();
+        //       await prefs.setString('jwt', idToken!);
+        //       print('idToken: --- $idToken');
+        //     });
+        //     print('login success');
+        //   },
+        // );
       } on FirebaseAuthException catch (e) {
         LoadingDialog.hideLoadingDialog(context);
+
         if (e.code == 'email-already-in-use') {}
-        //
+
         ScaffoldMessenger.of(context).clearSnackBars();
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             content: Text(e.message ?? 'Auth failed.'),
-            
           ),
         );
       }

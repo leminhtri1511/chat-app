@@ -1,7 +1,6 @@
 import 'package:chat_app/src/configs/configs.dart';
 import 'package:chat_app/src/configs/widget/pick_image/pick_image.dart';
 
-
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 

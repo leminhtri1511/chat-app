@@ -5,6 +5,7 @@ import 'dart:io';
 
 import 'package:chat_app/src/presentation/app_routers.dart';
 import 'package:chat_app/src/presentation/base/base.dart';
+import 'package:chat_app/src/resources/authentication.dart';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
@@ -145,43 +146,44 @@ class SignUpViewModel extends BaseViewModel {
   void signUpButton() async {
     if (enableSignUpChecker) {
       try {
+        if (selectedImage == null) {
+          imageEmptyDialog(context);
+          return;
+        }
         LoadingDialog.showLoadingDialog(context);
-        final createUser = await firebase.createUserWithEmailAndPassword(
-          email: emailController.text,
-          password: passwordController.text,
+        await Authentication().signUp(
+          emailController.text,
+          userNameController.text,
+          passwordController.text,
+          selectedImage!,
         );
-        final storageRef = FirebaseStorage.instance
-            .ref()
-            .child('user_images')
-            .child('${createUser.user!.uid}.jpg');
-        await storageRef.putFile(selectedImage!);
-        final imageUrl = await storageRef.getDownloadURL();
 
-        await FirebaseFirestore.instance
-            .collection('users')
-            .doc(createUser.user!.uid)
-            .set({
-          'username': userNameController.text,
-          'email': emailController.text,
-          'password': passwordController.text,
-          'image_url': imageUrl,
-        });
         LoadingDialog.hideLoadingDialog(context);
         goToSignInScreen(context);
         signUpSuccessDialog(context);
-        // Timer(
-        //   const Duration(seconds: 1),
-        //   () {
-
-        //   },
-        // );
-        // signUpSuccessDialog(context);
       } on FirebaseAuthException catch (e) {
         LoadingDialog.hideLoadingDialog(context);
-        if (e.code == 'email-already-in-use') {}
         signUpFailDialog(e);
+      } catch (e) {
+        LoadingDialog.hideLoadingDialog(context);
+        print(e.toString());
       }
     }
+  }
+
+  dynamic imageEmptyDialog(_) {
+    showDialog(
+      context: context,
+      barrierDismissible: true,
+      builder: (ctx) => WarningOneDialog(
+        imagePng: AppImages.icWarning,
+        title: 'No profile picture',
+        content: 'Please choose a profile picture and try again',
+        buttonName: 'Cancel',
+        buttonColor: AppColors.SECOND_YELLOW,
+        onTap: () => Navigator.pop(context),
+      ),
+    );
   }
 
   dynamic signUpSuccessDialog(_) {
@@ -205,8 +207,8 @@ class SignUpViewModel extends BaseViewModel {
       barrierDismissible: false,
       builder: (ctx) => WarningOneDialog(
         imagePng: AppImages.icFalse,
-        title: 'Sign up fail',
-        content: 'Please check your information and try again',
+        title: 'Email registered',
+        content: 'Your email has been registered before',
         buttonName: 'Cancel',
         buttonColor: AppColors.FIRST_RED,
         onTap: () {

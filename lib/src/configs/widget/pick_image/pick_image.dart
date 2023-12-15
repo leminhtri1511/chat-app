@@ -43,11 +43,20 @@ class _PickImageState extends State<PickImage> {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        CircleAvatar(
-          radius: 50,
-          backgroundColor: AppColors.BLACK_200,
-          foregroundImage:
-              pickedImageFile != null ? FileImage(pickedImageFile!) : null,
+        Container(
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(99),
+            border: Border.all(color: AppColors.PRIMARY_PURPLE)
+          ),
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: CircleAvatar(
+              radius: 50,
+              backgroundColor: AppColors.BLACK_200,
+              foregroundImage:
+                  pickedImageFile != null ? FileImage(pickedImageFile!) : null,
+            ),
+          ),
         ),
         TextButton.icon(
           onPressed: pickImage,
