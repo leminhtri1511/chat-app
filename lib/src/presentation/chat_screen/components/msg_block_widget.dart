@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:audioplayers/audioplayers.dart';
 import 'package:chat_app/src/configs/configs.dart';
 import 'package:flutter/material.dart';
@@ -16,6 +18,7 @@ class MsgBlockWidget extends StatelessWidget {
     this.userEmail,
     this.username,
     this.message,
+    this.imageMsg,
     this.isMe,
   }) : isFirstInSequence = true;
 
@@ -24,10 +27,14 @@ class MsgBlockWidget extends StatelessWidget {
     super.key,
     required this.message,
     required this.isMe,
+    this.imageMsg,
     this.userEmail,
   })  : isFirstInSequence = false,
         userImage = null,
         username = null;
+  // image = null;
+
+  final String? imageMsg;
 
   // Whether or not this message bubble is the first in a sequence of messages
   // from the same user.
@@ -183,70 +190,92 @@ class MsgBlockWidget extends StatelessWidget {
                       ),
                     ),
                   // The "speech" box surrounding the message.
-                  Container(
-                    decoration: BoxDecoration(
-                      gradient: isMe!
-                          ? const LinearGradient(
-                              colors: [
-                                AppColors.PRIMARY_PURPLE,
-                                AppColors.PRIMARY_PURPLE,
-                              ],
-                              // begin: Alignment.bottomLeft,
-                              // end: Alignment.topRight,
+                  if (message != null)
+                    Container(
+                      decoration: BoxDecoration(
+                        gradient: isMe!
+                            ? const LinearGradient(
+                                colors: [
+                                  AppColors.PRIMARY_PURPLE,
+                                  AppColors.PRIMARY_PURPLE,
+                                ],
+                                // begin: Alignment.bottomLeft,
+                                // end: Alignment.topRight,
+                              )
+                            : const LinearGradient(
+                                colors: [
+                                  AppColors.BLACK_200,
+                                  AppColors.BLACK_200,
+                                ],
+                              ),
+                        // color: isMe
+                        //     ? AppColors.SECONDARY_PURPLE
+                        //     : theme.colorScheme.secondary.withAlpha(200),
+                        // Only show the message bubble's "speaking edge" if first in
+                        // the chain.
+                        // Whether the "speaking edge" is on the left or right depends
+                        // on whether or not the message bubble is the current user.
+                        borderRadius: BorderRadius.only(
+                          topLeft: !isMe! && isFirstInSequence
+                              ? Radius.zero
+                              : const Radius.circular(12),
+                          topRight: isMe! && isFirstInSequence
+                              ? Radius.zero
+                              : const Radius.circular(12),
+                          bottomLeft: const Radius.circular(12),
+                          bottomRight: const Radius.circular(12),
+                        ),
+                      ),
+                      constraints: const BoxConstraints(maxWidth: 250),
+                      padding: const EdgeInsets.symmetric(
+                        vertical: 11,
+                        horizontal: 15,
+                      ),
+                      margin: const EdgeInsets.symmetric(
+                        vertical: 4,
+                        horizontal: 12,
+                      ),
+                      child: isMe!
+                          ? SelectableText(
+                              message.toString(),
+                              style: const TextStyle(
+                                fontFamily: 'Quicksand',
+                                fontSize: 16,
+                                fontWeight: FontWeight.w600,
+                                color: AppColors.COLOR_WHITE,
+                              ),
                             )
-                          : const LinearGradient(
-                              colors: [
-                                AppColors.BLACK_200,
-                                AppColors.BLACK_200,
-                              ],
+                          : SelectableText(
+                              message.toString(),
+                              style: const TextStyle(
+                                fontFamily: 'Quicksand',
+                                fontSize: 16,
+                                fontWeight: FontWeight.w500,
+                                color: AppColors.BLACK,
+                              ),
                             ),
-                      // color: isMe
-                      //     ? AppColors.SECONDARY_PURPLE
-                      //     : theme.colorScheme.secondary.withAlpha(200),
-                      // Only show the message bubble's "speaking edge" if first in
-                      // the chain.
-                      // Whether the "speaking edge" is on the left or right depends
-                      // on whether or not the message bubble is the current user.
-                      borderRadius: BorderRadius.only(
-                        topLeft: !isMe! && isFirstInSequence
-                            ? Radius.zero
-                            : const Radius.circular(12),
-                        topRight: isMe! && isFirstInSequence
-                            ? Radius.zero
-                            : const Radius.circular(12),
-                        bottomLeft: const Radius.circular(12),
-                        bottomRight: const Radius.circular(12),
+                    ),
+                  if (imageMsg != null)
+                    Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 5.0),
+                      child: Container(
+                        height: 350,
+                        // width: 200,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(10),
+                          border: Border.all(
+                            color: AppColors.PRIMARY_PURPLE,
+                            width: 1.2,
+                          ),
+                        ),
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(10),
+                          child: Image.network(
+                            imageMsg.toString(),
+                          ),
+                        ),
                       ),
                     ),
-                    constraints: const BoxConstraints(maxWidth: 250),
-                    padding: const EdgeInsets.symmetric(
-                      vertical: 11,
-                      horizontal: 15,
-                    ),
-                    margin: const EdgeInsets.symmetric(
-                      vertical: 4,
-                      horizontal: 12,
-                    ),
-                    child: isMe!
-                        ? SelectableText(
-                            message.toString(),
-                            style: const TextStyle(
-                              fontFamily: 'Quicksand',
-                              fontSize: 16,
-                              fontWeight: FontWeight.w600,
-                              color: AppColors.COLOR_WHITE,
-                            ),
-                          )
-                        : SelectableText(
-                            message.toString(),
-                            style: const TextStyle(
-                              fontFamily: 'Quicksand',
-                              fontSize: 16,
-                              fontWeight: FontWeight.w500,
-                              color: AppColors.BLACK,
-                            ),
-                          ),
-                  ),
                 ],
               ),
             ],

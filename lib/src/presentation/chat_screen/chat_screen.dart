@@ -1,19 +1,9 @@
-import 'package:chat_app/src/configs/configs.dart';
-import 'package:chat_app/src/presentation/app_routers.dart';
 
+import 'package:chat_app/src/configs/configs.dart';
 import 'package:chat_app/src/presentation/chat_screen/components/chat_msg_widget.dart';
 import 'package:chat_app/src/presentation/chat_screen/components/new_msg_widget.dart';
 import 'package:chat_app/src/presentation/chat_screen/chat_screen_viewmodel.dart';
-import 'package:chat_app/src/presentation/chat_screen/data/items.dart';
-import 'package:chat_app/src/presentation/chat_screen/models/menu_item.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_storage/firebase_storage.dart';
-import 'package:flutter/cupertino.dart';
-
 import 'package:flutter/material.dart';
-
-import 'package:firebase_messaging/firebase_messaging.dart';
 
 import '../base/base.dart';
 

@@ -68,6 +68,7 @@ class ChatMsgWidget extends StatelessWidget {
                 return MsgBlockWidget.next(
                   userEmail: chatMsg?['userEmail'],
                   message: chatMsg?['text'],
+                  imageMsg:  chatMsg?['chatImage'],
                   isMe: authUser?.uid == currentMsgUserId,
                 );
               } else {

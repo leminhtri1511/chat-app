@@ -27,6 +27,7 @@ class _PickImageState extends State<PickImage> {
       imageQuality: 100,
       maxWidth: 150,
     );
+    
     if (pickedImage == null) {
       return;
     }
