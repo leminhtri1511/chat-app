@@ -5,7 +5,9 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_slidable/flutter_slidable.dart';
 
 String imgError =
     'https://media.istockphoto.com/id/1409329028/vector/no-picture-available-placeholder-thumbnail-icon-illustration-design.jpg?s=612x612&w=0&k=20&c=_zOuJu755g2eEUioiOUdz_mHKJQJn-tDgIAhQzyeKUQ=';
@@ -67,6 +69,7 @@ class ChatMsgWidget extends StatelessWidget {
               if (nextUserIsSame) {
                 return MsgBlockWidget.next(
                   userEmail: chatMsg?['userEmail'],
+                  // userImage: chatMsg?['userImage'],
                   message: chatMsg?['text'],
                   imageMsg: chatMsg?['chatImage'],
                   isMe: authUser?.uid == currentMsgUserId,

@@ -71,6 +71,7 @@ dependencies:
   rename: ^3.0.1
   cached_network_image: ^3.3.0
   animations: ^2.0.8
+  flutter_slidable: ^3.0.1
 
 dev_dependencies:
   flutter_test:

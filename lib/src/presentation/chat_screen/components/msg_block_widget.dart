@@ -3,7 +3,9 @@ import 'dart:io';
 import 'package:animations/animations.dart';
 import 'package:audioplayers/audioplayers.dart';
 import 'package:chat_app/src/configs/configs.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 
@@ -56,6 +58,7 @@ class MsgBlockWidget extends StatelessWidget {
 
   // Controls how the MessageBubble will be aligned.
   final bool? isMe;
+
   bool isURL(String text) {
     // Implement your logic to check if 'text' is a URL
     // For example, you can use a regular expression to check
@@ -125,6 +128,7 @@ class MsgBlockWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+
     return Stack(
       children: [
         if (userImage != null)
@@ -190,7 +194,7 @@ class MsgBlockWidget extends StatelessWidget {
                         ),
                       ),
                     ),
-                  // The "speech" box surrounding the message.
+
                   if (message != null)
                     Container(
                       decoration: BoxDecoration(
@@ -200,8 +204,6 @@ class MsgBlockWidget extends StatelessWidget {
                                   AppColors.PRIMARY_PURPLE,
                                   AppColors.PRIMARY_PURPLE,
                                 ],
-                                // begin: Alignment.bottomLeft,
-                                // end: Alignment.topRight,
                               )
                             : const LinearGradient(
                                 colors: [
@@ -209,13 +211,6 @@ class MsgBlockWidget extends StatelessWidget {
                                   AppColors.BLACK_200,
                                 ],
                               ),
-                        // color: isMe
-                        //     ? AppColors.SECONDARY_PURPLE
-                        //     : theme.colorScheme.secondary.withAlpha(200),
-                        // Only show the message bubble's "speaking edge" if first in
-                        // the chain.
-                        // Whether the "speaking edge" is on the left or right depends
-                        // on whether or not the message bubble is the current user.
                         borderRadius: BorderRadius.only(
                           topLeft: !isMe! && isFirstInSequence
                               ? Radius.zero
@@ -258,7 +253,17 @@ class MsgBlockWidget extends StatelessWidget {
                     ),
                   if (imageMsg != null)
                     Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 5.0),
+                      padding: isMe == true
+                          ? const EdgeInsets.only(
+                              top: 5.0,
+                              bottom: 5,
+                              right: 10,
+                            )
+                          : const EdgeInsets.only(
+                              top: 5.0,
+                              bottom: 5,
+                              left: 10,
+                            ),
                       child: ClipRRect(
                         borderRadius: BorderRadius.circular(20),
                         child: OpenContainer(
@@ -300,7 +305,7 @@ class MsgBlockWidget extends StatelessWidget {
                                       borderRadius: BorderRadius.circular(20),
                                       child: Image.network(
                                         imageMsg.toString(),
-                                        fit: BoxFit.cover,
+                                        // fit: BoxFit.cover,
                                       ),
                                     ),
                                   ),
@@ -310,24 +315,6 @@ class MsgBlockWidget extends StatelessWidget {
                           ),
                         ),
                       ),
-                      //  Container(
-                      //   height: 350,
-                      //   width: 200,
-                      //   decoration: BoxDecoration(
-                      //     borderRadius: BorderRadius.circular(20),
-                      //     border: Border.all(
-                      //       color: AppColors.PRIMARY_PURPLE,
-                      //       width: 1.2,
-                      //     ),
-                      //   ),
-                      //   child: ClipRRect(
-                      //     borderRadius: BorderRadius.circular(20),
-                      //     child: Image.network(
-                      //       imageMsg.toString(),
-                      //       fit: BoxFit.cover,
-                      //     ),
-                      //   ),
-                      // ),
                     ),
                 ],
               ),
