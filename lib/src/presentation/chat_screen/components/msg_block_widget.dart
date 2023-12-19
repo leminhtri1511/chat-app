@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:animations/animations.dart';
 import 'package:audioplayers/audioplayers.dart';
 import 'package:chat_app/src/configs/configs.dart';
 import 'package:flutter/material.dart';
@@ -258,23 +259,75 @@ class MsgBlockWidget extends StatelessWidget {
                   if (imageMsg != null)
                     Padding(
                       padding: const EdgeInsets.symmetric(vertical: 5.0),
-                      child: Container(
-                        height: 350,
-                        // width: 200,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(10),
-                          border: Border.all(
-                            color: AppColors.PRIMARY_PURPLE,
-                            width: 1.2,
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(20),
+                        child: OpenContainer(
+                          closedBuilder: (context, action) => Container(
+                            height: 350,
+                            width: 200,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(20),
+                              border: Border.all(
+                                color: AppColors.PRIMARY_PURPLE,
+                                width: 1.2,
+                              ),
+                            ),
+                            child: ClipRRect(
+                              borderRadius: BorderRadius.circular(20),
+                              child: Image.network(
+                                imageMsg.toString(),
+                                fit: BoxFit.cover,
+                              ),
+                            ),
                           ),
-                        ),
-                        child: ClipRRect(
-                          borderRadius: BorderRadius.circular(10),
-                          child: Image.network(
-                            imageMsg.toString(),
+                          openBuilder: (context, action) => Column(
+                            children: [
+                              AppBar(),
+                              Expanded(
+                                child: Padding(
+                                  padding: const EdgeInsets.all(20.0),
+                                  child: Container(
+                                    // height: double.infinity,
+                                    // width: double.infinity,
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(20),
+                                      border: Border.all(
+                                        color: AppColors.PRIMARY_PURPLE,
+                                        width: 1.2,
+                                      ),
+                                    ),
+                                    child: ClipRRect(
+                                      borderRadius: BorderRadius.circular(20),
+                                      child: Image.network(
+                                        imageMsg.toString(),
+                                        fit: BoxFit.cover,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ],
                           ),
                         ),
                       ),
+                      //  Container(
+                      //   height: 350,
+                      //   width: 200,
+                      //   decoration: BoxDecoration(
+                      //     borderRadius: BorderRadius.circular(20),
+                      //     border: Border.all(
+                      //       color: AppColors.PRIMARY_PURPLE,
+                      //       width: 1.2,
+                      //     ),
+                      //   ),
+                      //   child: ClipRRect(
+                      //     borderRadius: BorderRadius.circular(20),
+                      //     child: Image.network(
+                      //       imageMsg.toString(),
+                      //       fit: BoxFit.cover,
+                      //     ),
+                      //   ),
+                      // ),
                     ),
                 ],
               ),

@@ -1,11 +1,10 @@
 import 'dart:io';
-import 'dart:math';
 
+import 'package:animations/animations.dart';
 import 'package:audioplayers/audioplayers.dart';
-import 'package:chat_app/src/configs/app_result/app_result.dart';
+
 import 'package:chat_app/src/configs/configs.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/cupertino.dart';
@@ -33,12 +32,12 @@ class _NewMsgWidgetState extends State<NewMsgWidget> {
     super.dispose();
   }
 
-  Future<String?> uploadImage(File imageFile) async {
+  Future<String?> uploadImage(File? imageFile) async {
     try {
       final storageRef = FirebaseStorage.instance
           .ref()
           .child('images/${DateTime.now().millisecondsSinceEpoch}.jpg');
-      final uploadTask = storageRef.putFile(imageFile);
+      final uploadTask = storageRef.putFile(imageFile!);
       final TaskSnapshot snapshot = await uploadTask;
       final String downloadUrl = await snapshot.ref.getDownloadURL();
       return downloadUrl;
@@ -49,41 +48,61 @@ class _NewMsgWidgetState extends State<NewMsgWidget> {
   }
 
   void submitMsg() async {
-    // Xác định nếu có ảnh được chọn
-    if (pickedImageFile == null && msgController.text.isEmpty) {
+    final enteredMsg = msgController.text;
+    final user = FirebaseAuth.instance.currentUser!;
+    final userData = await FirebaseFirestore.instance
+        .collection('users')
+        .doc(user.uid)
+        .get();
+
+    if (enteredMsg.isEmpty && pickedImageFile == null) {
+      print('Select an image or enter a text to send msg.');
       return;
     }
-    
-    if (pickedImageFile != null) {
-      // Tải ảnh lên Firebase Storage
-      final imageUrl = await uploadImage(pickedImageFile!);
 
-      // Sau khi tải ảnh lên thành công, có thể thêm thông tin và tin nhắn vào Firestore
+    // final imageUrl = await uploadImage(pickedImageFile);
+
+    if (pickedImageFile != null && enteredMsg.isNotEmpty) {
+      final imageUrl = await uploadImage(pickedImageFile);
       if (imageUrl != null) {
-        // Thêm thông tin vào Firestore với URL của ảnh
+        // Add data to Firestore with imageUrl
         FirebaseFirestore.instance.collection('chat').add({
-          'text': msgController.text,
+          'text': enteredMsg,
           'createdAt': Timestamp.now(),
-          'userId': FirebaseAuth.instance.currentUser!.uid,
+          'userId': user.uid,
+          'userName': userData.data()!['username'],
+          'userImage': userData.data()!['image_url'],
+          'userEmail': userData.data()!['email'],
           'chatImage': imageUrl,
-          // ... (các thông tin khác)
-        });
-        // Xoá ảnh sau khi đã tải lên thành công (nếu muốn)
-        setState(() {
-          pickedImageFile = null;
         });
       }
-    } else {
-      // Nếu không có ảnh, chỉ thêm thông tin văn bản vào Firestore
+    } else if (pickedImageFile == null) {
+      // Add data to Firestore with imageUrl
       FirebaseFirestore.instance.collection('chat').add({
-        'text': msgController.text,
+        'text': enteredMsg,
         'createdAt': Timestamp.now(),
-        'userId': FirebaseAuth.instance.currentUser!.uid,
-        // ... (các thông tin khác)
+        'userId': user.uid,
+        'userName': userData.data()!['username'],
+        'userImage': userData.data()!['image_url'],
+        'userEmail': userData.data()!['email'],
+        // 'chatImage': imageUrl,
       });
+    } else {
+      // Add data to Firestore without imageUrl
+      final imageUrl = await uploadImage(pickedImageFile);
+      if (imageUrl != null) {
+        FirebaseFirestore.instance.collection('chat').add({
+          'createdAt': Timestamp.now(),
+          'userId': user.uid,
+          'userName': userData.data()!['username'],
+          'userImage': userData.data()!['image_url'],
+          'userEmail': userData.data()!['email'],
+          'chatImage': imageUrl,
+        });
+      }
     }
 
-    // Xóa nội dung trong ô nhập tin nhắn
+    deleteImage();
     msgController.clear();
   }
 
@@ -111,26 +130,48 @@ class _NewMsgWidgetState extends State<NewMsgWidget> {
       child: Column(
         children: [
           if (pickedImageFile != null)
-            Row(
-              children: [
-                Container(
-                  width: 100,
-                  height: 200,
-                  decoration: BoxDecoration(
-                    image: DecorationImage(
-                      image: FileImage(pickedImageFile!),
-                      fit: BoxFit.cover,
+            OpenContainer(
+              closedBuilder: (context, action) => Row(
+                children: [
+                  Container(
+                    width: 100,
+                    height: 200,
+                    decoration: BoxDecoration(
+                      image: DecorationImage(
+                        image: FileImage(pickedImageFile!),
+                        fit: BoxFit.cover,
+                      ),
                     ),
                   ),
-                ),
-                IconButton(
-                  onPressed: deleteImage,
-                  icon: const Icon(
-                    CupertinoIcons.delete_left,
-                    size: 30,
+                  IconButton(
+                    onPressed: deleteImage,
+                    icon: const Icon(
+                      CupertinoIcons.delete_left,
+                      size: 30,
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
+              openBuilder: (context, action) => Column(
+                children: [
+                  AppBar(),
+                  Expanded(
+                    child: Padding(
+                      padding: const EdgeInsets.all(20.0),
+                      child: Container(
+                        decoration: BoxDecoration(
+                          border: Border.all(color: AppColors.PRIMARY_PURPLE),
+                          borderRadius: BorderRadius.circular(30),
+                          image: DecorationImage(
+                            image: FileImage(pickedImageFile!),
+                            fit: BoxFit.cover,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
             ),
           Row(
             children: [
@@ -140,7 +181,6 @@ class _NewMsgWidgetState extends State<NewMsgWidget> {
                     AppFormField(
                       textEditingController: msgController,
                       hintText: 'Send a message',
-                      // pickedImageFile: pickedImageFile,
                     ),
                     // TextField(
                     //   autocorrect: true,

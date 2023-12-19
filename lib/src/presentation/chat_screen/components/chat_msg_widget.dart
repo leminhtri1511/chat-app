@@ -32,7 +32,7 @@ class ChatMsgWidget extends StatelessWidget {
               child: ThreeBounceLoading(),
             );
           }
-          
+
           if (!chatSnapshots.hasData || chatSnapshots.data!.docs.isEmpty) {
             return const Paragraph(
               content: 'No msg yet!',
@@ -49,7 +49,7 @@ class ChatMsgWidget extends StatelessWidget {
 
           return ListView.builder(
             padding: const EdgeInsets.only(
-              bottom: 40,
+              bottom: 20,
               left: 10,
               right: 10,
             ),
@@ -68,7 +68,7 @@ class ChatMsgWidget extends StatelessWidget {
                 return MsgBlockWidget.next(
                   userEmail: chatMsg?['userEmail'],
                   message: chatMsg?['text'],
-                  imageMsg:  chatMsg?['chatImage'],
+                  imageMsg: chatMsg?['chatImage'],
                   isMe: authUser?.uid == currentMsgUserId,
                 );
               } else {
@@ -77,6 +77,7 @@ class ChatMsgWidget extends StatelessWidget {
                   userImage: chatMsg?['userImage'],
                   username: chatMsg?['userName'],
                   message: chatMsg?['text'],
+                  imageMsg: chatMsg?['chatImage'],
                   isMe: authUser?.uid == currentMsgUserId,
                 );
               }
