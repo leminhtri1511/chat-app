@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:animations/animations.dart';
 import 'package:audioplayers/audioplayers.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:chat_app/src/configs/configs.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -279,9 +280,15 @@ class MsgBlockWidget extends StatelessWidget {
                             ),
                             child: ClipRRect(
                               borderRadius: BorderRadius.circular(20),
-                              child: Image.network(
-                                imageMsg.toString(),
-                                fit: BoxFit.cover,
+                              child: CachedNetworkImage(
+                                imageUrl: imageMsg.toString(),
+                                placeholder: (context, url) =>
+                                    const CircularProgressIndicator(),
+                                imageBuilder: (context, imageProvider) =>
+                                    Image.network(
+                                  imageMsg.toString(),
+                                  fit: BoxFit.cover,
+                                ),
                               ),
                             ),
                           ),
