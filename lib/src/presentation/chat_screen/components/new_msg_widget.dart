@@ -181,6 +181,8 @@ class _NewMsgWidgetState extends State<NewMsgWidget> {
                     AppFormField(
                       textEditingController: msgController,
                       hintText: 'Send a message',
+                      // iconButton:
+                      //     IconButton(onPressed: () {}, icon: const Icon(Icons.close)),
                     ),
                     // TextField(
                     //   autocorrect: true,

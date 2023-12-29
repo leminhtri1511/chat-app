@@ -265,60 +265,59 @@ class MsgBlockWidget extends StatelessWidget {
                               bottom: 5,
                               left: 10,
                             ),
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.circular(20),
-                        child: OpenContainer(
-                          closedBuilder: (context, action) => Container(
-                            height: 350,
-                            width: 200,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(20),
-                              border: Border.all(
-                                color: AppColors.PRIMARY_PURPLE,
-                                width: 1.2,
+                      child: CachedNetworkImage(
+                        imageUrl: imageMsg.toString(),
+                        placeholder: (context, url) =>
+                            const CircularProgressIndicator(),
+                        imageBuilder: (context, imageProvider) => ClipRRect(
+                          borderRadius: BorderRadius.circular(20),
+                          child: OpenContainer(
+                            closedBuilder: (context, action) => Container(
+                              height: 350,
+                              width: 200,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(20),
+                                border: Border.all(
+                                  color: AppColors.PRIMARY_PURPLE,
+                                  width: 1.2,
+                                ),
                               ),
-                            ),
-                            child: ClipRRect(
-                              borderRadius: BorderRadius.circular(20),
-                              child: CachedNetworkImage(
-                                imageUrl: imageMsg.toString(),
-                                placeholder: (context, url) =>
-                                    const CircularProgressIndicator(),
-                                imageBuilder: (context, imageProvider) =>
-                                    Image.network(
+                              child: ClipRRect(
+                                borderRadius: BorderRadius.circular(20),
+                                child: Image.network(
                                   imageMsg.toString(),
                                   fit: BoxFit.cover,
                                 ),
                               ),
                             ),
-                          ),
-                          openBuilder: (context, action) => Column(
-                            children: [
-                              AppBar(),
-                              Expanded(
-                                child: Padding(
-                                  padding: const EdgeInsets.all(20.0),
-                                  child: Container(
-                                    // height: double.infinity,
-                                    // width: double.infinity,
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(20),
-                                      border: Border.all(
-                                        color: AppColors.PRIMARY_PURPLE,
-                                        width: 1.2,
+                            openBuilder: (context, action) => Column(
+                              children: [
+                                AppBar(),
+                                Expanded(
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(20.0),
+                                    child: Container(
+                                      // height: double.infinity,
+                                      // width: double.infinity,
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(20),
+                                        border: Border.all(
+                                          color: AppColors.PRIMARY_PURPLE,
+                                          width: 1.2,
+                                        ),
                                       ),
-                                    ),
-                                    child: ClipRRect(
-                                      borderRadius: BorderRadius.circular(20),
-                                      child: Image.network(
-                                        imageMsg.toString(),
-                                        // fit: BoxFit.cover,
+                                      child: ClipRRect(
+                                        borderRadius: BorderRadius.circular(20),
+                                        child: Image.network(
+                                          imageMsg.toString(),
+                                          // fit: BoxFit.cover,
+                                        ),
                                       ),
                                     ),
                                   ),
                                 ),
-                              ),
-                            ],
+                              ],
+                            ),
                           ),
                         ),
                       ),

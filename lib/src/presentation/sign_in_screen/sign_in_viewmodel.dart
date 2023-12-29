@@ -73,14 +73,40 @@ class SignInViewModel extends BaseViewModel {
   Future<void> logInButton() async {
     if (enableSignInChecker) {
       try {
+        // LoadingDialog.showLoadingDialog(context);
+
+        // Authentication().signIn(
+        //   emailController.text,
+        //   passwordController.text,
+        // );
+
+        // Timer(
+        //   const Duration(seconds: 1),
+        //   () {
+        //     LoadingDialog.hideLoadingDialog(context);
+        //     goToHomeScreen(context);
+        //   },
+        // );
         LoadingDialog.showLoadingDialog(context);
 
-        Authentication().signIn(
-          emailController.text,
-          passwordController.text,
+        final userLogIn = await firebase
+            .signInWithEmailAndPassword(
+          email: emailController.text,
+          password: passwordController.text,
+        )
+            .then(
+          (user) async {
+            user.user!.getIdToken().then((idToken) async {
+              final prefs = await SharedPreferences.getInstance();
+              await prefs.setString('jwt', idToken!);
+              print('idToken: --- $idToken');
+            });
+            print('login success');
+          },
         );
-        // print('a: $userLogIn');
-        // if (userLogIn) {
+
+        print(userLogIn);
+
         Timer(
           const Duration(seconds: 1),
           () {
@@ -88,22 +114,6 @@ class SignInViewModel extends BaseViewModel {
             goToHomeScreen(context);
           },
         );
-        // }  e
-        // final userLogIn = await firebase
-        //     .signInWithEmailAndPassword(
-        //   email: emailController.text,
-        //   password: passwordController.text,
-        // )
-        //     .then(
-        //   (user) async {
-        //     user.user!.getIdToken().then((idToken) async {
-        //       final prefs = await SharedPreferences.getInstance();
-        //       await prefs.setString('jwt', idToken!);
-        //       print('idToken: --- $idToken');
-        //     });
-        //     print('login success');
-        //   },
-        // );
       } on FirebaseAuthException catch (e) {
         LoadingDialog.hideLoadingDialog(context);
 
