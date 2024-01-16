@@ -16,6 +16,7 @@ class WarningDialog extends StatelessWidget {
     this.rightButtonName,
     this.onTapLeft,
     this.onTapRight,
+    this.imageColor,
   }) : super(key: key);
   final String? content;
   final String? title;
@@ -23,6 +24,7 @@ class WarningDialog extends StatelessWidget {
   final String? rightButtonName;
   final String? image;
   final Color? leftButtonColor;
+  final Color? imageColor;
   final List<Color>? rightButtonColor;
   final VoidCallback? onTapLeft;
   final VoidCallback? onTapRight;
@@ -65,7 +67,7 @@ class WarningDialog extends StatelessWidget {
                   backgroundColor: AppColors.COLOR_WHITE,
                   radius: 35,
                   child: Image.asset(
-                    image ?? '',
+                    image ?? '',color: imageColor,
                   ),
                 ),
               const SizedBox(
